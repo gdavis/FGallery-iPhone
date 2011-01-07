@@ -3,13 +3,12 @@
 FGallery is a photo gallery viewer developed for iPhone applications. FGallery implements a delegate style design pattern similar to how UITableViewDelegates work. You may load images from either the local application bundle, or from the network.
 
 ## Features
-* Image caching
-* Captions
 * Single-tap fullscreen mode
 * Double-tap image zooming
 * Pinch zooming
+* Captions
 * Thumbnail grid
-* Auto-rotation support
+* Rotation support
 * Load images locally or from a web URL
 * Custom UITabBarItems
 

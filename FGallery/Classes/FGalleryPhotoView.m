@@ -218,7 +218,6 @@
 
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(float)scale
 {
-//	NSLog(@"scrollViewDidEndZooming:");
 	if( self.zoomScale == self.minimumZoomScale ) _isZoomed = NO;
 	else _isZoomed = YES;
 }
@@ -233,7 +232,6 @@
 }
 
 - (void)dealloc {
-	NSLog(@"dealloc");
 	[self stopTapTimer];
 	
 	[_button release];

@@ -1,18 +1,42 @@
-# Factory Labs - FGallery 
-## A Photo Gallery for iPhone
-================================
-
+# FGallery - A Photo Gallery for iOS
 ## Overview
-
+FGallery is a photo gallery viewer developed for iPhone applications. FGallery implements a delegate style design pattern similar to how UITableViewDelegates work. You may load images from either the local application bundle, or from the network.
 
 ## Features
+* Image caching
+* Captions
+* Single-tap fullscreen mode
+* Double-tap image zooming
+* Pinch zooming
+* Thumbnail grid
 * Auto-rotation support
-* Locally loaded images
-* Network loaded images
+* Load images locally or from a web URL
 * Custom UITabBarItems
 
-## Changes
+## Usage
+### Basic Instantiation
+FGallery requires an object to implement the FGalleryViewControllerDelegate protocol in order to act as the photo source for the gallery. Then just push it into the navigation controller stack as you would with any UIViewController.
 
+	FGalleryViewController *galleryVC = [[FGalleryViewController alloc] initWithPhotoSource:self];
+	[self.navigationController pushViewController:galleryVC animated:YES];
+	[galleryVC release];
+	
+### Instantiation with Custom Bar Items
+FGallery allows you add additional UIBarButtonItems to the UIToolbar that exists within the gallery to perform additional functionality.
+
+	UIImage *trashIcon = [UIImage imageNamed:@"photo-gallery-trashcan.png"];
+	UIImage *captionIcon = [UIImage imageNamed:@"photo-gallery-edit-caption.png"];
+	UIBarButtonItem *trashButton = [[[UIBarButtonItem alloc] initWithImage:trashIcon style:UIBarButtonItemStylePlain target:self action:@selector(handleTrashButtonTouch:)] autorelease];
+	UIBarButtonItem *editCaptionButton = [[[UIBarButtonItem alloc] initWithImage:captionIcon style:UIBarButtonItemStylePlain target:self action:@selector(handleEditCaptionButtonTouch:)] autorelease];
+	NSArray *barItems = [NSArray arrayWithObjects:editCaptionButton, trashButton, nil];
+
+	FGalleryViewController *galleryVC = [[FGalleryViewController alloc] initWithPhotoSource:self barItems:barItems];
+	[self.navigationController pushViewController:galleryVC animated:YES];
+	[galleryVC release];
+
+## Changes
+### 1.0
+* First release!
 
 ## License
 (The MIT License)

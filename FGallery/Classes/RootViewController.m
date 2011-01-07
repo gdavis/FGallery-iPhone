@@ -15,44 +15,11 @@
 #pragma mark -
 #pragma mark View lifecycle
 
-/*
-- (void)viewDidLoad {
-    [super viewDidLoad];
-
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+- (void)loadView {
+	[super loadView];
+	self.title = @"FGallery";
+	captions = [[NSArray alloc] initWithObjects:@"Lava", @"Hawaii", @"Audi", @"Happy New Year!",@"Frosty Web",nil];
 }
-*/
-
-/*
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-}
-*/
-/*
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
-*/
-/*
-- (void)viewWillDisappear:(BOOL)animated {
-	[super viewWillDisappear:animated];
-}
-*/
-/*
-- (void)viewDidDisappear:(BOOL)animated {
-	[super viewDidDisappear:animated];
-}
-*/
-
-/*
- // Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	// Return YES for supported orientations.
-	return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
- */
-
 
 #pragma mark -
 #pragma mark Table view data source
@@ -81,10 +48,10 @@
     
 	// Configure the cell.
 	if( indexPath.row == 0 ) {
-		cell.textLabel.text = @"Basic Gallery";
+		cell.textLabel.text = @"Basic";
 	}
 	else if( indexPath.row == 1 ) {
-		cell.textLabel.text = @"Gallery With Custom Controls";
+		cell.textLabel.text = @"Custom Controls";
 	}
 
     return cell;
@@ -97,28 +64,53 @@
 
 - (int)numberOfPhotosForPhotoGallery:(FGalleryViewController *)gallery
 {
-	return 1;
+	return 5;
 }
 
 
 - (FGalleryPhotoSourceType)photoGallery:(FGalleryViewController *)gallery sourceTypeForPhotoAtIndex:(NSUInteger)index
 {
-	return FGalleryPhotoSourceTypeLocal;
-//	return FGalleryPhotoSourceTypeNetwork;
+	if( index <= 2 ) {
+		return FGalleryPhotoSourceTypeLocal;
+	}
+	else {
+		return FGalleryPhotoSourceTypeNetwork;
+	}
 }
 
 
 - (NSString*)photoGallery:(FGalleryViewController *)gallery captionForPhotoAtIndex:(NSUInteger)index
 {
-	return @"Test image 1!";
+	NSString *caption = [captions objectAtIndex:index];
+	NSLog(@"%@", caption);
+	return caption;
 }
 
 
 - (NSString*)photoGallery:(FGalleryViewController*)gallery filePathForPhotoSize:(FGalleryPhotoSize)size atIndex:(NSUInteger)index {
-	return @"IMG_1400.PNG";
+	NSString *imagePath;
+	if( index == 0 ) {
+		imagePath = @"lava.jpeg";
+	}
+	else if( index == 1 ) {
+		imagePath = @"hawaii.jpeg";
+	}
+	else if( index == 2 ) {
+		imagePath = @"audi.jpg";
+	}
+	return imagePath;
 }
 
-
+- (NSString*)photoGallery:(FGalleryViewController *)gallery urlForPhotoSize:(FGalleryPhotoSize)size atIndex:(NSUInteger)index {
+	NSString *imagePath;
+	if( index == 3 ) {
+		imagePath = @"http://farm6.static.flickr.com/5007/5311573633_3cae940638.jpg";
+	}
+	else if( index == 4 ) {
+		imagePath = @"http://farm6.static.flickr.com/5042/5323996646_9c11e1b2f6_b.jpg";
+	}
+	return imagePath;
+}
 
 /*
 // Override to support conditional editing of the table view.
@@ -160,7 +152,7 @@
 */
 
 - (void)handleTrashButtonTouch:(id)sender {
-	
+	[galleryVC removeImageAtIndex:[galleryVC currentIndex]];
 }
 
 
@@ -171,10 +163,9 @@
 #pragma mark Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-	FGalleryViewController *galleryViewController;
+	
 	if( indexPath.row == 0 ) {
-		galleryViewController = [[FGalleryViewController alloc] initWithPhotoSource:self];
+		galleryVC = [[FGalleryViewController alloc] initWithPhotoSource:self];
 	}
 	else if( indexPath.row == 1 ) {
 		UIImage *trashIcon = [UIImage imageNamed:@"photo-gallery-trashcan.png"];
@@ -183,12 +174,11 @@
 		UIBarButtonItem *editCaptionButton = [[[UIBarButtonItem alloc] initWithImage:captionIcon style:UIBarButtonItemStylePlain target:self action:@selector(handleEditCaptionButtonTouch:)] autorelease];
 		NSArray *barItems = [NSArray arrayWithObjects:editCaptionButton, trashButton, nil];
 		
-		
-		galleryViewController = [[FGalleryViewController alloc] initWithPhotoSource:self barItems:barItems];
+		galleryVC = [[FGalleryViewController alloc] initWithPhotoSource:self barItems:barItems];
 	}
 	
-	[self.navigationController pushViewController:galleryViewController animated:YES];
-	[galleryViewController release];
+	[self.navigationController pushViewController:galleryVC animated:YES];
+	[galleryVC release];
 }
 
 

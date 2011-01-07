@@ -258,7 +258,6 @@
 }
 
 
-//- (void)resizeImageViews
 - (void)resizeImageViewsWithRect:(CGRect)rect
 {
 	// resize all the image views
@@ -624,12 +623,13 @@
 {
 	NSUInteger i, count = [_photoSource numberOfPhotosForPhotoGallery:self];
 	for (i = 0; i < count; i++) {
-		FGalleryPhotoView *photoView = [[[FGalleryPhotoView alloc] initWithFrame:CGRectZero] autorelease];
+		FGalleryPhotoView *photoView = [[FGalleryPhotoView alloc] initWithFrame:CGRectZero];
 		photoView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		photoView.autoresizesSubviews = YES;
 		photoView.photoDelegate = self;
 		[_scroller addSubview:photoView];
 		[_photoViews addObject:photoView];
+		[photoView release];
 	}
 }
 
@@ -640,12 +640,13 @@
 	NSUInteger i, count = [_photoSource numberOfPhotosForPhotoGallery:self];
 	for (i = 0; i < count; i++) {
 		
-		FGalleryPhotoView *thumbView = [[[FGalleryPhotoView alloc] initWithFrame:CGRectZero target:self action:@selector(handleThumbClick:)] autorelease];
+		FGalleryPhotoView *thumbView = [[FGalleryPhotoView alloc] initWithFrame:CGRectZero target:self action:@selector(handleThumbClick:)];
 		[thumbView setContentMode:UIViewContentModeScaleAspectFill];
 		[thumbView setClipsToBounds:YES];
 		[thumbView setTag:i];
 		[_thumbsView addSubview:thumbView];
 		[_photoThumbnailViews addObject:thumbView];
+		[thumbView release];
 	}
 }
 
@@ -1117,12 +1118,15 @@
     [_photoLoaders release];
     _photoLoaders = nil;
 	
+	[_barItems removeAllObjects];
 	[_barItems release];
 	_barItems = nil;
 	
+	[_photoThumbnailViews removeAllObjects];
     [_photoThumbnailViews release];
     _photoThumbnailViews = nil;
 	
+	[_photoViews removeAllObjects];
     [_photoViews release];
     _photoViews = nil;
 	
@@ -1140,10 +1144,46 @@
 
 
 /**
- *	This section overrides the auto-rotate methods to allow the tab bar to rotate only when a FGalleryController is the viewable controller. Sweet.
+ *	This section overrides the auto-rotate methods for UINaviationController and UITabBarController 
+ *	to allow the tab bar to rotate only when a FGalleryController is the visible controller. Sweet.
  */
 
-@implementation UITabBarController (GalleryRotateOverride)
+@implementation UINavigationController (FGallery)
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+	if( interfaceOrientation == UIInterfaceOrientationPortrait 
+	   || interfaceOrientation == UIInterfaceOrientationLandscapeLeft 
+	   || interfaceOrientation == UIInterfaceOrientationLandscapeRight )
+	{
+		// see if the current controller in the stack is a gallery
+		if([self.visibleViewController isKindOfClass:[FGalleryViewController class]])
+		{
+			return YES;
+		}
+	}
+	
+	// we need to support at least one type of auto-rotation we'll get warnings.
+	// so, we'll just support the basic portrait.
+	return ( interfaceOrientation == UIInterfaceOrientationPortrait ) ? YES : NO;
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+	// see if the current controller in the stack is a gallery
+	if([self.visibleViewController isKindOfClass:[FGalleryViewController class]])
+	{
+		FGalleryViewController *galleryController = (FGalleryViewController*)self.visibleViewController;
+		[galleryController resetImageViewZoomLevels];
+	}
+}
+
+@end
+
+
+
+
+@implementation UITabBarController (FGallery)
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -1162,8 +1202,6 @@
 				return YES;
 			}
 		}
-		
-		// TODO: Add support for cases when the gallery is not in a navigation controller.
 	}
 	
 	// we need to support at least one type of auto-rotation we'll get warnings.
@@ -1184,8 +1222,6 @@
 			[galleryController resetImageViewZoomLevels];
 		}
 	}
-	
-	// TODO: Add support for cases when the gallery is not in a navigation controller.
 }
 
 

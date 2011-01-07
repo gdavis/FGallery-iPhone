@@ -15,7 +15,6 @@
 		28AD73600D9D9599002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD735F0D9D9599002E5188 /* MainWindow.xib */; };
 		28C286E10D94DF7D0034E888 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C286E00D94DF7D0034E888 /* RootViewController.m */; };
 		28F335F11007B36200424DE2 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28F335F01007B36200424DE2 /* RootViewController.xib */; };
-		775D12A512D68BB200872F74 /* IMG_1400.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 775D12A412D68BB200872F74 /* IMG_1400.PNG */; };
 		775D12D712D68D7200872F74 /* photo-gallery-trashcan.png in Resources */ = {isa = PBXBuildFile; fileRef = 775D12D312D68D7200872F74 /* photo-gallery-trashcan.png */; };
 		775D12D812D68D7200872F74 /* photo-gallery-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 775D12D412D68D7200872F74 /* photo-gallery-right.png */; };
 		775D12D912D68D7200872F74 /* photo-gallery-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 775D12D512D68D7200872F74 /* photo-gallery-left.png */; };
@@ -24,6 +23,9 @@
 		77AC3F4412D66ACF004C32B8 /* FGalleryPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77AC3F4012D66ACF004C32B8 /* FGalleryPhotoView.m */; };
 		77AC3F4512D66ACF004C32B8 /* FGalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77AC3F4212D66ACF004C32B8 /* FGalleryViewController.m */; };
 		77AC3F5512D670D8004C32B8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77AC3F5412D670D8004C32B8 /* QuartzCore.framework */; };
+		77FCB8BD12D7936A00AAAFF3 /* audi.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 77FCB8BC12D7936A00AAAFF3 /* audi.jpg */; };
+		77FCB8C912D793E100AAAFF3 /* hawaii.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 77FCB8C812D793E100AAAFF3 /* hawaii.jpeg */; };
+		77FCB8D012D794C000AAAFF3 /* lava.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 77FCB8CF12D794C000AAAFF3 /* lava.jpeg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,7 +41,6 @@
 		28C286E00D94DF7D0034E888 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		28F335F01007B36200424DE2 /* RootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RootViewController.xib; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		775D12A412D68BB200872F74 /* IMG_1400.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_1400.PNG; sourceTree = "<group>"; };
 		775D12D312D68D7200872F74 /* photo-gallery-trashcan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo-gallery-trashcan.png"; sourceTree = "<group>"; };
 		775D12D412D68D7200872F74 /* photo-gallery-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo-gallery-right.png"; sourceTree = "<group>"; };
 		775D12D512D68D7200872F74 /* photo-gallery-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo-gallery-left.png"; sourceTree = "<group>"; };
@@ -51,6 +52,9 @@
 		77AC3F4112D66ACF004C32B8 /* FGalleryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FGalleryViewController.h; sourceTree = "<group>"; };
 		77AC3F4212D66ACF004C32B8 /* FGalleryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FGalleryViewController.m; sourceTree = "<group>"; };
 		77AC3F5412D670D8004C32B8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		77FCB8BC12D7936A00AAAFF3 /* audi.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = audi.jpg; sourceTree = "<group>"; };
+		77FCB8C812D793E100AAAFF3 /* hawaii.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = hawaii.jpeg; sourceTree = "<group>"; };
+		77FCB8CF12D794C000AAAFF3 /* lava.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = lava.jpeg; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* FGallery-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "FGallery-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -118,11 +122,11 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				77FCB8BF12D7938900AAAFF3 /* Gallery Images */,
 				775D12D312D68D7200872F74 /* photo-gallery-trashcan.png */,
 				775D12D412D68D7200872F74 /* photo-gallery-right.png */,
 				775D12D512D68D7200872F74 /* photo-gallery-left.png */,
 				775D12D612D68D7200872F74 /* photo-gallery-edit-caption.png */,
-				775D12A412D68BB200872F74 /* IMG_1400.PNG */,
 				28F335F01007B36200424DE2 /* RootViewController.xib */,
 				28AD735F0D9D9599002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* FGallery-Info.plist */,
@@ -139,6 +143,16 @@
 				77AC3F5412D670D8004C32B8 /* QuartzCore.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		77FCB8BF12D7938900AAAFF3 /* Gallery Images */ = {
+			isa = PBXGroup;
+			children = (
+				77FCB8CF12D794C000AAAFF3 /* lava.jpeg */,
+				77FCB8C812D793E100AAAFF3 /* hawaii.jpeg */,
+				77FCB8BC12D7936A00AAAFF3 /* audi.jpg */,
+			);
+			name = "Gallery Images";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -193,11 +207,13 @@
 			files = (
 				28AD73600D9D9599002E5188 /* MainWindow.xib in Resources */,
 				28F335F11007B36200424DE2 /* RootViewController.xib in Resources */,
-				775D12A512D68BB200872F74 /* IMG_1400.PNG in Resources */,
 				775D12D712D68D7200872F74 /* photo-gallery-trashcan.png in Resources */,
 				775D12D812D68D7200872F74 /* photo-gallery-right.png in Resources */,
 				775D12D912D68D7200872F74 /* photo-gallery-left.png in Resources */,
 				775D12DA12D68D7200872F74 /* photo-gallery-edit-caption.png in Resources */,
+				77FCB8BD12D7936A00AAAFF3 /* audi.jpg in Resources */,
+				77FCB8C912D793E100AAAFF3 /* hawaii.jpeg in Resources */,
+				77FCB8D012D794C000AAAFF3 /* lava.jpeg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -233,7 +233,7 @@
 }
 
 - (void)dealloc {
-	
+	NSLog(@"dealloc");
 	[self stopTapTimer];
 	
 	[_button release];

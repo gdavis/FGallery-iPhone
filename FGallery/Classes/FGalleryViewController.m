@@ -467,7 +467,12 @@
 	
 	[self disableApp];
 	
-	[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:NO]; // 3.2+
+	UIApplication* application = [UIApplication sharedApplication];
+	if ([application respondsToSelector: @selector(setStatusBarHidden:withAnimation:)]) {
+		[[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO]; // 3.2+
+	} else {
+		[[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO]; // 2.0 - 3.2
+	}
 	
 	[self.navigationController setNavigationBarHidden:YES animated:YES];
 	
@@ -487,7 +492,12 @@
 	
 	[self disableApp];
 	
-	[[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO]; // 3.2+
+	UIApplication* application = [UIApplication sharedApplication];
+	if ([application respondsToSelector: @selector(setStatusBarHidden:withAnimation:)]) {
+		[[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO]; // 3.2+
+	} else {
+		[[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO]; // 2.0 - 3.2
+	}
 	
 	[self.navigationController setNavigationBarHidden:NO animated:YES];
 	

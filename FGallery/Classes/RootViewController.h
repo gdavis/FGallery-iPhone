@@ -10,8 +10,13 @@
 #import "FGalleryViewController.h"
 
 @interface RootViewController : UITableViewController <FGalleryViewControllerDelegate> {
-	NSArray *captions;
-	FGalleryViewController *galleryVC;
+	NSArray *localCaptions;
+    NSArray *localImages;
+    NSArray *networkCaptions;
+    NSArray *networkImages;
+    NSUInteger imageCount;
+	FGalleryViewController *localGallery;
+    FGalleryViewController *networkGallery;
 }
 
 @end

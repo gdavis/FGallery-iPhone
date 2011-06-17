@@ -73,8 +73,7 @@
 @synthesize photoSource = _photoSource, currentIndex = _currentIndex, thumbsView = _thumbsView, toolBar = _toolbar;
 
 
-#pragma mark -
-#pragma mark Public Methods
+#pragma mark - Public Methods
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -300,6 +299,7 @@
 	
 	[self layoutViews];
 	[self updateButtons];
+    [self updateTitle];
 }
 
 
@@ -323,14 +323,6 @@
 - (void)previous
 {
 	NSUInteger prevIndex = _currentIndex-1;
-	
-	// don't continue if we're out of images.
-	if( prevIndex < 0 )
-	{
-		prevIndex = 0;
-		return;
-	}
-	
 	[self gotoImageByIndex:prevIndex animated:NO];
 }
 
@@ -343,8 +335,7 @@
 	NSUInteger numPhotos = [_photoSource numberOfPhotosForPhotoGallery:self];
 	
 	// constrain index within our limits
-	if( index < 0 ) index = 0;
-	else if( index >= numPhotos ) index = numPhotos - 1;
+    if( index >= numPhotos ) index = numPhotos - 1;
 	
 	
 	if( numPhotos == 0 ) {
@@ -401,8 +392,7 @@
 
 
 
-#pragma mark -
-#pragma mark Private Methods
+#pragma mark - Private Methods
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
@@ -745,8 +735,7 @@
 
 
 
-#pragma mark -
-#pragma mark Image Loading
+#pragma mark - Image Loading
 
 
 - (void)preloadThumbnailImages
@@ -928,8 +917,7 @@
 }
 
 
-#pragma mark -
-#pragma mark FGalleryPhoto Delegate Methods
+#pragma mark - FGalleryPhoto Delegate Methods
 
 
 - (void)galleryPhoto:(FGalleryPhoto*)photo willLoadThumbnailFromPath:(NSString*)path
@@ -1013,8 +1001,7 @@
 
 
 
-#pragma mark -
-#pragma mark UIScrollView Methods
+#pragma mark - UIScrollView Methods
 
 
 
@@ -1038,8 +1025,7 @@
 
 
 
-#pragma mark -
-#pragma mark Memory Management Methods
+#pragma mark - Memory Management Methods
 
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.

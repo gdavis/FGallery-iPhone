@@ -3,7 +3,7 @@
 //  FGallery
 //
 //  Created by Grant Davis on 1/6/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Copyright 2011 Grant Davis Interactive, LLC. All rights reserved.
 //
 
 #import "FGalleryAppDelegate.h"

@@ -18,7 +18,7 @@
 
 // general
 - (void)buildViews;
-
+- (void)destroyViews;
 - (void)layoutViews;
 - (void)moveScrollerToCurrentIndexWithAnimation:(BOOL)animation;
 - (void)updateTitle;
@@ -83,63 +83,20 @@
 	
 		// init gallery id with our memory address
 		self.galleryID						= [NSString stringWithFormat:@"%p", self];
-		
-        // set defaults
+
+        // configure view controller
 		self.hidesBottomBarWhenPushed		= YES;
-        self.useThumbnailView               = YES;
-		
+        
+        // set defaults
+        _useThumbnailView                   = YES;
 		_prevStatusStyle					= [[UIApplication sharedApplication] statusBarStyle];
 		
-		// create storage
+		// create storage objects
 		_currentIndex						= 0;
 		_photoLoaders						= [[NSMutableDictionary alloc] init];
 		_photoViews							= [[NSMutableArray alloc] init];
 		_photoThumbnailViews				= [[NSMutableArray alloc] init];
 		_barItems							= [[NSMutableArray alloc] init];
-		
-		// create public objects first so they're available for custom configuration right away. positioning comes later.
-		_container							= [[UIView alloc] initWithFrame:CGRectZero];
-		_innerContainer						= [[UIView alloc] initWithFrame:CGRectZero];
-		_scroller							= [[UIScrollView alloc] initWithFrame:CGRectZero];
-		_thumbsView							= [[UIScrollView alloc] initWithFrame:CGRectZero];
-		_toolbar							= [[UIToolbar alloc] initWithFrame:CGRectZero];
-		_captionContainer					= [[UIView alloc] initWithFrame:CGRectZero];
-		_caption							= [[UILabel alloc] initWithFrame:CGRectZero];
-		
-		_toolbar.barStyle					= UIBarStyleBlackTranslucent;
-		_container.backgroundColor			= [UIColor blackColor];
-		
-		// listen for container frame changes so we can properly update the layout during auto-rotation or going in and out of fullscreen
-		[_container addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew context:nil];
-		
-		// setup scroller
-		_scroller.delegate							= self;
-		_scroller.pagingEnabled						= YES;
-		_scroller.showsVerticalScrollIndicator		= NO;
-		_scroller.showsHorizontalScrollIndicator	= NO;
-		
-		// setup caption
-		_captionContainer.backgroundColor			= [UIColor colorWithWhite:0.0 alpha:.35];
-		_captionContainer.hidden					= YES;
-		_captionContainer.userInteractionEnabled	= NO;
-		_captionContainer.exclusiveTouch			= YES;
-		_caption.font								= [UIFont systemFontOfSize:14.0];
-		_caption.textColor							= [UIColor whiteColor];
-		_caption.backgroundColor					= [UIColor clearColor];
-		_caption.textAlignment						= UITextAlignmentCenter;
-		_caption.shadowColor						= [UIColor blackColor];
-		_caption.shadowOffset						= CGSizeMake( 1, 1 );
-		
-		// make things flexible
-		_container.autoresizesSubviews				= NO;
-		_innerContainer.autoresizesSubviews			= NO;
-		_scroller.autoresizesSubviews				= NO;
-		_container.autoresizingMask					= UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-		
-		// setup thumbs view
-		_thumbsView.backgroundColor					= [UIColor whiteColor];
-		_thumbsView.hidden							= YES;
-		_thumbsView.contentInset					= UIEdgeInsetsMake( kThumbnailSpacing, kThumbnailSpacing, kThumbnailSpacing, kThumbnailSpacing);
         
         /*
          // debugging: 
@@ -179,8 +136,52 @@
 
 - (void)loadView
 {
-	// setup container
-	self.view = _container;
+    // create public objects first so they're available for custom configuration right away. positioning comes later.
+    _container							= [[UIView alloc] initWithFrame:CGRectZero];
+    _innerContainer						= [[UIView alloc] initWithFrame:CGRectZero];
+    _scroller							= [[UIScrollView alloc] initWithFrame:CGRectZero];
+    _thumbsView							= [[UIScrollView alloc] initWithFrame:CGRectZero];
+    _toolbar							= [[UIToolbar alloc] initWithFrame:CGRectZero];
+    _captionContainer					= [[UIView alloc] initWithFrame:CGRectZero];
+    _caption							= [[UILabel alloc] initWithFrame:CGRectZero];
+    
+    _toolbar.barStyle					= UIBarStyleBlackTranslucent;
+    _container.backgroundColor			= [UIColor blackColor];
+    
+    // listen for container frame changes so we can properly update the layout during auto-rotation or going in and out of fullscreen
+    [_container addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew context:nil];
+    
+    // setup scroller
+    _scroller.delegate							= self;
+    _scroller.pagingEnabled						= YES;
+    _scroller.showsVerticalScrollIndicator		= NO;
+    _scroller.showsHorizontalScrollIndicator	= NO;
+    
+    // setup caption
+    _captionContainer.backgroundColor			= [UIColor colorWithWhite:0.0 alpha:.35];
+    _captionContainer.hidden					= YES;
+    _captionContainer.userInteractionEnabled	= NO;
+    _captionContainer.exclusiveTouch			= YES;
+    _caption.font								= [UIFont systemFontOfSize:14.0];
+    _caption.textColor							= [UIColor whiteColor];
+    _caption.backgroundColor					= [UIColor clearColor];
+    _caption.textAlignment						= UITextAlignmentCenter;
+    _caption.shadowColor						= [UIColor blackColor];
+    _caption.shadowOffset						= CGSizeMake( 1, 1 );
+    
+    // make things flexible
+    _container.autoresizesSubviews				= NO;
+    _innerContainer.autoresizesSubviews			= NO;
+    _scroller.autoresizesSubviews				= NO;
+    _container.autoresizingMask					= UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
+    // setup thumbs view
+    _thumbsView.backgroundColor					= [UIColor whiteColor];
+    _thumbsView.hidden							= YES;
+    _thumbsView.contentInset					= UIEdgeInsetsMake( kThumbnailSpacing, kThumbnailSpacing, kThumbnailSpacing, kThumbnailSpacing);
+    
+	// set view
+	self.view                                   = _container;
 	
 	// add items to their containers
 	[_container addSubview:_innerContainer];
@@ -211,12 +212,22 @@
     [self reloadGallery];
 }
 
-
-- (void)reloadGallery
-{
-    _currentIndex = 0;
-    _isThumbViewShowing = NO;
+- (void)viewDidUnload {
     
+    [self destroyViews];
+    
+    [_container release], _container = nil;
+    [_innerContainer release], _innerContainer = nil;
+    [_scroller release], _scroller = nil;
+    [_thumbsView release], _thumbsView = nil;
+    [_toolbar release], _toolbar = nil;
+    [_captionContainer release], _captionContainer = nil;
+    [_caption release], _caption = nil;
+    
+    [super viewDidUnload];
+}
+
+- (void)destroyViews {
     // remove previous photo views
     for (UIView *view in _photoViews) {
         [view removeFromSuperview];
@@ -238,8 +249,17 @@
         [photoLoader unloadThumbnail];
     }
     [_photoLoaders removeAllObjects];
+}
+
+- (void)reloadGallery
+{
+    _currentIndex = 0;
+    _isThumbViewShowing = NO;
     
-    // build views if we have data.
+    // remove the old
+    [self destroyViews];
+    
+    // build the new
     if ([_photoSource numberOfPhotosForPhotoGallery:self] > 0) {
         // create the image views for each photo
         [self buildViews];
@@ -250,9 +270,11 @@
         // start loading thumbs
         [self preloadThumbnailImages];
         
-        // update state
-        [self layoutViews];
+        // start on first image
         [self gotoImageByIndex:_currentIndex animated:NO];
+        
+        // layout
+        [self layoutViews];
     }
 }
 
@@ -277,10 +299,10 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
+    
 	_isActive = NO;
-	
-	[super viewWillDisappear:animated];
-	
+
 	[[UIApplication sharedApplication] setStatusBarStyle:_prevStatusStyle animated:animated];
 }
 
@@ -358,8 +380,6 @@
 
 - (void)gotoImageByIndex:(NSUInteger)index animated:(BOOL)animated
 {
-//	NSLog(@"gotoImageByIndex: %i, out of %i", index, [_photoSource numberOfPhotosForPhotoGallery:self]);
-	
 	NSUInteger numPhotos = [_photoSource numberOfPhotosForPhotoGallery:self];
 	
 	// constrain index within our limits
@@ -788,6 +808,7 @@
 {
 	NSUInteger index = _currentIndex;
 	NSUInteger count = [_photoViews count];
+    
 	// make sure the images surrounding the current index have thumbs loading
 	NSUInteger nextIndex = index + 1;
 	NSUInteger prevIndex = index - 1;
@@ -796,16 +817,13 @@
 	// a value of 2 at maximum would preload 4 images, 2 in front of and two behind the current image.
 	NSUInteger preloadCount = 1;
 	
-	
 	FGalleryPhoto *photo;
-	
 	
 	// check to see if the current image thumb has been loaded
 	photo = [_photoLoaders objectForKey:[NSString stringWithFormat:@"%i", index]];
 	
 	if( !photo )
 	{
-//		NSLog(@"preloading current image thumbnail!");
 		[self loadThumbnailImageWithIndex:index];
 		photo = [_photoLoaders objectForKey:[NSString stringWithFormat:@"%i", index]];
 	}
@@ -826,8 +844,6 @@
 		else if( !photo.hasThumbLoaded && !photo.isThumbLoading )
 			[photo loadThumbnail];
 		
-//		NSLog(@"prev thumbnail %i loading", photo.tag );
-		
 		curIndex--;
 	}
 	
@@ -843,7 +859,6 @@
 		
 		else if( !photo.hasThumbLoaded && !photo.isThumbLoading )
 			[photo loadThumbnail];
-//		NSLog(@"next thumbnail %i loading", photo.tag );
 		
 		curIndex++;
 	}
@@ -862,8 +877,6 @@
 
 - (void)loadThumbnailImageWithIndex:(NSUInteger)index
 {
-//	NSLog(@"loadThumbnailImageWithIndex: %i", index );
-	
 	FGalleryPhoto *photo = [_photoLoaders objectForKey:[NSString stringWithFormat:@"%i", index]];
 	
 	if( photo == nil )
@@ -876,8 +889,6 @@
 
 - (void)loadFullsizeImageWithIndex:(NSUInteger)index
 {
-//	NSLog(@"loadFullsizeImageWithIndex: %i", index );
-	
 	FGalleryPhoto *photo = [_photoLoaders objectForKey:[NSString stringWithFormat:@"%i", index]];
 	
 	if( photo == nil )
@@ -890,10 +901,7 @@
 
 - (void)unloadFullsizeImageWithIndex:(NSUInteger)index
 {
-	if( index >= 0 && index < [_photoViews count])
-	{
-//		NSLog(@"unloadFullsizeImageWithIndex: %i", index);
-		
+	if (index < [_photoViews count]) {		
 		FGalleryPhoto *loader = [_photoLoaders objectForKey:[NSString stringWithFormat:@"%i", index]];
 		[loader unloadFullsize];
 		
@@ -928,9 +936,7 @@
 		// invalid source type, throw an error.
 		[NSException raise:@"Invalid photo source type" format:@"The specified source type of %d is invalid", sourceType];
 	}
-	
-//	NSLog(@"Creating new gallery photo object for index: %i", index);
-	
+    
 	// assign the photo index
 	photo.tag = index;
 	
@@ -979,18 +985,9 @@
 	}
 }
 
-/*
-- (void)galleryPhoto:(FGalleryPhoto*)photo willLoadFullsizeFromPath:(NSString*)path
-{
-//	NSLog(@"galleryPhoto:willLoadFullsizeFromPath: %@", path );
-}
-*/
-
 
 - (void)galleryPhoto:(FGalleryPhoto*)photo willLoadThumbnailFromUrl:(NSString*)url
 {
-//	NSLog(@"galleryPhoto:willLoadThumbnailFromUrl:");
-	
 	// show activity indicator for large photo view
 	FGalleryPhotoView *photoView = [_photoViews objectAtIndex:photo.tag];
 	[photoView.activity startAnimating];
@@ -1001,14 +998,6 @@
 		[thumb.activity startAnimating];
 	}
 }
-
-/*
-- (void)galleryPhoto:(FGalleryPhoto*)photo willLoadFullsizeFromUrl:(NSString*)url
-{
-//	NSLog(@"galleryPhoto:willLoadFullsizeFromUrl:");
-}
- */
-
 
 
 - (void)galleryPhoto:(FGalleryPhoto*)photo didLoadThumbnail:(UIImage*)image
@@ -1104,17 +1093,8 @@
 	
 }
 
-/*
-- (void)viewDidUnload {
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-*/
 
 - (void)dealloc {	
-	
-//	NSLog(@"FGalleryViewController dealloc");
 	
 	// remove KVO listener
 	[_container removeObserver:self forKeyPath:@"frame"];

@@ -18,6 +18,7 @@
 	[super loadView];
     
 	self.title = @"FGallery";
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     
 	localCaptions = [[NSArray alloc] initWithObjects:@"Lava", @"Hawaii", @"Audi", @"Happy New Year!",@"Frosty Web",nil];
     localImages = [[NSArray alloc] initWithObjects: @"lava.jpeg", @"hawaii.jpeg", @"audi.jpg",nil];

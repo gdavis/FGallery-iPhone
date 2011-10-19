@@ -447,7 +447,11 @@
 
 - (void)resizeThumbView
 {
-	_thumbsView.frame = CGRectMake( 0, 0, _container.frame.size.width, _container.frame.size.height );
+    int barHeight = 0;
+    if (self.navigationController.navigationBar.barStyle == UIBarStyleBlackTranslucent) {
+        barHeight = self.navigationController.navigationBar.frame.size.height;
+    }
+	_thumbsView.frame = CGRectMake( 0, barHeight, _container.frame.size.width, _container.frame.size.height-barHeight );
 }
 
 

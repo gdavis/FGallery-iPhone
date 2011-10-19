@@ -84,8 +84,9 @@
 		// init gallery id with our memory address
 		self.galleryID						= [NSString stringWithFormat:@"%p", self];
 		
-		// hide any silly bottom bars.
+        // set defaults
 		self.hidesBottomBarWhenPushed		= YES;
+        self.useThumbnailView               = YES;
 		
 		_prevStatusStyle					= [[UIApplication sharedApplication] statusBarStyle];
 		
@@ -106,23 +107,10 @@
 		_caption							= [[UILabel alloc] initWithFrame:CGRectZero];
 		
 		_toolbar.barStyle					= UIBarStyleBlackTranslucent;
-		
 		_container.backgroundColor			= [UIColor blackColor];
 		
 		// listen for container frame changes so we can properly update the layout during auto-rotation or going in and out of fullscreen
 		[_container addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew context:nil];
-		
-		/*
-		// debugging: 
-		_container.layer.borderColor = [[UIColor yellowColor] CGColor];
-		_container.layer.borderWidth = 1.0;
-		
-		_innerContainer.layer.borderColor = [[UIColor greenColor] CGColor];
-		_innerContainer.layer.borderWidth = 1.0;
-		
-		_scroller.layer.borderColor = [[UIColor redColor] CGColor];
-		_scroller.layer.borderWidth = 2.0;
-		*/
 		
 		// setup scroller
 		_scroller.delegate							= self;
@@ -152,6 +140,18 @@
 		_thumbsView.backgroundColor					= [UIColor whiteColor];
 		_thumbsView.hidden							= YES;
 		_thumbsView.contentInset					= UIEdgeInsetsMake( kThumbnailSpacing, kThumbnailSpacing, kThumbnailSpacing, kThumbnailSpacing);
+        
+        /*
+         // debugging: 
+         _container.layer.borderColor = [[UIColor yellowColor] CGColor];
+         _container.layer.borderWidth = 1.0;
+         
+         _innerContainer.layer.borderColor = [[UIColor greenColor] CGColor];
+         _innerContainer.layer.borderWidth = 1.0;
+         
+         _scroller.layer.borderColor = [[UIColor redColor] CGColor];
+         _scroller.layer.borderWidth = 2.0;
+         */
 	}
 	return self;
 }
@@ -206,33 +206,64 @@
 	
 	// set buttons on the toolbar.
 	[_toolbar setItems:_barItems animated:NO];
-	
-    // build done button by using thumbnail view
-    [self setUseThumbnailView:YES];
-	
-	// create layer for the thumbnails
-	_isThumbViewShowing = NO;
-	
-	// create the image views for each photo
-	[self buildViews];
-	
-	// create the thumbnail views
-	[self buildThumbsViewPhotos];
-	
-	// start loading thumbs
-	[self preloadThumbnailImages];
+    
+    // build stuff
+    [self reloadGallery];
 }
 
 
+- (void)reloadGallery
+{
+    _currentIndex = 0;
+    _isThumbViewShowing = NO;
+    
+    // remove previous photo views
+    for (UIView *view in _photoViews) {
+        [view removeFromSuperview];
+    }
+    [_photoViews removeAllObjects];
+    
+    // remove previous thumbnails
+    for (UIView *view in _photoThumbnailViews) {
+        [view removeFromSuperview];
+    }
+    [_photoThumbnailViews removeAllObjects];
+    
+    // remove photo loaders
+    NSArray *photoKeys = [_photoLoaders allKeys];
+    for (int i=0; i<[photoKeys count]; i++) {
+        FGalleryPhoto *photoLoader = [_photoLoaders objectForKey:[photoKeys objectAtIndex:i]];
+        photoLoader.delegate = nil;
+        [photoLoader unloadFullsize];
+        [photoLoader unloadThumbnail];
+    }
+    [_photoLoaders removeAllObjects];
+    
+    // build views if we have data.
+    if ([_photoSource numberOfPhotosForPhotoGallery:self] > 0) {
+        // create the image views for each photo
+        [self buildViews];
+        
+        // create the thumbnail views
+        [self buildThumbsViewPhotos];
+        
+        // start loading thumbs
+        [self preloadThumbnailImages];
+        
+        // update state
+        [self layoutViews];
+        [self gotoImageByIndex:_currentIndex animated:NO];
+    }
+}
 
 
 - (void)viewWillAppear:(BOOL)animated
 {
-//	NSLog(@"<ViewWillAppear>");
+    [super viewWillAppear:animated];
 	
-	_isActive = YES;
-	
-	[super viewWillAppear:animated]; // according to docs, we have to call this.
+    _isActive = YES;
+    
+    self.useThumbnailView = _useThumbnailView;
 	
 	[self layoutViews];
 	

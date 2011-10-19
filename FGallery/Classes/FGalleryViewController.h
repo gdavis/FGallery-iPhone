@@ -84,6 +84,7 @@ typedef enum
 - (void)next;
 - (void)previous;
 - (void)gotoImageByIndex:(NSUInteger)index animated:(BOOL)animated;
+- (void)reloadGallery;
 
 @property (nonatomic,assign) NSObject<FGalleryViewControllerDelegate> *photoSource;
 @property (nonatomic,readonly) UIToolbar *toolBar;

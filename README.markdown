@@ -34,6 +34,12 @@ FGallery allows you add additional UIBarButtonItems to the UIToolbar that exists
 	[galleryVC release];
 
 ## Changes
+### 1.1
+* Added support for translucent navigation bars
+* Added support to hide the right navigation button and therefore disable thumbnails through a new useThumbnailView property.
+* Added better memory management for building and destroying view objects.
+* Fixed a crash in the network images demo.
+
 ### 1.0
 * First release!
 

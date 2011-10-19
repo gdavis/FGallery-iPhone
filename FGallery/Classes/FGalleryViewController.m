@@ -70,7 +70,11 @@
 
 @implementation FGalleryViewController
 @synthesize galleryID;
-@synthesize photoSource = _photoSource, currentIndex = _currentIndex, thumbsView = _thumbsView, toolBar = _toolbar;
+@synthesize photoSource = _photoSource;
+@synthesize currentIndex = _currentIndex;
+@synthesize thumbsView = _thumbsView;
+@synthesize toolBar = _toolbar;
+@synthesize useThumbnailView = _useThumbnailView;
 
 
 #pragma mark - Public Methods
@@ -206,12 +210,8 @@
 	// set buttons on the toolbar.
 	[_toolbar setItems:_barItems animated:NO];
 	
-	// add top right nav button for thumbs view
-	if( self.navigationController )
-	{
-		UIBarButtonItem *btn = [[[UIBarButtonItem alloc] initWithTitle:@"See All" style:UIBarButtonSystemItemDone target:self action:@selector(handleSeeAllTouch:)] autorelease];
-		[self.navigationItem setRightBarButtonItem:btn animated:YES];
-	}
+    // build done button by using thumbnail view
+    [self setUseThumbnailView:YES];
 	
 	// create layer for the thumbnails
 	_isThumbViewShowing = NO;
@@ -390,6 +390,20 @@
 }
 
 
+
+- (void)setUseThumbnailView:(BOOL)useThumbnailView
+{
+    _useThumbnailView = useThumbnailView;
+    if( self.navigationController ) {
+        if (_useThumbnailView) {
+            UIBarButtonItem *btn = [[[UIBarButtonItem alloc] initWithTitle:@"See All" style:UIBarButtonItemStylePlain target:self action:@selector(handleSeeAllTouch:)] autorelease];
+            [self.navigationItem setRightBarButtonItem:btn animated:YES];
+        }
+        else {
+            [self.navigationItem setRightBarButtonItem:nil animated:NO];
+        }
+    }
+}
 
 
 #pragma mark - Private Methods

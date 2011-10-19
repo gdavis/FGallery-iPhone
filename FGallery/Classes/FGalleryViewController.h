@@ -90,6 +90,7 @@ typedef enum
 @property (nonatomic,readonly) UIView* thumbsView;
 @property NSInteger currentIndex;
 @property (nonatomic,retain) NSString *galleryID;
+@property (nonatomic) BOOL useThumbnailView;
 
 @end
 

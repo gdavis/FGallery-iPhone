@@ -470,12 +470,11 @@
 	CGRect screenFrame = [[UIScreen mainScreen] bounds];
 	CGRect innerContainerRect;
 	
-	if( self.interfaceOrientation == UIInterfaceOrientationPortrait )
+	if( self.interfaceOrientation == UIInterfaceOrientationPortrait || self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown )
 	{
 		innerContainerRect = CGRectMake( 0, _container.frame.size.height - screenFrame.size.height, _container.frame.size.width, screenFrame.size.height );
 	}
-	else if( self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft 
-			|| self.interfaceOrientation == UIInterfaceOrientationLandscapeRight )
+	else if( self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight )
 	{
 		innerContainerRect = CGRectMake( 0, _container.frame.size.height - screenFrame.size.width, _container.frame.size.width, screenFrame.size.width );
 	}
@@ -488,12 +487,11 @@
 	CGRect screenFrame = [[UIScreen mainScreen] bounds];
 	CGRect scrollerRect;
 	
-	if( self.interfaceOrientation == UIInterfaceOrientationPortrait )
+	if( self.interfaceOrientation == UIInterfaceOrientationPortrait || self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown )
 	{
 		scrollerRect = CGRectMake( 0, 0, screenFrame.size.width, screenFrame.size.height );
 	}
-	else if( self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft 
-			|| self.interfaceOrientation == UIInterfaceOrientationLandscapeRight )
+	else if( self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight )
 	{
 		scrollerRect = CGRectMake( 0, 0, screenFrame.size.height, screenFrame.size.width );
 	}
@@ -1174,15 +1172,9 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	if( interfaceOrientation == UIInterfaceOrientationPortrait 
-	   || interfaceOrientation == UIInterfaceOrientationLandscapeLeft 
-	   || interfaceOrientation == UIInterfaceOrientationLandscapeRight )
+	if([self.visibleViewController isKindOfClass:[FGalleryViewController class]]) 
 	{
-		// see if the current controller in the stack is a gallery
-		if([self.visibleViewController isKindOfClass:[FGalleryViewController class]])
-		{
-			return YES;
-		}
+        return YES;
 	}
 	
 	// we need to support at least one type of auto-rotation we'll get warnings.
@@ -1209,22 +1201,17 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	if( interfaceOrientation == UIInterfaceOrientationPortrait 
-	   || interfaceOrientation == UIInterfaceOrientationLandscapeLeft 
-	   || interfaceOrientation == UIInterfaceOrientationLandscapeRight )
-	{
-		// only return yes if we're looking at the gallery
-		if( [self.selectedViewController isKindOfClass:[UINavigationController class]])
-		{
-			UINavigationController *navController = (UINavigationController*)self.selectedViewController;
-			
-			// see if the current controller in the stack is a gallery
-			if([navController.visibleViewController isKindOfClass:[FGalleryViewController class]])
-			{
-				return YES;
-			}
-		}
-	}
+    // only return yes if we're looking at the gallery
+    if( [self.selectedViewController isKindOfClass:[UINavigationController class]])
+    {
+        UINavigationController *navController = (UINavigationController*)self.selectedViewController;
+        
+        // see if the current controller in the stack is a gallery
+        if([navController.visibleViewController isKindOfClass:[FGalleryViewController class]])
+        {
+            return YES;
+        }
+    }
 	
 	// we need to support at least one type of auto-rotation we'll get warnings.
 	// so, we'll just support the basic portrait.

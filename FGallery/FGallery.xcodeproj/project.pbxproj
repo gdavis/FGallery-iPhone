@@ -247,6 +247,7 @@
 				GCC_PREFIX_HEADER = FGallery_Prefix.pch;
 				INFOPLIST_FILE = "FGallery-Info.plist";
 				PRODUCT_NAME = FGallery;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};

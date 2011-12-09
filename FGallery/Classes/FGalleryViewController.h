@@ -28,75 +28,55 @@ typedef enum
 
 @interface FGalleryViewController : UIViewController <UIScrollViewDelegate,FGalleryPhotoDelegate,FGalleryPhotoViewDelegate> {
 	
-	UIStatusBarStyle _prevStatusStyle;
-	
 	BOOL _isActive;
-	
 	BOOL _isFullscreen;
-	
 	BOOL _isScrolling;
-	
 	BOOL _isThumbViewShowing;
 	
-	float _prevNextButtonSize;
-	
+	UIStatusBarStyle _prevStatusStyle;
+	CGFloat _prevNextButtonSize;
 	CGRect _scrollerRect;
-	
 	NSString *galleryID;
-	
 	NSInteger _currentIndex;
 	
 	UIView *_container; // used as view for the controller
-	
 	UIView *_innerContainer; // sized and placed to be fullscreen within the container
-	
 	UIToolbar *_toolbar;
-	
 	UIScrollView *_thumbsView;
-	
 	UIScrollView *_scroller;
-	
 	UIView *_captionContainer;
-	
 	UILabel *_caption;
 	
 	NSMutableDictionary *_photoLoaders;
-	
 	NSMutableArray *_barItems;
-	
 	NSMutableArray *_photoThumbnailViews;
-	
 	NSMutableArray *_photoViews;
 	
 	NSObject <FGalleryViewControllerDelegate> *_photoSource;
-	
+    
 	UIBarButtonItem *_nextButton;
-	
 	UIBarButtonItem *_prevButton;
 }
 
 - (id)initWithPhotoSource:(NSObject<FGalleryViewControllerDelegate>*)photoSrc;
 - (id)initWithPhotoSource:(NSObject<FGalleryViewControllerDelegate>*)photoSrc barItems:(NSArray*)items;
 
-
-- (void)removeImageAtIndex:(NSUInteger)index;
-
 - (void)next;
 - (void)previous;
 - (void)gotoImageByIndex:(NSUInteger)index animated:(BOOL)animated;
+- (void)removeImageAtIndex:(NSUInteger)index;
 - (void)reloadGallery;
 
+@property NSInteger currentIndex;
+@property NSInteger startingIndex;
 @property (nonatomic,assign) NSObject<FGalleryViewControllerDelegate> *photoSource;
 @property (nonatomic,readonly) UIToolbar *toolBar;
 @property (nonatomic,readonly) UIView* thumbsView;
-@property NSInteger currentIndex;
-@property NSInteger startingIndex;
 @property (nonatomic,retain) NSString *galleryID;
 @property (nonatomic) BOOL useThumbnailView;
 @property (nonatomic) BOOL beginsInThumbnailView;
 
 @end
-
 
 
 @protocol FGalleryViewControllerDelegate

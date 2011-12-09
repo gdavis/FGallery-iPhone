@@ -143,12 +143,12 @@
 		77EFAE5D14927B40005BE43F /* FGallery */ = {
 			isa = PBXGroup;
 			children = (
-				77AC3F3D12D66ACF004C32B8 /* FGalleryPhoto.h */,
-				77AC3F3E12D66ACF004C32B8 /* FGalleryPhoto.m */,
-				77AC3F3F12D66ACF004C32B8 /* FGalleryPhotoView.h */,
-				77AC3F4012D66ACF004C32B8 /* FGalleryPhotoView.m */,
 				77AC3F4112D66ACF004C32B8 /* FGalleryViewController.h */,
 				77AC3F4212D66ACF004C32B8 /* FGalleryViewController.m */,
+				77AC3F3F12D66ACF004C32B8 /* FGalleryPhotoView.h */,
+				77AC3F4012D66ACF004C32B8 /* FGalleryPhotoView.m */,
+				77AC3F3D12D66ACF004C32B8 /* FGalleryPhoto.h */,
+				77AC3F3E12D66ACF004C32B8 /* FGalleryPhoto.m */,
 			);
 			name = FGallery;
 			sourceTree = "<group>";

@@ -72,7 +72,7 @@
 @synthesize thumbsView = _thumbsView;
 @synthesize toolBar = _toolbar;
 @synthesize useThumbnailView = _useThumbnailView;
-
+@synthesize startingIndex = _startingIndex;
 
 #pragma mark - Public Methods
 
@@ -93,6 +93,7 @@
 		
 		// create storage objects
 		_currentIndex						= 0;
+        _startingIndex                      = 0;
 		_photoLoaders						= [[NSMutableDictionary alloc] init];
 		_photoViews							= [[NSMutableArray alloc] init];
 		_photoThumbnailViews				= [[NSMutableArray alloc] init];
@@ -253,7 +254,7 @@
 
 - (void)reloadGallery
 {
-    _currentIndex = 0;
+    _currentIndex = _startingIndex;
     _isThumbViewShowing = NO;
     
     // remove the old

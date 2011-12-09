@@ -76,16 +76,9 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				77AC3F3D12D66ACF004C32B8 /* FGalleryPhoto.h */,
-				77AC3F3E12D66ACF004C32B8 /* FGalleryPhoto.m */,
-				77AC3F3F12D66ACF004C32B8 /* FGalleryPhotoView.h */,
-				77AC3F4012D66ACF004C32B8 /* FGalleryPhotoView.m */,
-				77AC3F4112D66ACF004C32B8 /* FGalleryViewController.h */,
-				77AC3F4212D66ACF004C32B8 /* FGalleryViewController.m */,
+				77EFAE5D14927B40005BE43F /* FGallery */,
 				28C286DF0D94DF7D0034E888 /* RootViewController.h */,
 				28C286E00D94DF7D0034E888 /* RootViewController.m */,
-				1D3623240D0F684500981E51 /* FGalleryAppDelegate.h */,
-				1D3623250D0F684500981E51 /* FGalleryAppDelegate.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -143,6 +136,21 @@
 				77AC3F5412D670D8004C32B8 /* QuartzCore.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		77EFAE5D14927B40005BE43F /* FGallery */ = {
+			isa = PBXGroup;
+			children = (
+				1D3623240D0F684500981E51 /* FGalleryAppDelegate.h */,
+				1D3623250D0F684500981E51 /* FGalleryAppDelegate.m */,
+				77AC3F3D12D66ACF004C32B8 /* FGalleryPhoto.h */,
+				77AC3F3E12D66ACF004C32B8 /* FGalleryPhoto.m */,
+				77AC3F3F12D66ACF004C32B8 /* FGalleryPhotoView.h */,
+				77AC3F4012D66ACF004C32B8 /* FGalleryPhotoView.m */,
+				77AC3F4112D66ACF004C32B8 /* FGalleryViewController.h */,
+				77AC3F4212D66ACF004C32B8 /* FGalleryViewController.m */,
+			);
+			name = FGallery;
 			sourceTree = "<group>";
 		};
 		77FCB8BF12D7938900AAAFF3 /* Gallery Images */ = {

@@ -40,15 +40,15 @@
 - (void)resizeThumbView;
 
 // thumbnails
-- (void)toggleThumbView;
+- (void)toggleThumbnailViewWithAnimation:(BOOL)animation;
+- (void)showThumbnailViewWithAnimation:(BOOL)animation;
+- (void)hideThumbnailViewWithAnimation:(BOOL)animation;
 - (void)buildThumbsViewPhotos;
 
 - (void)arrangeThumbs;
 - (void)loadAllThumbViewPhotos;
 
 - (void)preloadThumbnailImages;
-- (void)curlThumbView;
-- (void)uncurlThumbView;
 - (void)unloadFullsizeImageWithIndex:(NSUInteger)index;
 
 - (void)scrollingHasEnded;
@@ -73,6 +73,7 @@
 @synthesize toolBar = _toolbar;
 @synthesize useThumbnailView = _useThumbnailView;
 @synthesize startingIndex = _startingIndex;
+@synthesize beginsInThumbnailView = _beginsInThumbnailView;
 
 #pragma mark - Public Methods
 
@@ -213,6 +214,7 @@
     [self reloadGallery];
 }
 
+
 - (void)viewDidUnload {
     
     [self destroyViews];
@@ -227,6 +229,7 @@
     
     [super viewDidUnload];
 }
+
 
 - (void)destroyViews {
     // remove previous photo views
@@ -251,6 +254,7 @@
     }
     [_photoLoaders removeAllObjects];
 }
+
 
 - (void)reloadGallery
 {
@@ -288,6 +292,12 @@
     
     self.useThumbnailView = _useThumbnailView;
 	
+    // toggle into the thumb view if we should start there
+    if (_beginsInThumbnailView && _useThumbnailView) {
+        [self showThumbnailViewWithAnimation:NO];
+        [self loadAllThumbViewPhotos];
+    }
+    
 	[self layoutViews];
 	
 	// update status bar to be see-through
@@ -297,6 +307,7 @@
 	if( _currentIndex == -1 ) [self next];
 	else [self gotoImageByIndex:_currentIndex animated:NO];
 }
+
 
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -319,6 +330,7 @@
 		dx += rect.size.width;
 	}
 }
+
 
 - (void)resetImageViewZoomLevels
 {
@@ -411,33 +423,19 @@
 }
 
 
-
-
-
-// adjusts size and positioning of everything
 - (void)layoutViews
 {
 	[self positionInnerContainer];
-	
 	[self positionScroller];
-	
 	[self resizeThumbView];
-	
 	[self positionToolbar];
-	
 	[self updateScrollSize];
-	
 	[self updateCaption];
-	
 	[self resizeImageViewsWithRect:_scroller.frame];
-	
 	[self layoutButtons];
-	
 	[self arrangeThumbs];
-	
 	[self moveScrollerToCurrentIndexWithAnimation:NO];
 }
-
 
 
 - (void)setUseThumbnailView:(BOOL)useThumbnailView
@@ -483,6 +481,7 @@
 	_innerContainer.frame = innerContainerRect;
 }
 
+
 - (void)positionScroller
 {
 	CGRect screenFrame = [[UIScreen mainScreen] bounds];
@@ -499,6 +498,7 @@
 	
 	_scroller.frame = scrollerRect;
 }
+
 
 - (void)positionToolbar
 {
@@ -570,6 +570,8 @@
 {
 	[[UIApplication sharedApplication] endIgnoringInteractionEvents];
 }
+
+
 - (void)disableApp
 {
 	[[UIApplication sharedApplication] beginIgnoringInteractionEvents];
@@ -642,12 +644,12 @@
 }
 
 
-
 - (void)updateButtons
 {
 	_prevButton.enabled = ( _currentIndex <= 0 ) ? NO : YES;
 	_nextButton.enabled = ( _currentIndex >= [_photoSource numberOfPhotosForPhotoGallery:self]-1 ) ? NO : YES;
 }
+
 
 - (void)layoutButtons
 {
@@ -662,25 +664,13 @@
 	[_toolbar setNeedsLayout];
 }
 
+
 - (void)moveScrollerToCurrentIndexWithAnimation:(BOOL)animation
 {
 	int xp = _scroller.frame.size.width * _currentIndex;
 	[_scroller scrollRectToVisible:CGRectMake(xp, 0, _scroller.frame.size.width, _scroller.frame.size.height) animated:animation];
 	_isScrolling = animation;
 }
-
-
-
-- (void)handleSeeAllTouch:(id)sender
-{
-	// show thumb view
-	[self toggleThumbView];
-	
-	// tell thumbs that havent loaded to load
-	[self loadAllThumbViewPhotos];
-}
-
-
 
 
 // creates all the image views for this gallery
@@ -697,7 +687,6 @@
 		[photoView release];
 	}
 }
-
 
 
 - (void)buildThumbsViewPhotos
@@ -746,58 +735,73 @@
 }
 
 
-
-- (void)toggleThumbView
+- (void)toggleThumbnailViewWithAnimation:(BOOL)animation
 {
-	if( !_isThumbViewShowing ) 
-	{
-		_isThumbViewShowing = YES;
-		[self arrangeThumbs];
-		[self uncurlThumbView];
-		[self.navigationItem.rightBarButtonItem setTitle:@"Done"];
-	}
-	else 
-	{
-		_isThumbViewShowing = NO;
-		[self curlThumbView];
-		[self.navigationItem.rightBarButtonItem setTitle:@"See All"];
-	}
+    if (_isThumbViewShowing) {
+        [self hideThumbnailViewWithAnimation:animation];
+    }
+    else {
+        [self showThumbnailViewWithAnimation:animation];
+    }
 }
 
 
-
-- (void)curlThumbView
+- (void)showThumbnailViewWithAnimation:(BOOL)animation
 {
-	// do curl animation
-	[UIView beginAnimations:@"curl" context:nil];
-	[UIView setAnimationDuration:.666];
-	[UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:_thumbsView cache:YES];
-	[_thumbsView setHidden:YES];
-	[UIView commitAnimations];
+    _isThumbViewShowing = YES;
+    
+    [self arrangeThumbs];
+    [self.navigationItem.rightBarButtonItem setTitle:@"Done"];
+    
+    if (animation) {
+        // do curl animation
+        [UIView beginAnimations:@"uncurl" context:nil];
+        [UIView setAnimationDuration:.666];
+        [UIView setAnimationTransition:UIViewAnimationTransitionCurlDown forView:_thumbsView cache:YES];
+        [_thumbsView setHidden:NO];
+        [UIView commitAnimations];
+    }
+    else {
+        [_thumbsView setHidden:NO];
+    }
 }
 
 
-
-- (void)uncurlThumbView
+- (void)hideThumbnailViewWithAnimation:(BOOL)animation
 {
-	// do curl animation
-	[UIView beginAnimations:@"uncurl" context:nil];
-	[UIView setAnimationDuration:.666];
-	[UIView setAnimationTransition:UIViewAnimationTransitionCurlDown forView:_thumbsView cache:YES];
-	[_thumbsView setHidden:NO];
-	[UIView commitAnimations];
+    _isThumbViewShowing = NO;
+    [self.navigationItem.rightBarButtonItem setTitle:@"See All"];
+    
+    if (animation) {
+        // do curl animation
+        [UIView beginAnimations:@"curl" context:nil];
+        [UIView setAnimationDuration:.666];
+        [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:_thumbsView cache:YES];
+        [_thumbsView setHidden:YES];
+        [UIView commitAnimations];
+    }
+    else {
+        [_thumbsView setHidden:NO];
+    }
 }
 
+
+- (void)handleSeeAllTouch:(id)sender
+{
+	// show thumb view
+	[self toggleThumbnailViewWithAnimation:YES];
+	
+	// tell thumbs that havent loaded to load
+	[self loadAllThumbViewPhotos];
+}
 
 
 - (void)handleThumbClick:(id)sender
 {
 	FGalleryPhotoView *photoView = (FGalleryPhotoView*)[(UIButton*)sender superview];
-	[self toggleThumbView];
+	[self hideThumbnailViewWithAnimation:YES];
 	[self gotoImageByIndex:photoView.tag animated:NO];
 }
-
-
 
 
 #pragma mark - Image Loading
@@ -885,7 +889,6 @@
 }
 
 
-
 - (void)loadFullsizeImageWithIndex:(NSUInteger)index
 {
 	FGalleryPhoto *photo = [_photoLoaders objectForKey:[NSString stringWithFormat:@"%i", index]];
@@ -895,7 +898,6 @@
 	
 	[photo loadFullsize];
 }
-
 
 
 - (void)unloadFullsizeImageWithIndex:(NSUInteger)index
@@ -908,7 +910,6 @@
 		photoView.imageView.image = loader.thumbnail;
 	}
 }
-
 
 
 - (FGalleryPhoto*)createGalleryPhotoForIndex:(NSUInteger)index
@@ -1031,12 +1032,7 @@
 }
 
 
-
-
-
-
 #pragma mark - UIScrollView Methods
-
 
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -1044,6 +1040,7 @@
 	_isScrolling = YES;
 }
  
+
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
 	if( !decelerate )
@@ -1052,11 +1049,11 @@
 	}
 }
 
+
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
 	[self scrollingHasEnded];
 }
-
 
 
 #pragma mark - Memory Management Methods
@@ -1088,8 +1085,6 @@
 			photoView.imageView.image = nil;
 		}
 	}
-	
-	
 }
 
 
@@ -1183,6 +1178,7 @@
 	return ( interfaceOrientation == UIInterfaceOrientationPortrait ) ? YES : NO;
 }
 
+
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
 	// see if the current controller in the stack is a gallery
@@ -1199,6 +1195,7 @@
 
 
 @implementation UITabBarController (FGallery)
+
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -1218,6 +1215,7 @@
 	// so, we'll just support the basic portrait.
 	return ( interfaceOrientation == UIInterfaceOrientationPortrait ) ? YES : NO;
 }
+
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {

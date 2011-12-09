@@ -93,6 +93,7 @@ typedef enum
 @property NSInteger startingIndex;
 @property (nonatomic,retain) NSString *galleryID;
 @property (nonatomic) BOOL useThumbnailView;
+@property (nonatomic) BOOL beginsInThumbnailView;
 
 @end
 

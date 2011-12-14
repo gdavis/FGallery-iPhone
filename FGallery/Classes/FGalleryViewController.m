@@ -467,11 +467,11 @@
 	CGRect innerContainerRect;
 	
 	if( self.interfaceOrientation == UIInterfaceOrientationPortrait || self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown )
-	{
+	{//portrait
 		innerContainerRect = CGRectMake( 0, _container.frame.size.height - screenFrame.size.height, _container.frame.size.width, screenFrame.size.height );
 	}
-	else if( self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight )
-	{
+	else 
+	{// landscape
 		innerContainerRect = CGRectMake( 0, _container.frame.size.height - screenFrame.size.width, _container.frame.size.width, screenFrame.size.width );
 	}
 	
@@ -485,11 +485,11 @@
 	CGRect scrollerRect;
 	
 	if( self.interfaceOrientation == UIInterfaceOrientationPortrait || self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown )
-	{
+	{//portrait
 		scrollerRect = CGRectMake( 0, 0, screenFrame.size.width, screenFrame.size.height );
 	}
-	else if( self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight )
-	{
+	else
+	{//landscape
 		scrollerRect = CGRectMake( 0, 0, screenFrame.size.height, screenFrame.size.width );
 	}
 	
@@ -827,7 +827,8 @@
 		[self loadThumbnailImageWithIndex:index];
 		photo = [_photoLoaders objectForKey:[NSString stringWithFormat:@"%i", index]];
 	}
-	else if( !photo.hasThumbLoaded && !photo.isThumbLoading )
+	
+	if( !photo.hasThumbLoaded && !photo.isThumbLoading )
 	{
 		[photo loadThumbnail];
 	}
@@ -841,7 +842,8 @@
 			[self loadThumbnailImageWithIndex:curIndex];
 			photo = [_photoLoaders objectForKey:[NSString stringWithFormat:@"%i", curIndex]];
 		}
-		else if( !photo.hasThumbLoaded && !photo.isThumbLoading )
+		
+		if( !photo.hasThumbLoaded && !photo.isThumbLoading )
 		{
 			[photo loadThumbnail];
 		}
@@ -858,7 +860,8 @@
 			[self loadThumbnailImageWithIndex:curIndex];
 			photo = [_photoLoaders objectForKey:[NSString stringWithFormat:@"%i", curIndex]];
 		}
-		else if( !photo.hasThumbLoaded && !photo.isThumbLoading )
+		
+		if( !photo.hasThumbLoaded && !photo.isThumbLoading )
 		{
 			[photo loadThumbnail];
 		}

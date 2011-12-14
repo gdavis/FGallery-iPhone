@@ -372,13 +372,10 @@
 	NSUInteger nextIndex = _currentIndex+1;
 	
 	// don't continue if we're out of images.
-	if( nextIndex >= numberOfPhotos )
+	if( nextIndex <= numberOfPhotos )
 	{
-		nextIndex = numberOfPhotos-1;
-		return;
+		[self gotoImageByIndex:nextIndex animated:NO];
 	}
-	
-	[self gotoImageByIndex:nextIndex animated:NO];
 }
 
 
@@ -831,8 +828,9 @@
 		photo = [_photoLoaders objectForKey:[NSString stringWithFormat:@"%i", index]];
 	}
 	else if( !photo.hasThumbLoaded && !photo.isThumbLoading )
+	{
 		[photo loadThumbnail];
-	
+	}
 	
 	NSUInteger curIndex = prevIndex;
 	while( curIndex > -1 && curIndex > prevIndex - preloadCount )
@@ -843,9 +841,10 @@
 			[self loadThumbnailImageWithIndex:curIndex];
 			photo = [_photoLoaders objectForKey:[NSString stringWithFormat:@"%i", curIndex]];
 		}
-		
 		else if( !photo.hasThumbLoaded && !photo.isThumbLoading )
+		{
 			[photo loadThumbnail];
+		}
 		
 		curIndex--;
 	}
@@ -859,9 +858,10 @@
 			[self loadThumbnailImageWithIndex:curIndex];
 			photo = [_photoLoaders objectForKey:[NSString stringWithFormat:@"%i", curIndex]];
 		}
-		
 		else if( !photo.hasThumbLoaded && !photo.isThumbLoading )
+		{
 			[photo loadThumbnail];
+		}
 		
 		curIndex++;
 	}

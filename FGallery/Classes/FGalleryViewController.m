@@ -372,13 +372,10 @@
 	NSUInteger nextIndex = _currentIndex+1;
 	
 	// don't continue if we're out of images.
-	if( nextIndex >= numberOfPhotos )
+	if( nextIndex <= numberOfPhotos )
 	{
-		nextIndex = numberOfPhotos-1;
-		return;
+		[self gotoImageByIndex:nextIndex animated:NO];
 	}
-	
-	[self gotoImageByIndex:nextIndex animated:NO];
 }
 
 
@@ -470,11 +467,11 @@
 	CGRect innerContainerRect;
 	
 	if( self.interfaceOrientation == UIInterfaceOrientationPortrait || self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown )
-	{
+	{//portrait
 		innerContainerRect = CGRectMake( 0, _container.frame.size.height - screenFrame.size.height, _container.frame.size.width, screenFrame.size.height );
 	}
-	else if( self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight )
-	{
+	else 
+	{// landscape
 		innerContainerRect = CGRectMake( 0, _container.frame.size.height - screenFrame.size.width, _container.frame.size.width, screenFrame.size.width );
 	}
 	
@@ -488,11 +485,11 @@
 	CGRect scrollerRect;
 	
 	if( self.interfaceOrientation == UIInterfaceOrientationPortrait || self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown )
-	{
+	{//portrait
 		scrollerRect = CGRectMake( 0, 0, screenFrame.size.width, screenFrame.size.height );
 	}
-	else if( self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft || self.interfaceOrientation == UIInterfaceOrientationLandscapeRight )
-	{
+	else
+	{//landscape
 		scrollerRect = CGRectMake( 0, 0, screenFrame.size.height, screenFrame.size.width );
 	}
 	
@@ -830,9 +827,11 @@
 		[self loadThumbnailImageWithIndex:index];
 		photo = [_photoLoaders objectForKey:[NSString stringWithFormat:@"%i", index]];
 	}
-	else if( !photo.hasThumbLoaded && !photo.isThumbLoading )
-		[photo loadThumbnail];
 	
+	if( !photo.hasThumbLoaded && !photo.isThumbLoading )
+	{
+		[photo loadThumbnail];
+	}
 	
 	NSUInteger curIndex = prevIndex;
 	while( curIndex > -1 && curIndex > prevIndex - preloadCount )
@@ -844,8 +843,10 @@
 			photo = [_photoLoaders objectForKey:[NSString stringWithFormat:@"%i", curIndex]];
 		}
 		
-		else if( !photo.hasThumbLoaded && !photo.isThumbLoading )
+		if( !photo.hasThumbLoaded && !photo.isThumbLoading )
+		{
 			[photo loadThumbnail];
+		}
 		
 		curIndex--;
 	}
@@ -860,8 +861,10 @@
 			photo = [_photoLoaders objectForKey:[NSString stringWithFormat:@"%i", curIndex]];
 		}
 		
-		else if( !photo.hasThumbLoaded && !photo.isThumbLoading )
+		if( !photo.hasThumbLoaded && !photo.isThumbLoading )
+		{
 			[photo loadThumbnail];
+		}
 		
 		curIndex++;
 	}

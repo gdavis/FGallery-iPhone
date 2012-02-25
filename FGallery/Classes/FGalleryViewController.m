@@ -527,7 +527,9 @@
 	if ([application respondsToSelector: @selector(setStatusBarHidden:withAnimation:)]) {
 		[[UIApplication sharedApplication] setStatusBarHidden: YES withAnimation: UIStatusBarAnimationFade]; // 3.2+
 	} else {
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 		[[UIApplication sharedApplication] setStatusBarHidden: YES animated:YES]; // 2.0 - 3.2
+#pragma GCC diagnostic warning "-Wdeprecated-declarations"
 	}
 	
 	[self.navigationController setNavigationBarHidden:YES animated:YES];
@@ -552,7 +554,9 @@
 	if ([application respondsToSelector: @selector(setStatusBarHidden:withAnimation:)]) {
 		[[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade]; // 3.2+
 	} else {
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 		[[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO]; // 2.0 - 3.2
+#pragma GCC diagnostic warning "-Wdeprecated-declarations"
 	}
     
 	[self.navigationController setNavigationBarHidden:NO animated:YES];

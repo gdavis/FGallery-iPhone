@@ -196,7 +196,6 @@
 	[_captionContainer addSubview:_caption];
 	
 	// create buttons for toolbar
-    NSLog(@"_nextButton: %@", _nextButton);
 	UIImage *leftIcon = [UIImage imageNamed:@"photo-gallery-left.png"];
 	UIImage *rightIcon = [UIImage imageNamed:@"photo-gallery-right.png"];
 	_nextButton = [[UIBarButtonItem alloc] initWithImage:rightIcon style:UIBarButtonItemStylePlain target:self action:@selector(next)];
@@ -285,6 +284,11 @@
         // layout
         [self layoutViews];
     }
+}
+
+- (FGalleryPhoto*)currentPhoto
+{
+    return [_photoLoaders objectForKey:[NSString stringWithFormat:@"%i", _currentIndex]];
 }
 
 

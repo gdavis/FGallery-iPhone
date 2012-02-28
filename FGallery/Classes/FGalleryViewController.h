@@ -66,6 +66,7 @@ typedef enum
 - (void)gotoImageByIndex:(NSUInteger)index animated:(BOOL)animated;
 - (void)removeImageAtIndex:(NSUInteger)index;
 - (void)reloadGallery;
+- (FGalleryPhoto*)currentPhoto;
 
 @property NSInteger currentIndex;
 @property NSInteger startingIndex;

@@ -286,6 +286,11 @@
     }
 }
 
+- (FGalleryPhoto*)currentPhoto
+{
+    return [_photoLoaders objectForKey:[NSString stringWithFormat:@"%i", _currentIndex]];
+}
+
 
 - (void)viewWillAppear:(BOOL)animated
 {

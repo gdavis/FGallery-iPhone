@@ -445,10 +445,15 @@
 
 - (void)setUseThumbnailView:(BOOL)useThumbnailView
 {
+    
+    UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: NSLocalizedString(@"Back", @"") style: UIBarButtonItemStyleBordered target: nil action: nil];
+    [[self navigationItem] setBackBarButtonItem: newBackButton];
+    
+    
     _useThumbnailView = useThumbnailView;
     if( self.navigationController ) {
         if (_useThumbnailView) {
-            UIBarButtonItem *btn = [[[UIBarButtonItem alloc] initWithTitle:@"See All" style:UIBarButtonItemStylePlain target:self action:@selector(handleSeeAllTouch:)] autorelease];
+            UIBarButtonItem *btn = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"See all", @"") style:UIBarButtonItemStylePlain target:self action:@selector(handleSeeAllTouch:)] autorelease];
             [self.navigationItem setRightBarButtonItem:btn animated:YES];
         }
         else {
@@ -649,7 +654,7 @@
 
 - (void)updateTitle
 {
-	[self setTitle:[NSString stringWithFormat:@"%i of %i", _currentIndex+1, [_photoSource numberOfPhotosForPhotoGallery:self]]];
+	[self setTitle:[NSString stringWithFormat:@"%i %@ %i", _currentIndex+1, NSLocalizedString(@"of", @"") , [_photoSource numberOfPhotosForPhotoGallery:self]]];
 }
 
 
@@ -760,7 +765,7 @@
     _isThumbViewShowing = YES;
     
     [self arrangeThumbs];
-    [self.navigationItem.rightBarButtonItem setTitle:@"Done"];
+    [self.navigationItem.rightBarButtonItem setTitle:NSLocalizedString(@"Close", @"")];
     
     if (animation) {
         // do curl animation
@@ -779,7 +784,7 @@
 - (void)hideThumbnailViewWithAnimation:(BOOL)animation
 {
     _isThumbViewShowing = NO;
-    [self.navigationItem.rightBarButtonItem setTitle:@"See All"];
+    [self.navigationItem.rightBarButtonItem setTitle:NSLocalizedString(@"See all", @"")];
     
     if (animation) {
         // do curl animation

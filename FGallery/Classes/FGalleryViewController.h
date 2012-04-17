@@ -76,6 +76,7 @@ typedef enum
 @property (nonatomic,retain) NSString *galleryID;
 @property (nonatomic) BOOL useThumbnailView;
 @property (nonatomic) BOOL beginsInThumbnailView;
+@property (nonatomic) BOOL hideTitle;
 
 @end
 

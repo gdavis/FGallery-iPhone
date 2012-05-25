@@ -1197,6 +1197,21 @@
 	{
         return YES;
 	}
+
+	// To preserve the UINavigationController's defined behavior,
+	// walk its stack.  If all of the view controllers in the stack
+	// agree they can rotate to the given orientation, then allow it.
+	BOOL supported = YES;
+	for(UIViewController *sub in self.viewControllers)
+	{
+		if(![sub shouldAutorotateToInterfaceOrientation:interfaceOrientation])
+		{
+			supported = NO;
+			break;
+		}
+	}	
+	if(supported)
+		return YES;
 	
 	// we need to support at least one type of auto-rotation we'll get warnings.
 	// so, we'll just support the basic portrait.

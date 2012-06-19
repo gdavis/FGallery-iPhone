@@ -19,7 +19,7 @@
 	UIButton *_button;
 	BOOL _isZoomed;
 	NSTimer *_tapTimer;
-	NSObject <FGalleryPhotoViewDelegate> *photoDelegate;
+	NSObject <FGalleryPhotoViewDelegate> *__unsafe_unretained photoDelegate;
 }
 
 - (void)killActivityIndicator;
@@ -29,7 +29,7 @@
 
 - (void)resetZoom;
 
-@property (nonatomic,assign) NSObject <FGalleryPhotoViewDelegate> *photoDelegate;
+@property (nonatomic,unsafe_unretained) NSObject <FGalleryPhotoViewDelegate> *photoDelegate;
 @property (nonatomic,readonly) UIImageView *imageView;
 @property (nonatomic,readonly) UIButton *button;
 @property (nonatomic,readonly) UIActivityIndicatorView *activity;

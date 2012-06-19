@@ -26,37 +26,9 @@ typedef enum
 
 @protocol FGalleryViewControllerDelegate;
 
-@interface FGalleryViewController : UIViewController <UIScrollViewDelegate,FGalleryPhotoDelegate,FGalleryPhotoViewDelegate> {
-	
-	BOOL _isActive;
-	BOOL _isFullscreen;
-	BOOL _isScrolling;
-	BOOL _isThumbViewShowing;
-	
-	UIStatusBarStyle _prevStatusStyle;
-	CGFloat _prevNextButtonSize;
-	CGRect _scrollerRect;
-	NSString *galleryID;
-	NSInteger _currentIndex;
-	
-	UIView *_container; // used as view for the controller
-	UIView *_innerContainer; // sized and placed to be fullscreen within the container
-	UIToolbar *_toolbar;
-	UIScrollView *_thumbsView;
-	UIScrollView *_scroller;
-	UIView *_captionContainer;
-	UILabel *_caption;
-	
-	NSMutableDictionary *_photoLoaders;
-	NSMutableArray *_barItems;
-	NSMutableArray *_photoThumbnailViews;
-	NSMutableArray *_photoViews;
-	
-	NSObject <FGalleryViewControllerDelegate> *_photoSource;
-    
-	UIBarButtonItem *_nextButton;
-	UIBarButtonItem *_prevButton;
-}
+@interface FGalleryViewController : UIViewController <UIScrollViewDelegate,
+                                                        FGalleryPhotoDelegate,
+                                                        FGalleryPhotoViewDelegate>
 
 - (id)initWithPhotoSource:(NSObject<FGalleryViewControllerDelegate>*)photoSrc;
 - (id)initWithPhotoSource:(NSObject<FGalleryViewControllerDelegate>*)photoSrc barItems:(NSArray*)items;
@@ -70,10 +42,10 @@ typedef enum
 
 @property NSInteger currentIndex;
 @property NSInteger startingIndex;
-@property (nonatomic,assign) NSObject<FGalleryViewControllerDelegate> *photoSource;
+@property (nonatomic,unsafe_unretained) NSObject<FGalleryViewControllerDelegate> *photoSource;
 @property (nonatomic,readonly) UIToolbar *toolBar;
 @property (nonatomic,readonly) UIView* thumbsView;
-@property (nonatomic,retain) NSString *galleryID;
+@property (nonatomic) NSString *galleryID;
 @property (nonatomic) BOOL useThumbnailView;
 @property (nonatomic) BOOL beginsInThumbnailView;
 @property (nonatomic) BOOL hideTitle;

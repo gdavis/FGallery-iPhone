@@ -34,7 +34,7 @@
 	UIImage *_thumbnail;
 	UIImage *_fullsize;
 	
-	NSObject <FGalleryPhotoDelegate> *_delegate;
+	NSObject <FGalleryPhotoDelegate> *__unsafe_unretained _delegate;
 	
 	NSUInteger tag;
 }
@@ -60,7 +60,7 @@
 @property (nonatomic,readonly) UIImage *thumbnail;
 @property (nonatomic,readonly) UIImage *fullsize;
 
-@property (nonatomic,assign) NSObject<FGalleryPhotoDelegate> *delegate;
+@property (nonatomic,unsafe_unretained) NSObject<FGalleryPhotoDelegate> *delegate;
 
 @end
 

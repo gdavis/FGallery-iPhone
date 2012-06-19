@@ -43,8 +43,8 @@
 {
 	self = [super init];
 	_useNetwork = YES;
-	_thumbUrl = [thumb retain];
-	_fullsizeUrl = [fullsize retain];
+	_thumbUrl = thumb;
+	_fullsizeUrl = fullsize;
 	_delegate = delegate;
 	return self;
 }
@@ -54,8 +54,8 @@
 	self = [super init];
 	
 	_useNetwork = NO;
-	_thumbUrl = [thumb retain];
-	_fullsizeUrl = [fullsize retain];
+	_thumbUrl = thumb;
+	_fullsizeUrl = fullsize;
 	_delegate = delegate;
 	return self;
 }
@@ -74,7 +74,7 @@
 		_isThumbLoading = YES;
 		
 		NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:_thumbUrl]];
-		_thumbConnection = [[NSURLConnection connectionWithRequest:request delegate:self] retain];
+		_thumbConnection = [NSURLConnection connectionWithRequest:request delegate:self];
 		_thumbData = [[NSMutableData alloc] init];
 	}
 	
@@ -104,7 +104,7 @@
 		_isFullsizeLoading = YES;
 		
 		NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:_fullsizeUrl]];
-		_fullsizeConnection = [[NSURLConnection connectionWithRequest:request delegate:self] retain];
+		_fullsizeConnection = [NSURLConnection connectionWithRequest:request delegate:self];
 		_fullsizeData = [[NSMutableData alloc] init];
 	}
 	else
@@ -121,33 +121,33 @@
 
 - (void)loadFullsizeInThread
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
 	
-	NSString *path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] bundlePath], _fullsizeUrl];
-	_fullsize = [[UIImage imageWithContentsOfFile:path] retain];
-	
-	_hasFullsizeLoaded = YES;
-	_isFullsizeLoading = NO;
+		NSString *path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] bundlePath], _fullsizeUrl];
+		_fullsize = [UIImage imageWithContentsOfFile:path];
+		
+		_hasFullsizeLoaded = YES;
+		_isFullsizeLoading = NO;
 
-	[self performSelectorOnMainThread:@selector(didLoadFullsize) withObject:nil waitUntilDone:YES];
+		[self performSelectorOnMainThread:@selector(didLoadFullsize) withObject:nil waitUntilDone:YES];
 	
-	[pool release];
+	}
 }
 
 
 - (void)loadThumbnailInThread
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
 	
-	NSString *path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] bundlePath], _thumbUrl];
-	_thumbnail = [[UIImage imageWithContentsOfFile:path] retain];
+		NSString *path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] bundlePath], _thumbUrl];
+		_thumbnail = [UIImage imageWithContentsOfFile:path];
+		
+		_hasThumbLoaded = YES;
+		_isThumbLoading = NO;
+		
+		[self performSelectorOnMainThread:@selector(didLoadThumbnail) withObject:nil waitUntilDone:YES];
 	
-	_hasThumbLoaded = YES;
-	_isThumbLoading = NO;
-	
-	[self performSelectorOnMainThread:@selector(didLoadThumbnail) withObject:nil waitUntilDone:YES];
-	
-	[pool release];
+	}
 }
 
 
@@ -159,7 +159,6 @@
 	_isFullsizeLoading = NO;
 	_hasFullsizeLoaded = NO;
 	
-	[_fullsize release];
 	_fullsize = nil;
 }
 
@@ -171,7 +170,6 @@
 	_isThumbLoading = NO;
 	_hasThumbLoaded = NO;
 	
-	[_thumbnail release];
 	_thumbnail = nil;
 }
 
@@ -299,8 +297,6 @@
 - (void)killThumbnailLoadObjects
 {
 	
-	[_thumbConnection release];
-	[_thumbData release];
 	_thumbConnection = nil;
 	_thumbData = nil;
 }
@@ -310,8 +306,6 @@
 - (void)killFullsizeLoadObjects
 {
 	
-	[_fullsizeConnection release];
-	[_fullsizeData release];
 	_fullsizeConnection = nil;
 	_fullsizeData = nil;
 }
@@ -330,19 +324,12 @@
 	[self killFullsizeLoadObjects];
 	[self killThumbnailLoadObjects];
 	
-	[_thumbUrl release];
 	_thumbUrl = nil;
 	
-	[_fullsizeUrl release];
 	_fullsizeUrl = nil;
 	
-	[_thumbnail release];
-	_thumbnail = nil;
 	
-	[_fullsize release];
-	_fullsize = nil;
 	
-	[super dealloc];
 }
 
 

@@ -117,6 +117,32 @@
 }
 
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+	self = [super initWithCoder:aDecoder];
+	
+	if (self != nil) {
+		self.galleryID						= [NSString stringWithFormat:@"%p", self];
+		
+        // configure view controller
+		self.hidesBottomBarWhenPushed		= YES;
+        
+        // set defaults
+        _useThumbnailView                   = YES;
+		_prevStatusStyle					= [[UIApplication sharedApplication] statusBarStyle];
+        _hideTitle                          = NO;
+		
+		// create storage objects
+		_currentIndex						= 0;
+        _startingIndex                      = 0;
+		_photoLoaders						= [[NSMutableDictionary alloc] init];
+		_photoViews							= [[NSMutableArray alloc] init];
+		_photoThumbnailViews				= [[NSMutableArray alloc] init];
+		_barItems							= [[NSMutableArray alloc] init];
+	}
+	
+	return self;
+}
+
 - (id)initWithPhotoSource:(NSObject<FGalleryViewControllerDelegate>*)photoSrc
 {
 	if((self = [self initWithNibName:nil bundle:nil])) {

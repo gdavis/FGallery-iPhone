@@ -449,7 +449,7 @@
     
     UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: NSLocalizedString(@"Back", @"") style: UIBarButtonItemStyleBordered target: nil action: nil];
     [[self navigationItem] setBackBarButtonItem: newBackButton];
-    
+    [newBackButton release];
     
     _useThumbnailView = useThumbnailView;
     if( self.navigationController ) {

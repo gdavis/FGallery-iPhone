@@ -75,6 +75,7 @@
 @synthesize startingIndex = _startingIndex;
 @synthesize beginsInThumbnailView = _beginsInThumbnailView;
 @synthesize hideTitle = _hideTitle;
+@synthesize barItems = _barItems;
 
 #pragma mark - Public Methods
 

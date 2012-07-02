@@ -74,6 +74,7 @@ typedef enum
 @property (nonatomic,readonly) UIToolbar *toolBar;
 @property (nonatomic,readonly) UIView* thumbsView;
 @property (nonatomic,retain) NSString *galleryID;
+@property (nonatomic,retain) NSMutableArray *barItems;
 @property (nonatomic) BOOL useThumbnailView;
 @property (nonatomic) BOOL beginsInThumbnailView;
 @property (nonatomic) BOOL hideTitle;

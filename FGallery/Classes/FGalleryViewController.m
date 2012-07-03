@@ -488,6 +488,8 @@
             [self.navigationItem setRightBarButtonItem:nil animated:NO];
         }
     }
+	
+	[newBackButton release], newBackButton = nil;
 }
 
 

@@ -1093,27 +1093,39 @@
 	// unload fullsize and thumbnail images for all our images except at the current index.
 	NSArray *keys = [_photoLoaders allKeys];
 	NSUInteger i, count = [keys count];
-	for (i = 0; i < count; i++) 
-	{
-		if( i != _currentIndex )
-		{
-			FGalleryPhoto *photo = [_photoLoaders objectForKey:[keys objectAtIndex:i]];
-			[photo unloadFullsize];
-			[photo unloadThumbnail];
-			
-			// unload main image thumb
-			FGalleryPhotoView *photoView = [_photoViews objectAtIndex:i];
-			photoView.imageView.image = nil;
-			
-			// unload thumb tile
-			photoView = [_photoThumbnailViews objectAtIndex:i];
-			photoView.imageView.image = nil;
-		}
-	}
+    if (_isThumbViewShowing==YES) {
+        for (i = 0; i < count; i++)
+        {
+            FGalleryPhoto *photo = [_photoLoaders objectForKey:[keys objectAtIndex:i]];
+            [photo unloadFullsize];
+            
+            // unload main image thumb
+            FGalleryPhotoView *photoView = [_photoViews objectAtIndex:i];
+            photoView.imageView.image = nil;
+        }
+    } else {
+        for (i = 0; i < count; i++)
+        {
+            if( i != _currentIndex )
+            {
+                FGalleryPhoto *photo = [_photoLoaders objectForKey:[keys objectAtIndex:i]];
+                [photo unloadFullsize];
+                [photo unloadThumbnail];
+                
+                // unload main image thumb
+                FGalleryPhotoView *photoView = [_photoViews objectAtIndex:i];
+                photoView.imageView.image = nil;
+                
+                // unload thumb tile
+                photoView = [_photoThumbnailViews objectAtIndex:i];
+                photoView.imageView.image = nil;
+            }
+        }
+    }
 }
 
 
-- (void)dealloc {	
+- (void)dealloc {
 	
 	// remove KVO listener
 	[_container removeObserver:self forKeyPath:@"frame"];

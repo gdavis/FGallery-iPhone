@@ -529,27 +529,30 @@
 
 - (void)enterFullscreen
 {
-	_isFullscreen = YES;
-	
-	[self disableApp];
-	
-	UIApplication* application = [UIApplication sharedApplication];
-	if ([application respondsToSelector: @selector(setStatusBarHidden:withAnimation:)]) {
-		[[UIApplication sharedApplication] setStatusBarHidden: YES withAnimation: UIStatusBarAnimationFade]; // 3.2+
-	} else {
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-		[[UIApplication sharedApplication] setStatusBarHidden: YES animated:YES]; // 2.0 - 3.2
-#pragma GCC diagnostic warning "-Wdeprecated-declarations"
-	}
-	
-	[self.navigationController setNavigationBarHidden:YES animated:YES];
-	
-	[UIView beginAnimations:@"galleryOut" context:nil];
-	[UIView setAnimationDelegate:self];
-	[UIView setAnimationDidStopSelector:@selector(enableApp)];
-	_toolbar.alpha = 0.0;
-	_captionContainer.alpha = 0.0;
-	[UIView commitAnimations];
+    if (!_isThumbViewShowing)
+    {
+        _isFullscreen = YES;
+        
+        [self disableApp];
+        
+        UIApplication* application = [UIApplication sharedApplication];
+        if ([application respondsToSelector: @selector(setStatusBarHidden:withAnimation:)]) {
+            [[UIApplication sharedApplication] setStatusBarHidden: YES withAnimation: UIStatusBarAnimationFade]; // 3.2+
+        } else {
+    #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+            [[UIApplication sharedApplication] setStatusBarHidden: YES animated:YES]; // 2.0 - 3.2
+    #pragma GCC diagnostic warning "-Wdeprecated-declarations"
+        }
+        
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+        
+        [UIView beginAnimations:@"galleryOut" context:nil];
+        [UIView setAnimationDelegate:self];
+        [UIView setAnimationDidStopSelector:@selector(enableApp)];
+        _toolbar.alpha = 0.0;
+        _captionContainer.alpha = 0.0;
+        [UIView commitAnimations];
+    }
 }
 
 

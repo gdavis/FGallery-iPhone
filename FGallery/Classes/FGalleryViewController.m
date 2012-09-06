@@ -470,7 +470,7 @@
     
     UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: NSLocalizedString(@"Back", @"") style: UIBarButtonItemStyleBordered target: nil action: nil];
     [[self navigationItem] setBackBarButtonItem: newBackButton];
-    
+    [newBackButton release];
     
     _useThumbnailView = useThumbnailView;
     if( self.navigationController ) {
@@ -565,27 +565,30 @@
 
 - (void)enterFullscreen
 {
-	_isFullscreen = YES;
-	
-	[self disableApp];
-	
-	UIApplication* application = [UIApplication sharedApplication];
-	if ([application respondsToSelector: @selector(setStatusBarHidden:withAnimation:)]) {
-		[[UIApplication sharedApplication] setStatusBarHidden: YES withAnimation: UIStatusBarAnimationFade]; // 3.2+
-	} else {
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-		[[UIApplication sharedApplication] setStatusBarHidden: YES animated:YES]; // 2.0 - 3.2
-#pragma GCC diagnostic warning "-Wdeprecated-declarations"
-	}
-	
-	[self.navigationController setNavigationBarHidden:YES animated:YES];
-	
-	[UIView beginAnimations:@"galleryOut" context:nil];
-	[UIView setAnimationDelegate:self];
-	[UIView setAnimationDidStopSelector:@selector(enableApp)];
-	_toolbar.alpha = 0.0;
-	_captionContainer.alpha = 0.0;
-	[UIView commitAnimations];
+    if (!_isThumbViewShowing)
+    {
+        _isFullscreen = YES;
+        
+        [self disableApp];
+        
+        UIApplication* application = [UIApplication sharedApplication];
+        if ([application respondsToSelector: @selector(setStatusBarHidden:withAnimation:)]) {
+            [[UIApplication sharedApplication] setStatusBarHidden: YES withAnimation: UIStatusBarAnimationFade]; // 3.2+
+        } else {
+    #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+            [[UIApplication sharedApplication] setStatusBarHidden: YES animated:YES]; // 2.0 - 3.2
+    #pragma GCC diagnostic warning "-Wdeprecated-declarations"
+        }
+        
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+        
+        [UIView beginAnimations:@"galleryOut" context:nil];
+        [UIView setAnimationDelegate:self];
+        [UIView setAnimationDidStopSelector:@selector(enableApp)];
+        _toolbar.alpha = 0.0;
+        _captionContainer.alpha = 0.0;
+        [UIView commitAnimations];
+    }
 }
 
 
@@ -1129,27 +1132,39 @@
 	// unload fullsize and thumbnail images for all our images except at the current index.
 	NSArray *keys = [_photoLoaders allKeys];
 	NSUInteger i, count = [keys count];
-	for (i = 0; i < count; i++) 
-	{
-		if( i != _currentIndex )
-		{
-			FGalleryPhoto *photo = [_photoLoaders objectForKey:[keys objectAtIndex:i]];
-			[photo unloadFullsize];
-			[photo unloadThumbnail];
-			
-			// unload main image thumb
-			FGalleryPhotoView *photoView = [_photoViews objectAtIndex:i];
-			photoView.imageView.image = nil;
-			
-			// unload thumb tile
-			photoView = [_photoThumbnailViews objectAtIndex:i];
-			photoView.imageView.image = nil;
-		}
-	}
+    if (_isThumbViewShowing==YES) {
+        for (i = 0; i < count; i++)
+        {
+            FGalleryPhoto *photo = [_photoLoaders objectForKey:[keys objectAtIndex:i]];
+            [photo unloadFullsize];
+            
+            // unload main image thumb
+            FGalleryPhotoView *photoView = [_photoViews objectAtIndex:i];
+            photoView.imageView.image = nil;
+        }
+    } else {
+        for (i = 0; i < count; i++)
+        {
+            if( i != _currentIndex )
+            {
+                FGalleryPhoto *photo = [_photoLoaders objectForKey:[keys objectAtIndex:i]];
+                [photo unloadFullsize];
+                [photo unloadThumbnail];
+                
+                // unload main image thumb
+                FGalleryPhotoView *photoView = [_photoViews objectAtIndex:i];
+                photoView.imageView.image = nil;
+                
+                // unload thumb tile
+                photoView = [_photoThumbnailViews objectAtIndex:i];
+                photoView.imageView.image = nil;
+            }
+        }
+    }
 }
 
 
-- (void)dealloc {	
+- (void)dealloc {
 	
 	// remove KVO listener
 	[_container removeObserver:self forKeyPath:@"frame"];

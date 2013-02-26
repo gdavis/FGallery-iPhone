@@ -32,13 +32,17 @@ typedef enum
 	BOOL _isFullscreen;
 	BOOL _isScrolling;
 	BOOL _isThumbViewShowing;
+  BOOL _isSelectingView;
+  BOOL _selectingViewHasIcon;
+  BOOL _selectingViewHasGlow;
 	
 	UIStatusBarStyle _prevStatusStyle;
 	CGFloat _prevNextButtonSize;
 	CGRect _scrollerRect;
 	NSString *galleryID;
 	NSInteger _currentIndex;
-	
+  NSInteger _itemsSelected;
+
 	UIView *_container; // used as view for the controller
 	UIView *_innerContainer; // sized and placed to be fullscreen within the container
 	UIToolbar *_toolbar;
@@ -77,6 +81,9 @@ typedef enum
 @property (nonatomic) BOOL useThumbnailView;
 @property (nonatomic) BOOL beginsInThumbnailView;
 @property (nonatomic) BOOL hideTitle;
+@property (nonatomic) BOOL isSelectingView;
+@property (nonatomic) BOOL selectingViewHasIcon;
+@property (nonatomic) BOOL selectingViewHasGlow;
 
 @end
 

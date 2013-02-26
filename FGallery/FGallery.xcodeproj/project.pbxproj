@@ -26,6 +26,7 @@
 		77FCB8BD12D7936A00AAAFF3 /* audi.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 77FCB8BC12D7936A00AAAFF3 /* audi.jpg */; };
 		77FCB8C912D793E100AAAFF3 /* hawaii.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 77FCB8C812D793E100AAAFF3 /* hawaii.jpeg */; };
 		77FCB8D012D794C000AAAFF3 /* lava.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 77FCB8CF12D794C000AAAFF3 /* lava.jpeg */; };
+		E9A4A07816DCEC8F006000A4 /* selected.png in Resources */ = {isa = PBXBuildFile; fileRef = E9A4A07716DCEC8F006000A4 /* selected.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		77FCB8C812D793E100AAAFF3 /* hawaii.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = hawaii.jpeg; sourceTree = "<group>"; };
 		77FCB8CF12D794C000AAAFF3 /* lava.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = lava.jpeg; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* FGallery-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "FGallery-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		E9A4A07716DCEC8F006000A4 /* selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selected.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +119,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E9A4A07716DCEC8F006000A4 /* selected.png */,
 				77FCB8BF12D7938900AAAFF3 /* Gallery Images */,
 				775D12D312D68D7200872F74 /* photo-gallery-trashcan.png */,
 				775D12D412D68D7200872F74 /* photo-gallery-right.png */,
@@ -225,6 +228,7 @@
 				77FCB8BD12D7936A00AAAFF3 /* audi.jpg in Resources */,
 				77FCB8C912D793E100AAAFF3 /* hawaii.jpeg in Resources */,
 				77FCB8D012D794C000AAAFF3 /* lava.jpeg in Resources */,
+				E9A4A07816DCEC8F006000A4 /* selected.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

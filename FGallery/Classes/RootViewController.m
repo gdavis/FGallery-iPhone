@@ -146,7 +146,11 @@
 		
 		localGallery = [[FGalleryViewController alloc] initWithPhotoSource:self barItems:barItems];
         [self.navigationController pushViewController:localGallery animated:YES];
-        [localGallery release];
+    [localGallery setIsSelectingView:YES];
+    [localGallery setSelectingViewHasGlow:YES];
+    [localGallery setSelectingViewHasIcon:YES];
+
+    [localGallery release];
 	}
 }
 

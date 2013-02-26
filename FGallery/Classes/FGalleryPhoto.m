@@ -38,7 +38,6 @@
 @synthesize isThumbLoading = _isThumbLoading;
 @synthesize hasThumbLoaded = _hasThumbLoaded;
 
-
 - (id)initWithThumbnailUrl:(NSString*)thumb fullsizeUrl:(NSString*)fullsize delegate:(NSObject<FGalleryPhotoDelegate>*)delegate
 {
 	self = [super init];

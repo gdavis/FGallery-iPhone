@@ -75,6 +75,10 @@
 @synthesize startingIndex = _startingIndex;
 @synthesize beginsInThumbnailView = _beginsInThumbnailView;
 @synthesize hideTitle = _hideTitle;
+@synthesize isSelectingView = _isSelectingView;
+@synthesize selectingViewHasIcon = _selectingViewHasIcon;
+@synthesize selectingViewHasGlow = _selectingViewHasGlow;
+
 
 #pragma mark - Public Methods
 
@@ -786,9 +790,18 @@
 - (void)toggleThumbnailViewWithAnimation:(BOOL)animation
 {
     if (_isThumbViewShowing) {
+      if (_isSelectingView && (_itemsSelected > 0)) {
+        for (FGalleryPhotoView *photoView in _photoThumbnailViews) {
+          if (photoView.isSelected) {
+            /* TODO: Your Save Code here */
+            NSLog(@"\nSave Selected Photoview\n");
+          }
+        }
+      }
+      
+
         [self hideThumbnailViewWithAnimation:animation];
-    }
-    else {
+    } else {
         [self showThumbnailViewWithAnimation:animation];
     }
 }
@@ -847,8 +860,37 @@
 - (void)handleThumbClick:(id)sender
 {
 	FGalleryPhotoView *photoView = (FGalleryPhotoView*)[(UIButton*)sender superview];
-	[self hideThumbnailViewWithAnimation:YES];
-	[self gotoImageByIndex:photoView.tag animated:NO];
+
+  if (_isSelectingView) {
+
+    [photoView setIsSelected:!photoView.isSelected];
+    _itemsSelected = (photoView.isSelected) ? _itemsSelected + 1 : _itemsSelected - 1;
+
+    if (_itemsSelected > 0) {
+      [self.navigationItem.rightBarButtonItem setTitle:NSLocalizedString(@"Save & Close", @"")];
+    } else {
+      [self.navigationItem.rightBarButtonItem setTitle:NSLocalizedString(@"Close", @"")];
+    }
+
+    if (_selectingViewHasGlow) {
+      if (photoView.isSelected) {
+        [photoView enableGlowWithColor:[UIColor whiteColor]];
+      } else {
+        [photoView enableGlowWithColor:[UIColor clearColor]];
+      }
+    }
+
+    if (_selectingViewHasIcon) {
+      if (photoView.isSelected) {
+        [photoView showCornerIcon:[UIImage imageNamed:@"selected.png"]];
+      } else {
+        [photoView setCornerIconHidden:YES];
+      }
+    }
+  } else {
+    [self hideThumbnailViewWithAnimation:YES];
+    [self gotoImageByIndex:photoView.tag animated:NO];
+  }
 }
 
 

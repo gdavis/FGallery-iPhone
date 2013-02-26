@@ -18,8 +18,12 @@
 	UIActivityIndicatorView *_activity;
 	UIButton *_button;
 	BOOL _isZoomed;
+  BOOL _isSelected;
 	NSTimer *_tapTimer;
 	NSObject <FGalleryPhotoViewDelegate> *photoDelegate;
+
+  UIView *_glowingView;
+  UIImageView *_cornerIconView;
 }
 
 - (void)killActivityIndicator;
@@ -29,10 +33,15 @@
 
 - (void)resetZoom;
 
+- (void)enableGlowWithColor:(UIColor *)color;
+- (void)showCornerIcon:(UIImage *)icon;
+- (void)setCornerIconHidden:(BOOL)b;
+
 @property (nonatomic,assign) NSObject <FGalleryPhotoViewDelegate> *photoDelegate;
 @property (nonatomic,readonly) UIImageView *imageView;
 @property (nonatomic,readonly) UIButton *button;
 @property (nonatomic,readonly) UIActivityIndicatorView *activity;
+@property (nonatomic) BOOL isSelected;
 
 @end
 

@@ -7,6 +7,7 @@
 //
 
 #import "FGalleryPhoto.h"
+#import "SDWebImageManager.h"
 
 @interface FGalleryPhoto (Private)
 
@@ -72,10 +73,15 @@
 		[self willLoadThumbFromUrl];
 		
 		_isThumbLoading = YES;
-		
-		NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:_thumbUrl]];
-		_thumbConnection = [NSURLConnection connectionWithRequest:request delegate:self];
-		_thumbData = [[NSMutableData alloc] init];
+
+        [[SDWebImageManager sharedManager] downloadWithURL:[NSURL URLWithString:_thumbUrl] options:SDWebImageRetryFailed progress:^(NSUInteger receivedSize, long long expectedSize) {
+        }                                        completed:^(UIImage *downloadedImage, NSError *error, SDImageCacheType cacheType, BOOL finished) {
+            _isThumbLoading = NO;
+            _hasThumbLoaded = YES;
+            _thumbnail = downloadedImage;
+            if( _delegate )
+            	[self didLoadThumbnail];
+        }];
 	}
 	
 	// load from disk
@@ -103,9 +109,14 @@
 		
 		_isFullsizeLoading = YES;
 		
-		NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:_fullsizeUrl]];
-		_fullsizeConnection = [NSURLConnection connectionWithRequest:request delegate:self];
-		_fullsizeData = [[NSMutableData alloc] init];
+        [[SDWebImageManager sharedManager] downloadWithURL:[NSURL URLWithString:_fullsizeUrl] options:SDWebImageRetryFailed progress:^(NSUInteger receivedSize, long long expectedSize) {
+        }                                        completed:^(UIImage *downloadedImage, NSError *error, SDImageCacheType cacheType, BOOL finished) {
+            _isFullsizeLoading = NO;
+            _hasFullsizeLoaded = YES;
+            _fullsize = downloadedImage;
+            if (_delegate)
+                [self didLoadFullsize];
+        }];
 	}
 	else
 	{

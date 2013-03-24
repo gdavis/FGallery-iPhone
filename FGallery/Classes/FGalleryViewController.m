@@ -25,10 +25,9 @@
 	CGRect _scrollerRect;
 	NSString *galleryID;
 	NSInteger _currentIndex;
-	
+
 	UIView *_container; // used as view for the controller
 	UIView *_innerContainer; // sized and placed to be fullscreen within the container
-	UIToolbar *_toolbar;
 	UIScrollView *_thumbsView;
 	UIScrollView *_scroller;
 	UIView *_captionContainer;
@@ -38,7 +37,7 @@
 	NSMutableArray *_barItems;
 	NSMutableArray *_photoThumbnailViews;
 	NSMutableArray *_photoViews;
-	
+
 	NSObject <FGalleryViewControllerDelegate> *__unsafe_unretained _photoSource;
     
 	UIBarButtonItem *_nextButton;
@@ -58,7 +57,6 @@
 - (void)resizeImageViewsWithRect:(CGRect)rect;
 - (void)resetImageViewZoomLevels;
 
-- (void)enterFullscreen;
 - (void)exitFullscreen;
 - (void)enableApp;
 - (void)disableApp;
@@ -88,7 +86,6 @@
 - (FGalleryPhoto*)createGalleryPhotoForIndex:(NSUInteger)index;
 
 - (void)loadThumbnailImageWithIndex:(NSUInteger)index;
-- (void)loadFullsizeImageWithIndex:(NSUInteger)index;
 
 @end
 
@@ -599,6 +596,9 @@
 	}
     
 	[self.navigationController setNavigationBarHidden:NO animated:YES];
+    CGRect originalFrame = self.view.frame;
+    originalFrame.origin.y = 20.0;
+    self.view.frame = originalFrame;
     
 	[UIView beginAnimations:@"galleryIn" context:nil];
 	[UIView setAnimationDelegate:self];
@@ -855,68 +855,20 @@
 
 - (void)preloadThumbnailImages
 {
-	NSUInteger index = _currentIndex;
-	NSUInteger count = [_photoViews count];
-    
-	// make sure the images surrounding the current index have thumbs loading
-	NSUInteger nextIndex = index + 1;
-	NSUInteger prevIndex = index - 1;
-	
-	// the preload count indicates how many images surrounding the current photo will get preloaded.
-	// a value of 2 at maximum would preload 4 images, 2 in front of and two behind the current image.
-	NSUInteger preloadCount = 1;
-	
-	FGalleryPhoto *photo;
-	
-	// check to see if the current image thumb has been loaded
-	photo = [_photoLoaders objectForKey:[NSString stringWithFormat:@"%i", index]];
-	
-	if( !photo )
-	{
-		[self loadThumbnailImageWithIndex:index];
-		photo = [_photoLoaders objectForKey:[NSString stringWithFormat:@"%i", index]];
-	}
-	
-	if( !photo.hasThumbLoaded && !photo.isThumbLoading )
-	{
-		[photo loadThumbnail];
-	}
-	
-	NSUInteger curIndex = prevIndex;
-	while( curIndex > -1 && curIndex > prevIndex - preloadCount )
-	{
-		photo = [_photoLoaders objectForKey:[NSString stringWithFormat:@"%i", curIndex]];
-		
-		if( !photo ) {
-			[self loadThumbnailImageWithIndex:curIndex];
-			photo = [_photoLoaders objectForKey:[NSString stringWithFormat:@"%i", curIndex]];
-		}
-		
-		if( !photo.hasThumbLoaded && !photo.isThumbLoading )
-		{
-			[photo loadThumbnail];
-		}
-		
-		curIndex--;
-	}
-	
-	curIndex = nextIndex;
-	while( curIndex < count && curIndex < nextIndex + preloadCount )
-	{
-		photo = [_photoLoaders objectForKey:[NSString stringWithFormat:@"%i", curIndex]];
-		
-		if( !photo ) {
-			[self loadThumbnailImageWithIndex:curIndex];
-			photo = [_photoLoaders objectForKey:[NSString stringWithFormat:@"%i", curIndex]];
-		}
-		
-		if( !photo.hasThumbLoaded && !photo.isThumbLoading )
-		{
-			[photo loadThumbnail];
-		}
-		
-		curIndex++;
-	}
+    NSUInteger count = [_photoViews count];
+    FGalleryPhoto *photo;
+    for (int i = 0; i < count; i++) {
+        photo = [_photoLoaders objectForKey:[NSString stringWithFormat:@"%i", i]];
+
+        if (!photo) {
+            [self loadThumbnailImageWithIndex:i];
+            photo = [_photoLoaders objectForKey:[NSString stringWithFormat:@"%i", i]];
+        }
+
+        if (!photo.hasThumbLoaded && !photo.isThumbLoading) {
+            [photo loadThumbnail];
+        }
+    }
 }
 
 
@@ -1203,8 +1155,11 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	if([self.visibleViewController isKindOfClass:[FGalleryViewController class]]) 
+	if([self.visibleViewController isKindOfClass:[FGalleryViewController class]])
 	{
+
+        [(FGalleryViewController *)self.visibleViewController exitFullscreen];
+
         return YES;
 	}
 

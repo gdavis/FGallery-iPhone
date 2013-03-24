@@ -28,7 +28,9 @@ typedef enum
 
 @interface FGalleryViewController : UIViewController <UIScrollViewDelegate,
                                                         FGalleryPhotoDelegate,
-                                                        FGalleryPhotoViewDelegate>
+                                                        FGalleryPhotoViewDelegate> {
+    UIToolbar *_toolbar;
+}
 
 - (id)initWithPhotoSource:(NSObject<FGalleryViewControllerDelegate>*)photoSrc;
 - (id)initWithPhotoSource:(NSObject<FGalleryViewControllerDelegate>*)photoSrc barItems:(NSArray*)items;
@@ -36,6 +38,11 @@ typedef enum
 - (void)next;
 - (void)previous;
 - (void)gotoImageByIndex:(NSUInteger)index animated:(BOOL)animated;
+
+- (void)enterFullscreen;
+- (void)exitFullscreen;
+- (void)disableApp;
+
 - (void)removeImageAtIndex:(NSUInteger)index;
 - (void)reloadGallery;
 - (FGalleryPhoto*)currentPhoto;

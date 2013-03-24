@@ -596,10 +596,7 @@
 	}
     
 	[self.navigationController setNavigationBarHidden:NO animated:YES];
-    CGRect originalFrame = self.view.frame;
-    originalFrame.origin.y = 20.0;
-    self.view.frame = originalFrame;
-    
+
 	[UIView beginAnimations:@"galleryIn" context:nil];
 	[UIView setAnimationDelegate:self];
 	[UIView setAnimationDidStopSelector:@selector(enableApp)];
@@ -1157,9 +1154,6 @@
 {
 	if([self.visibleViewController isKindOfClass:[FGalleryViewController class]])
 	{
-
-        [(FGalleryViewController *)self.visibleViewController exitFullscreen];
-
         return YES;
 	}
 
@@ -1191,6 +1185,7 @@
 	{
 		FGalleryViewController *galleryController = (FGalleryViewController*)self.visibleViewController;
 		[galleryController resetImageViewZoomLevels];
+        [galleryController exitFullscreen];
 	}
 }
 

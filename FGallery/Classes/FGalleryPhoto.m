@@ -76,11 +76,14 @@
 
         [[SDWebImageManager sharedManager] downloadWithURL:[NSURL URLWithString:_thumbUrl] options:SDWebImageRetryFailed progress:^(NSUInteger receivedSize, long long expectedSize) {
         }                                        completed:^(UIImage *downloadedImage, NSError *error, SDImageCacheType cacheType, BOOL finished) {
+            if (error) {
+                downloadedImage = [UIImage imageNamed:@"timeline_placeholder.png"];
+            }
             _isThumbLoading = NO;
             _hasThumbLoaded = YES;
             _thumbnail = downloadedImage;
-            if( _delegate )
-            	[self didLoadThumbnail];
+            if (_delegate)
+                [self didLoadThumbnail];
         }];
 	}
 	
@@ -111,6 +114,9 @@
 		
         [[SDWebImageManager sharedManager] downloadWithURL:[NSURL URLWithString:_fullsizeUrl] options:SDWebImageRetryFailed progress:^(NSUInteger receivedSize, long long expectedSize) {
         }                                        completed:^(UIImage *downloadedImage, NSError *error, SDImageCacheType cacheType, BOOL finished) {
+            if (error) {
+                downloadedImage = [UIImage imageNamed:@"timeline_placeholder.png"];
+            }
             _isFullsizeLoading = NO;
             _hasFullsizeLoaded = YES;
             _fullsize = downloadedImage;

@@ -30,6 +30,10 @@ typedef enum
                                                         FGalleryPhotoDelegate,
                                                         FGalleryPhotoViewDelegate> {
     UIToolbar *_toolbar;
+    UIView *_container; // used as view for the controller
+    UIView *_innerContainer; // sized and placed to be fullscreen within the container
+    UIScrollView *_thumbsView;
+    UIScrollView *_scroller;
 }
 
 - (id)initWithPhotoSource:(NSObject<FGalleryViewControllerDelegate>*)photoSrc;

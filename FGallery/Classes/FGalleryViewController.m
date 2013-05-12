@@ -26,10 +26,6 @@
 	NSString *galleryID;
 	NSInteger _currentIndex;
 
-	UIView *_container; // used as view for the controller
-	UIView *_innerContainer; // sized and placed to be fullscreen within the container
-	UIScrollView *_thumbsView;
-	UIScrollView *_scroller;
 	UIView *_captionContainer;
 	UILabel *_caption;
 	
@@ -1144,7 +1140,7 @@
 
 
 /**
- *	This section overrides the auto-rotate methods for UINaviationController and UITabBarController 
+ *	This section overrides the auto-rotate methods for UINaviationController and UITabBarController
  *	to allow the tab bar to rotate only when a FGalleryController is the visible controller. Sweet.
  */
 
@@ -1168,10 +1164,10 @@
 			supported = NO;
 			break;
 		}
-	}	
+	}
 	if(supported)
 		return YES;
-	
+
 	// we need to support at least one type of auto-rotation we'll get warnings.
 	// so, we'll just support the basic portrait.
 	return ( interfaceOrientation == UIInterfaceOrientationPortrait ) ? YES : NO;
@@ -1203,14 +1199,14 @@
     if( [self.selectedViewController isKindOfClass:[UINavigationController class]])
     {
         UINavigationController *navController = (UINavigationController*)self.selectedViewController;
-        
+
         // see if the current controller in the stack is a gallery
         if([navController.visibleViewController isKindOfClass:[FGalleryViewController class]])
         {
             return YES;
         }
     }
-	
+
 	// we need to support at least one type of auto-rotation we'll get warnings.
 	// so, we'll just support the basic portrait.
 	return ( interfaceOrientation == UIInterfaceOrientationPortrait ) ? YES : NO;
@@ -1222,7 +1218,7 @@
 	if([self.selectedViewController isKindOfClass:[UINavigationController class]])
 	{
 		UINavigationController *navController = (UINavigationController*)self.selectedViewController;
-		
+
 		// see if the current controller in the stack is a gallery
 		if([navController.visibleViewController isKindOfClass:[FGalleryViewController class]])
 		{

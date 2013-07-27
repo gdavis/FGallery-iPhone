@@ -23,6 +23,7 @@
 - (void)moveScrollerToCurrentIndexWithAnimation:(BOOL)animation;
 - (void)updateTitle;
 - (void)updateButtons;
+- (void)updateBookmarkButton;
 - (void)layoutButtons;
 - (void)updateScrollSize;
 - (void)updateCaption;
@@ -162,7 +163,6 @@
 	return self;
 }
 
-
 - (void)loadView
 {
     // create public objects first so they're available for custom configuration right away. positioning comes later.
@@ -221,7 +221,29 @@
 	
 	[_toolbar addSubview:_captionContainer];
 	[_captionContainer addSubview:_caption];
-	
+
+	UIImage *bookMarkIconON = [UIImage imageNamed:@"photo-gallery-bookmark_on.png"];
+    UIImage *bookMarkIconOFF = [UIImage imageNamed:@"photo-gallery-bookmark_off.png"];
+    
+    if (self.isBookmarkEnabled) {
+        UIButton *bookMarkButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [bookMarkButton setFrame:CGRectMake(0, 0, 20, 20)];
+        [bookMarkButton setContentMode:UIViewContentModeCenter];
+        
+        [bookMarkButton setImage:bookMarkIconOFF forState:UIControlStateNormal];
+        [bookMarkButton setImage:bookMarkIconON forState:UIControlStateSelected];
+        [bookMarkButton addTarget:self action:@selector(toggleBookmarked:) forControlEvents:UIControlEventTouchUpInside];
+        
+        _bookMarkButton = [[UIBarButtonItem alloc] initWithCustomView:bookMarkButton];
+        
+        
+//        _bookMarkButton = [[UIBarButtonItem alloc] initWithImage:bookMarkIconON style:UIBarButtonItemStylePlain target:self action:@selector(toggleBookmarked:)];
+        
+        [_barItems insertObject:_bookMarkButton atIndex:0];
+        
+    }
+    
+    
 	// create buttons for toolbar
 	UIImage *leftIcon = [UIImage imageNamed:@"photo-gallery-left.png"];
 	UIImage *rightIcon = [UIImage imageNamed:@"photo-gallery-right.png"];
@@ -231,6 +253,8 @@
 	// add prev next to front of the array
 	[_barItems insertObject:_nextButton atIndex:0];
 	[_barItems insertObject:_prevButton atIndex:0];
+    
+
 	
 	_prevNextButtonSize = leftIcon.size.width;
 	
@@ -249,6 +273,7 @@
     [_barItems release], _barItems = nil;
     [_nextButton release], _nextButton = nil;
     [_prevButton release], _prevButton = nil;
+    [_bookMarkButton release], _bookMarkButton = nil;
     [_container release], _container = nil;
     [_innerContainer release], _innerContainer = nil;
     [_scroller release], _scroller = nil;
@@ -421,6 +446,21 @@
 	[self gotoImageByIndex:prevIndex animated:NO];
 }
 
+- (void)toggleBookmarked:(UIButton *)sender {
+    BOOL *currentState = sender.isSelected;
+
+    //is already bookmarked.
+    if (currentState) {
+        if ([self.photoSource respondsToSelector:@selector(photoGallery:didUnbookmarkedImageAtIndex:)]){
+            [self.photoSource photoGallery:self didUnbookmarkedImageAtIndex:self.currentIndex];
+        }
+    } else {
+        if ([self.photoSource respondsToSelector:@selector(photoGallery:didBookmarkedImageAtIndex:)]) {
+            [self.photoSource photoGallery:self didBookmarkedImageAtIndex:self.currentIndex];
+        }
+    }
+    sender.selected = !sender.selected;
+}
 
 
 - (void)gotoImageByIndex:(NSUInteger)index animated:(BOOL)animated
@@ -452,6 +492,7 @@
 	}
 	[self updateButtons];
 	[self updateCaption];
+    [self updateBookmarkButton];
 }
 
 
@@ -463,6 +504,7 @@
 	[self positionToolbar];
 	[self updateScrollSize];
 	[self updateCaption];
+    [self updateBookmarkButton];
 	[self resizeImageViewsWithRect:_scroller.frame];
 	[self layoutButtons];
 	[self arrangeThumbs];
@@ -698,6 +740,14 @@
 	_nextButton.enabled = ( _currentIndex >= [_photoSource numberOfPhotosForPhotoGallery:self]-1 ) ? NO : YES;
 }
 
+- (void)updateBookmarkButton {
+    if (self.isBookmarkEnabled) {
+        if ([self.photoSource respondsToSelector:@selector(photoGallery:isBookmarkedImageAtIndex:)]) {
+            BOOL r = [self.photoSource photoGallery:self isBookmarkedImageAtIndex:self.currentIndex];
+            [((UIButton *)_bookMarkButton.customView) setSelected:r];
+        }
+    }
+}
 
 - (void)layoutButtons
 {
@@ -1018,6 +1068,7 @@
 	[self updateCaption];
 	[self updateTitle];
 	[self updateButtons];
+    [self updateBookmarkButton];
 	[self loadFullsizeImageWithIndex:_currentIndex];
 	[self preloadThumbnailImages];
 }

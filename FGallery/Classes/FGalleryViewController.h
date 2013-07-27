@@ -56,6 +56,7 @@ typedef enum
     
 	UIBarButtonItem *_nextButton;
 	UIBarButtonItem *_prevButton;
+    UIBarButtonItem *_bookMarkButton;
 }
 
 - (id)initWithPhotoSource:(NSObject<FGalleryViewControllerDelegate>*)photoSrc;
@@ -77,6 +78,7 @@ typedef enum
 @property (nonatomic) BOOL useThumbnailView;
 @property (nonatomic) BOOL beginsInThumbnailView;
 @property (nonatomic) BOOL hideTitle;
+@property (nonatomic, assign, getter = isBookmarkEnabled) BOOL enableBookmark;
 
 @end
 
@@ -90,8 +92,12 @@ typedef enum
 @optional
 - (NSString*)photoGallery:(FGalleryViewController*)gallery captionForPhotoAtIndex:(NSUInteger)index;
 
-// the photosource must implement one of these methods depending on which FGalleryPhotoSourceType is specified 
+// the photosource must implement one of these methods depending on which FGalleryPhotoSourceType is specified
 - (NSString*)photoGallery:(FGalleryViewController*)gallery filePathForPhotoSize:(FGalleryPhotoSize)size atIndex:(NSUInteger)index;
 - (NSString*)photoGallery:(FGalleryViewController*)gallery urlForPhotoSize:(FGalleryPhotoSize)size atIndex:(NSUInteger)index;
 
+//These methods are optionals and concern bookmark functionality
+- (BOOL)photoGallery:(FGalleryViewController *)gallery isBookmarkedImageAtIndex:(NSUInteger)index;
+- (void)photoGallery:(FGalleryViewController *)gallery didBookmarkedImageAtIndex:(NSUInteger)index;
+- (void)photoGallery:(FGalleryViewController *)gallery didUnbookmarkedImageAtIndex:(NSUInteger)index;
 @end

@@ -26,6 +26,10 @@
 		77FCB8BD12D7936A00AAAFF3 /* audi.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 77FCB8BC12D7936A00AAAFF3 /* audi.jpg */; };
 		77FCB8C912D793E100AAAFF3 /* hawaii.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 77FCB8C812D793E100AAAFF3 /* hawaii.jpeg */; };
 		77FCB8D012D794C000AAAFF3 /* lava.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 77FCB8CF12D794C000AAAFF3 /* lava.jpeg */; };
+		EEDDF38517A3BBEF000D3CB5 /* photo-gallery-bookmark_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EEDDF38317A3BBEF000D3CB5 /* photo-gallery-bookmark_on@2x.png */; };
+		EEDDF38617A3BBEF000D3CB5 /* photo-gallery-bookmark_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EEDDF38417A3BBEF000D3CB5 /* photo-gallery-bookmark_off@2x.png */; };
+		EEDDF38917A3BC07000D3CB5 /* photo-gallery-bookmark_on.png in Resources */ = {isa = PBXBuildFile; fileRef = EEDDF38717A3BC07000D3CB5 /* photo-gallery-bookmark_on.png */; };
+		EEDDF38A17A3BC07000D3CB5 /* photo-gallery-bookmark_off.png in Resources */ = {isa = PBXBuildFile; fileRef = EEDDF38817A3BC07000D3CB5 /* photo-gallery-bookmark_off.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +60,10 @@
 		77FCB8C812D793E100AAAFF3 /* hawaii.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = hawaii.jpeg; sourceTree = "<group>"; };
 		77FCB8CF12D794C000AAAFF3 /* lava.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = lava.jpeg; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* FGallery-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "FGallery-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		EEDDF38317A3BBEF000D3CB5 /* photo-gallery-bookmark_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo-gallery-bookmark_on@2x.png"; sourceTree = "<group>"; };
+		EEDDF38417A3BBEF000D3CB5 /* photo-gallery-bookmark_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo-gallery-bookmark_off@2x.png"; sourceTree = "<group>"; };
+		EEDDF38717A3BC07000D3CB5 /* photo-gallery-bookmark_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo-gallery-bookmark_on.png"; sourceTree = "<group>"; };
+		EEDDF38817A3BC07000D3CB5 /* photo-gallery-bookmark_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo-gallery-bookmark_off.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +125,10 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				EEDDF38717A3BC07000D3CB5 /* photo-gallery-bookmark_on.png */,
+				EEDDF38817A3BC07000D3CB5 /* photo-gallery-bookmark_off.png */,
+				EEDDF38317A3BBEF000D3CB5 /* photo-gallery-bookmark_on@2x.png */,
+				EEDDF38417A3BBEF000D3CB5 /* photo-gallery-bookmark_off@2x.png */,
 				77FCB8BF12D7938900AAAFF3 /* Gallery Images */,
 				775D12D312D68D7200872F74 /* photo-gallery-trashcan.png */,
 				775D12D412D68D7200872F74 /* photo-gallery-right.png */,
@@ -225,6 +237,10 @@
 				77FCB8BD12D7936A00AAAFF3 /* audi.jpg in Resources */,
 				77FCB8C912D793E100AAAFF3 /* hawaii.jpeg in Resources */,
 				77FCB8D012D794C000AAAFF3 /* lava.jpeg in Resources */,
+				EEDDF38517A3BBEF000D3CB5 /* photo-gallery-bookmark_on@2x.png in Resources */,
+				EEDDF38617A3BBEF000D3CB5 /* photo-gallery-bookmark_off@2x.png in Resources */,
+				EEDDF38917A3BC07000D3CB5 /* photo-gallery-bookmark_on.png in Resources */,
+				EEDDF38A17A3BC07000D3CB5 /* photo-gallery-bookmark_off.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

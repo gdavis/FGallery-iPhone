@@ -985,7 +985,13 @@
 		fullsizePath = [_photoSource photoGallery:self urlForPhotoSize:FGalleryPhotoSizeFullsize atIndex:index];
 		photo = [[[FGalleryPhoto alloc] initWithThumbnailUrl:thumbPath fullsizeUrl:fullsizePath delegate:self] autorelease];
 	}
-	else 
+    else if( sourceType == FGalleryPhotoSourceTypeAsset )
+    {
+ 		thumbPath = [_photoSource photoGallery:self assetForPhotoSize:FGalleryPhotoSizeThumbnail atIndex:index];
+		fullsizePath = [_photoSource photoGallery:self assetForPhotoSize:FGalleryPhotoSizeFullsize atIndex:index];
+		photo = [[[FGalleryPhoto alloc] initWithThumbnailAsset:thumbPath fullsizePath:fullsizePath delegate:self] autorelease];
+    }
+	else
 	{
 		// invalid source type, throw an error.
 		[NSException raise:@"Invalid photo source type" format:@"The specified source type of %d is invalid", sourceType];

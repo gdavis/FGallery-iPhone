@@ -7,7 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 
+//typedef void (^ALAssetsLibraryAssetForURLResultBlock)(ALAsset *asset);
 
 @protocol FGalleryPhotoDelegate;
 
@@ -15,6 +17,7 @@
 	
 	// value which determines if the photo was initialized with local file paths or network paths.
 	BOOL _useNetwork;
+    BOOL _useAsset;
 	
 	BOOL _isThumbLoading;
 	BOOL _hasThumbLoaded;
@@ -33,6 +36,9 @@
 	
 	UIImage *_thumbnail;
 	UIImage *_fullsize;
+    
+    NSConditionLock* readLock;
+
 	
 	NSObject <FGalleryPhotoDelegate> *_delegate;
 	
@@ -42,6 +48,7 @@
 
 - (id)initWithThumbnailUrl:(NSString*)thumb fullsizeUrl:(NSString*)fullsize delegate:(NSObject<FGalleryPhotoDelegate>*)delegate;
 - (id)initWithThumbnailPath:(NSString*)thumb fullsizePath:(NSString*)fullsize delegate:(NSObject<FGalleryPhotoDelegate>*)delegate;
+- (id)initWithThumbnailAsset:(NSString*)thumb fullsizePath:(NSString*)fullsize delegate:(NSObject<FGalleryPhotoDelegate>*)delegate;
 
 - (void)loadThumbnail;
 - (void)loadFullsize;
@@ -77,5 +84,8 @@
 
 - (void)galleryPhoto:(FGalleryPhoto*)photo willLoadThumbnailFromPath:(NSString*)path;
 - (void)galleryPhoto:(FGalleryPhoto*)photo willLoadFullsizeFromPath:(NSString*)path;
+
+- (void)galleryPhoto:(FGalleryPhoto*)photo willLoadThumbnailFromAsset:(NSString*)path;
+- (void)galleryPhoto:(FGalleryPhoto*)photo willLoadFullsizeFromAsset:(NSString*)path;
 
 @end

@@ -1,0 +1,1 @@
+PODS_GRAVITY_OTHER_LDFLAGS = -lz -framework CoreData -framework CoreGraphics -framework QuartzCore

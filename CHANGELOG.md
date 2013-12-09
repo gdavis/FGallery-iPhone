@@ -1,6 +1,7 @@
 # GDIImageGallery CHANGELOG
 
 ## 2.0
+* FGallery has been renamed to GDIImageGallery
 * iOS7 Support
 * Cocoapod support
 * Major project restructuring (for cocoapds)

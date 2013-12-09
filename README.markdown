@@ -1,6 +1,6 @@
-# FGallery - A Photo Gallery for iOS
+# GDIImageGallery - A Photo Gallery for iOS
 ## Overview
-FGallery is a photo gallery viewer developed for iPhone applications. FGallery implements a delegate style design pattern similar to how UITableViewDelegates work. You may load images from either the local application bundle, or from the network.
+GDIImageGallery is a photo gallery viewer developed for iPhone applications. GDIImageGallery implements a delegate style design pattern similar to how UITableViewDelegates work. You may load images from either the local application bundle, or from the network.
 
 ## Features
 * Single-tap fullscreen mode
@@ -25,13 +25,13 @@ it simply add the following line to your Podfile:
 To run the example project; clone the repo, and run `pod install` from the Project directory first.
 
 ### Basic Instantiation
-FGallery requires an object to implement the FGalleryViewControllerDelegate protocol in order to act as the photo source for the gallery. Then just push it into the navigation controller stack as you would with any UIViewController.
+GDIImageGallery requires an object to implement the GDIImageGalleryViewControllerDelegate protocol in order to act as the photo source for the gallery. Then just push it into the navigation controller stack as you would with any UIViewController.
 
-	FGalleryViewController *galleryVC = [[FGalleryViewController alloc] initWithPhotoSource:self];
+	GDIImageGalleryViewController *galleryVC = [[GDIImageGalleryViewController alloc] initWithPhotoSource:self];
 	[self.navigationController pushViewController:galleryVC animated:YES];
 	
 ### Instantiation with Custom Bar Items
-FGallery allows you add additional UIBarButtonItems to the UIToolbar that exists within the gallery to perform additional functionality.
+GDIImageGallery allows you add additional UIBarButtonItems to the UIToolbar that exists within the gallery to perform additional functionality.
 
 	UIImage *trashIcon = [UIImage imageNamed:@"photo-gallery-trashcan.png"];
 	UIImage *captionIcon = [UIImage imageNamed:@"photo-gallery-edit-caption.png"];
@@ -39,7 +39,7 @@ FGallery allows you add additional UIBarButtonItems to the UIToolbar that exists
 	UIBarButtonItem *editCaptionButton = [[UIBarButtonItem alloc] initWithImage:captionIcon style:UIBarButtonItemStylePlain target:self action:@selector(handleEditCaptionButtonTouch:)];
 	NSArray *barItems = [NSArray arrayWithObjects:editCaptionButton, trashButton, nil];
 
-	FGalleryViewController *galleryVC = [[FGalleryViewController alloc] initWithPhotoSource:self barItems:barItems];
+	GDIImageGalleryViewController *galleryVC = [[GDIImageGalleryViewController alloc] initWithPhotoSource:self barItems:barItems];
 	[self.navigationController pushViewController:galleryVC animated:YES];
 
 ## Author

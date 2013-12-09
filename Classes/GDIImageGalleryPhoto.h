@@ -1,6 +1,6 @@
 //
-//  FGalleryPhoto.h
-//  FGallery
+//  GDIImageGalleryPhoto.h
+//  GDIImageGallery
 //
 //  Created by Grant Davis on 5/20/10.
 //  Copyright 2011 Grant Davis Interactive, LLC. All rights reserved.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 
-@protocol FGalleryPhotoDelegate;
+@protocol GDIImageGalleryPhotoDelegate;
 
 @interface GDIImageGalleryPhoto : NSObject {
 	
@@ -34,14 +34,14 @@
 	UIImage *_thumbnail;
 	UIImage *_fullsize;
 	
-	NSObject <FGalleryPhotoDelegate> *__unsafe_unretained _delegate;
+	NSObject <GDIImageGalleryPhotoDelegate> *__unsafe_unretained _delegate;
 	
 	NSUInteger tag;
 }
 
 
-- (id)initWithThumbnailUrl:(NSString*)thumb fullsizeUrl:(NSString*)fullsize delegate:(NSObject<FGalleryPhotoDelegate>*)delegate;
-- (id)initWithThumbnailPath:(NSString*)thumb fullsizePath:(NSString*)fullsize delegate:(NSObject<FGalleryPhotoDelegate>*)delegate;
+- (id)initWithThumbnailUrl:(NSString*)thumb fullsizeUrl:(NSString*)fullsize delegate:(NSObject<GDIImageGalleryPhotoDelegate>*)delegate;
+- (id)initWithThumbnailPath:(NSString*)thumb fullsizePath:(NSString*)fullsize delegate:(NSObject<GDIImageGalleryPhotoDelegate>*)delegate;
 
 - (void)loadThumbnail;
 - (void)loadFullsize;
@@ -60,12 +60,12 @@
 @property (nonatomic,readonly) UIImage *thumbnail;
 @property (nonatomic,readonly) UIImage *fullsize;
 
-@property (nonatomic,unsafe_unretained) NSObject<FGalleryPhotoDelegate> *delegate;
+@property (nonatomic,unsafe_unretained) NSObject<GDIImageGalleryPhotoDelegate> *delegate;
 
 @end
 
 
-@protocol FGalleryPhotoDelegate
+@protocol GDIImageGalleryPhotoDelegate
 
 @required
 - (void)galleryPhoto:(GDIImageGalleryPhoto*)photo didLoadThumbnail:(UIImage*)image;

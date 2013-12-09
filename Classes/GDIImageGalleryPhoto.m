@@ -1,6 +1,6 @@
 //
-//  FGalleryPhoto.m
-//  FGallery
+//  GDIImageGalleryPhoto.m
+//  GDIImageGallery
 //
 //  Created by Grant Davis on 5/20/10.
 //  Copyright 2011 Grant Davis Interactive, LLC. All rights reserved.
@@ -39,7 +39,7 @@
 @synthesize hasThumbLoaded = _hasThumbLoaded;
 
 
-- (id)initWithThumbnailUrl:(NSString*)thumb fullsizeUrl:(NSString*)fullsize delegate:(NSObject<FGalleryPhotoDelegate>*)delegate
+- (id)initWithThumbnailUrl:(NSString*)thumb fullsizeUrl:(NSString*)fullsize delegate:(NSObject<GDIImageGalleryPhotoDelegate>*)delegate
 {
 	self = [super init];
 	_useNetwork = YES;
@@ -49,7 +49,7 @@
 	return self;
 }
 
-- (id)initWithThumbnailPath:(NSString*)thumb fullsizePath:(NSString*)fullsize delegate:(NSObject<FGalleryPhotoDelegate>*)delegate
+- (id)initWithThumbnailPath:(NSString*)thumb fullsizePath:(NSString*)fullsize delegate:(NSObject<GDIImageGalleryPhotoDelegate>*)delegate
 {
 	self = [super init];
 	
@@ -332,7 +332,7 @@
 
 - (void)dealloc
 {
-//	NSLog(@"FGalleryPhoto dealloc");
+//	NSLog(@"GDIImageGalleryPhoto dealloc");
 	
 //	[_delegate release];
 	_delegate = nil;

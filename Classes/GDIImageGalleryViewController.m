@@ -208,7 +208,7 @@
     _container.backgroundColor			= [UIColor blackColor];
     
     // listen for container frame changes so we can properly update the layout during auto-rotation or going in and out of fullscreen
-    [_container addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew context:nil];
+//    [_container addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew context:nil];
     
     // setup scroller
     _scroller.delegate							= self;
@@ -288,6 +288,12 @@
     _caption = nil;
     
     [super viewDidUnload];
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    [self layoutViews];
 }
 
 
@@ -1186,7 +1192,7 @@
     [self destroyViews];
     
 	// remove KVO listener
-	[_container removeObserver:self forKeyPath:@"frame"];
+//	[_container removeObserver:self forKeyPath:@"frame"];
 	
 	// Cancel all photo loaders in progress
 	NSArray *keys = [_photoLoaders allKeys];

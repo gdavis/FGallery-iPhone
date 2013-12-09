@@ -1,1 +1,0 @@
-../../../../Classes/GDIImageGallery.h

@@ -1,10 +1,3 @@
-FGallery/FGallery.xcodeproj/project.xcworkspace/contents.xcworkspacedata
-FGallery/FGallery.xcodeproj/project.xcworkspace/xcuserdata/grantdavis.xcuserdatad/UserInterfaceState.xcuserstate
-FGallery/FGallery.xcodeproj/xcuserdata/grantdavis.xcuserdatad/xcschemes/FGallery.xcscheme
-FGallery/FGallery.xcodeproj/xcuserdata/grantdavis.xcuserdatad/xcschemes/xcschememanagement.plist
-FGallery/FGallery.xcodeproj/project.xcworkspace/xcuserdata/grantdavis.xcuserdatad/WorkspaceSettings.xcsettings
-
-
 # Xcode
 build/*
 *.pbxuser
@@ -30,3 +23,5 @@ profile
 # Files that might appear on external disk
 .Spotlight-V100
 .Trashes
+
+Project/Pods

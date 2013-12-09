@@ -8,13 +8,14 @@
 
 #import "GDIDemoViewController.h"
 
+#define kLocalGalleryTag 0
+#define kNetworkGalleryTag 1
+
 @interface GDIDemoViewController () {
 	NSArray *localCaptions;
     NSArray *localImages;
     NSArray *networkCaptions;
     NSArray *networkImages;
-	GDIImageGalleryViewController *localGallery;
-    GDIImageGalleryViewController *networkGallery;
 }
 
 @end
@@ -73,6 +74,33 @@
     return cell;
 }
 
+#pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+	if( indexPath.row == 0 ) {
+		GDIImageGalleryViewController *localGallery = [[GDIImageGalleryViewController alloc] initWithPhotoSource:self];
+        localGallery.view.tag = kLocalGalleryTag;
+        [self.navigationController pushViewController:localGallery animated:YES];
+	}
+    else if( indexPath.row == 1 ) {
+		GDIImageGalleryViewController *networkGallery = [[GDIImageGalleryViewController alloc] initWithPhotoSource:self];
+        networkGallery.view.tag = kNetworkGalleryTag;
+        [self.navigationController pushViewController:networkGallery animated:YES];
+    }
+	else if( indexPath.row == 2 ) {
+		UIImage *trashIcon = [UIImage imageNamed:@"GDIImageGallery.bundle/photo-gallery-trashcan.png"];
+		UIImage *captionIcon = [UIImage imageNamed:@"GDIImageGallery.bundle/photo-gallery-edit-caption.png"];
+		UIBarButtonItem *trashButton = [[UIBarButtonItem alloc] initWithImage:trashIcon style:UIBarButtonItemStylePlain target:self action:@selector(handleTrashButtonTouch:)];
+		UIBarButtonItem *editCaptionButton = [[UIBarButtonItem alloc] initWithImage:captionIcon style:UIBarButtonItemStylePlain target:self action:@selector(handleEditCaptionButtonTouch:)];
+		NSArray *barItems = [NSArray arrayWithObjects:editCaptionButton, trashButton, nil];
+		
+		GDIImageGalleryViewController *localGallery = [[GDIImageGalleryViewController alloc] initWithPhotoSource:self barItems:barItems];
+        localGallery.view.tag = kLocalGalleryTag;
+        [self.navigationController pushViewController:localGallery animated:YES];
+	}
+}
+
 
 #pragma mark - GDIImageGalleryViewControllerDelegate Methods
 
@@ -80,10 +108,10 @@
 - (NSUInteger)numberOfPhotosForPhotoGallery:(GDIImageGalleryViewController *)gallery
 {
     NSUInteger num = 0;
-    if( gallery == localGallery ) {
+    if( gallery.view.tag == kLocalGalleryTag ) {
         num = [localImages count];
     }
-    else if( gallery == networkGallery ) {
+    else if( gallery.view.tag == kNetworkGalleryTag ) {
         num = [networkImages count];
     }
 	return num;
@@ -92,20 +120,21 @@
 
 - (GDIImageGalleryPhotoSourceType)photoGallery:(GDIImageGalleryViewController *)gallery sourceTypeForPhotoAtIndex:(NSUInteger)index
 {
-	if( gallery == localGallery ) {
+	if( gallery.view.tag == kLocalGalleryTag ) {
 		return GDIImageGalleryPhotoSourceTypeLocal;
 	}
-	else return GDIImageGalleryPhotoSourceTypeNetwork;
+    
+	return GDIImageGalleryPhotoSourceTypeNetwork;
 }
 
 
 - (NSString*)photoGallery:(GDIImageGalleryViewController *)gallery captionForPhotoAtIndex:(NSUInteger)index
 {
     NSString *caption;
-    if( gallery == localGallery ) {
+    if( gallery.view.tag == kLocalGalleryTag ) {
         caption = [localCaptions objectAtIndex:index];
     }
-    else if( gallery == networkGallery ) {
+    else if( gallery.view.tag == kNetworkGalleryTag ) {
         caption = [networkCaptions objectAtIndex:index];
     }
 	return caption;
@@ -120,6 +149,9 @@
     return [networkImages objectAtIndex:index];
 }
 
+
+#pragma mark - Custom Action Handlers
+
 - (void)handleTrashButtonTouch:(id)sender {
     // here we could remove images from our local array storage and tell the gallery to remove that image
     // ex:
@@ -129,45 +161,6 @@
 
 - (void)handleEditCaptionButtonTouch:(id)sender {
     // here we could implement some code to change the caption for a stored image
-}
-
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-	if( indexPath.row == 0 ) {
-		localGallery = [[GDIImageGalleryViewController alloc] initWithPhotoSource:self];
-        [self.navigationController pushViewController:localGallery animated:YES];
-	}
-    else if( indexPath.row == 1 ) {
-		networkGallery = [[GDIImageGalleryViewController alloc] initWithPhotoSource:self];
-        [self.navigationController pushViewController:networkGallery animated:YES];
-    }
-	else if( indexPath.row == 2 ) {
-		UIImage *trashIcon = [UIImage imageNamed:@"GDIImageGallery.bundle/photo-gallery-trashcan.png"];
-		UIImage *captionIcon = [UIImage imageNamed:@"GDIImageGallery.bundle/photo-gallery-edit-caption.png"];
-		UIBarButtonItem *trashButton = [[UIBarButtonItem alloc] initWithImage:trashIcon style:UIBarButtonItemStylePlain target:self action:@selector(handleTrashButtonTouch:)];
-		UIBarButtonItem *editCaptionButton = [[UIBarButtonItem alloc] initWithImage:captionIcon style:UIBarButtonItemStylePlain target:self action:@selector(handleEditCaptionButtonTouch:)];
-		NSArray *barItems = [NSArray arrayWithObjects:editCaptionButton, trashButton, nil];
-		
-		localGallery = [[GDIImageGalleryViewController alloc] initWithPhotoSource:self barItems:barItems];
-        [self.navigationController pushViewController:localGallery animated:YES];
-	}
-}
-
-
-#pragma mark - Memory management
-
-- (void)didReceiveMemoryWarning {
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Relinquish ownership any cached data, images, etc that aren't in use.
-}
-
-- (void)viewDidUnload {
-    // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
-    // For example: self.myOutlet = nil;
 }
 
 

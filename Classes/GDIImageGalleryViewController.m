@@ -266,9 +266,6 @@
 	
 	// set buttons on the toolbar.
 	[_toolbar setItems:_barItems animated:NO];
-    
-    // build stuff
-    [self reloadGallery];
 }
 
 
@@ -358,6 +355,13 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    // check to see if we have not yet prepared
+    // the gallery with views. if not, trigger a reload
+    // to rebuild the gallery
+    if (_photoViews.count == 0) {
+        [self reloadGallery];
+    }
 	
     _isActive = YES;
     
@@ -580,6 +584,10 @@
 
 - (void)resizeThumbView
 {
+    if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
+        _thumbsView.contentInset = UIEdgeInsetsMake(self.topLayoutGuide.length, 0, 0, 0);
+    }
+    
     int barHeight = 0;
     if (self.navigationController.navigationBar.barStyle == UIBarStyleBlackTranslucent) {
         barHeight = self.navigationController.navigationBar.frame.size.height;
@@ -791,6 +799,7 @@
 {
 	float dx = 0.0;
 	float dy = 0.0;
+    
 	// loop through all thumbs to size and place them
 	NSUInteger i, count = [_photoThumbnailViews count];
 	for (i = 0; i < count; i++) {

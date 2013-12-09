@@ -1,7 +1,4 @@
+platform :ios
+xcodeproj 'GDIImageGalleryDemo/GDIImageGalleryDemo.xcodeproj'
+
 pod "GDIImageGallery", :path => "../"
-
-target "GDIImageGalleryDemo" do
-end
-
-target "DemoTests" do
-end

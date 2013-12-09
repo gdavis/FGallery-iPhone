@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0586A584481E452C93468A49 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0893BC1CB4024FA885C489C3 /* libPods.a */; };
 		7707D23418557BED00B831E1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7707D23318557BED00B831E1 /* Foundation.framework */; };
 		7707D23618557BED00B831E1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7707D23518557BED00B831E1 /* CoreGraphics.framework */; };
 		7707D23818557BED00B831E1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7707D23718557BED00B831E1 /* UIKit.framework */; };
@@ -16,14 +17,13 @@
 		7707D24718557BED00B831E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7707D24518557BED00B831E1 /* Main.storyboard */; };
 		7707D24C18557BED00B831E1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7707D24B18557BED00B831E1 /* Images.xcassets */; };
 		7707D2A818557C7700B831E1 /* GDIDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7707D2A718557C7700B831E1 /* GDIDemoViewController.m */; };
-		7707D2B91855819300B831E1 /* GDIImageGallery.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7707D2B81855819300B831E1 /* GDIImageGallery.bundle */; };
-		7768812F18558440003942CA /* libGDIImageGallery.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7768812E18558440003942CA /* libGDIImageGallery.a */; };
 		7768813818558587003942CA /* audi.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7768813518558587003942CA /* audi.jpg */; };
 		7768813918558587003942CA /* hawaii.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 7768813618558587003942CA /* hawaii.jpeg */; };
 		7768813A18558587003942CA /* lava.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 7768813718558587003942CA /* lava.jpeg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0893BC1CB4024FA885C489C3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7707D23018557BED00B831E1 /* GDIImageGalleryDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GDIImageGalleryDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7707D23318557BED00B831E1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7707D23518557BED00B831E1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -39,13 +39,10 @@
 		7707D25218557BED00B831E1 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		7707D2A618557C7700B831E1 /* GDIDemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDIDemoViewController.h; sourceTree = "<group>"; };
 		7707D2A718557C7700B831E1 /* GDIDemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDIDemoViewController.m; sourceTree = "<group>"; };
-		7707D2A918557C9E00B831E1 /* libGDImageGallery.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGDImageGallery.a; path = "../GDImageGallery/build/Debug-iphoneos/libGDImageGallery.a"; sourceTree = "<group>"; };
-		7707D2AD18557DED00B831E1 /* libGDImageGallery.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGDImageGallery.a; path = "../GDImageGallery/build/Debug-iphoneos/libGDImageGallery.a"; sourceTree = "<group>"; };
-		7707D2B81855819300B831E1 /* GDIImageGallery.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GDIImageGallery.bundle; path = ../../../Assets/GDIImageGallery.bundle; sourceTree = "<group>"; };
-		7768812E18558440003942CA /* libGDIImageGallery.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGDIImageGallery.a; path = "../GDIImageGallery/build/Debug-iphoneos/libGDIImageGallery.a"; sourceTree = "<group>"; };
 		7768813518558587003942CA /* audi.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = audi.jpg; sourceTree = "<group>"; };
 		7768813618558587003942CA /* hawaii.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = hawaii.jpeg; sourceTree = "<group>"; };
 		7768813718558587003942CA /* lava.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = lava.jpeg; sourceTree = "<group>"; };
+		AB979DCF7A004BF585AF9557 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = ../Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,10 +50,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7768812F18558440003942CA /* libGDIImageGallery.a in Frameworks */,
 				7707D23618557BED00B831E1 /* CoreGraphics.framework in Frameworks */,
 				7707D23818557BED00B831E1 /* UIKit.framework in Frameworks */,
 				7707D23418557BED00B831E1 /* Foundation.framework in Frameworks */,
+				0586A584481E452C93468A49 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,6 +66,7 @@
 				7707D23918557BED00B831E1 /* GDIImageGalleryDemo */,
 				7707D23218557BED00B831E1 /* Frameworks */,
 				7707D23118557BED00B831E1 /* Products */,
+				AB979DCF7A004BF585AF9557 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -83,13 +81,11 @@
 		7707D23218557BED00B831E1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7768812E18558440003942CA /* libGDIImageGallery.a */,
-				7707D2AD18557DED00B831E1 /* libGDImageGallery.a */,
-				7707D2A918557C9E00B831E1 /* libGDImageGallery.a */,
 				7707D23318557BED00B831E1 /* Foundation.framework */,
 				7707D23518557BED00B831E1 /* CoreGraphics.framework */,
 				7707D23718557BED00B831E1 /* UIKit.framework */,
 				7707D25218557BED00B831E1 /* XCTest.framework */,
+				0893BC1CB4024FA885C489C3 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -97,12 +93,8 @@
 		7707D23918557BED00B831E1 /* GDIImageGalleryDemo */ = {
 			isa = PBXGroup;
 			children = (
-				7707D24218557BED00B831E1 /* GDIAppDelegate.h */,
-				7707D24318557BED00B831E1 /* GDIAppDelegate.m */,
+				7768813D18558B2F003942CA /* Classes */,
 				7707D24518557BED00B831E1 /* Main.storyboard */,
-				7707D2A618557C7700B831E1 /* GDIDemoViewController.h */,
-				7707D2A718557C7700B831E1 /* GDIDemoViewController.m */,
-				7707D2B81855819300B831E1 /* GDIImageGallery.bundle */,
 				7707D24B18557BED00B831E1 /* Images.xcassets */,
 				7768813518558587003942CA /* audi.jpg */,
 				7768813618558587003942CA /* hawaii.jpeg */,
@@ -123,6 +115,17 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		7768813D18558B2F003942CA /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				7707D24218557BED00B831E1 /* GDIAppDelegate.h */,
+				7707D24318557BED00B831E1 /* GDIAppDelegate.m */,
+				7707D2A618557C7700B831E1 /* GDIDemoViewController.h */,
+				7707D2A718557C7700B831E1 /* GDIDemoViewController.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -130,9 +133,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7707D26218557BED00B831E1 /* Build configuration list for PBXNativeTarget "GDIImageGalleryDemo" */;
 			buildPhases = (
+				CC5CFCF42783439ABFF32267 /* Check Pods Manifest.lock */,
 				7707D22C18557BED00B831E1 /* Sources */,
 				7707D22D18557BED00B831E1 /* Frameworks */,
 				7707D22E18557BED00B831E1 /* Resources */,
+				948652A5E52644A0BC4D79B0 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -176,7 +181,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7707D2B91855819300B831E1 /* GDIImageGallery.bundle in Resources */,
 				7768813A18558587003942CA /* lava.jpeg in Resources */,
 				7768813818558587003942CA /* audi.jpg in Resources */,
 				7768813918558587003942CA /* hawaii.jpeg in Resources */,
@@ -187,6 +191,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		948652A5E52644A0BC4D79B0 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/../Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CC5CFCF42783439ABFF32267 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		7707D22C18557BED00B831E1 /* Sources */ = {
@@ -295,6 +332,7 @@
 		};
 		7707D26318557BED00B831E1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB979DCF7A004BF585AF9557 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -310,6 +348,7 @@
 		};
 		7707D26418557BED00B831E1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB979DCF7A004BF585AF9557 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

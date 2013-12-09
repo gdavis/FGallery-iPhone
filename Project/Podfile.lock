@@ -1,0 +1,14 @@
+PODS:
+  - GDIImageGallery (2.0.0)
+
+DEPENDENCIES:
+  - GDIImageGallery (from `../`)
+
+EXTERNAL SOURCES:
+  GDIImageGallery:
+    :path: ../
+
+SPEC CHECKSUMS:
+  GDIImageGallery: 716dc0bce5853b6971d4de7eb75b1abb79003ad7
+
+COCOAPODS: 0.28.0

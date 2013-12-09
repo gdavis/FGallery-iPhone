@@ -79,7 +79,7 @@
 
 - (int)numberOfPhotosForPhotoGallery:(GDIImageGalleryViewController *)gallery
 {
-    int num;
+    int num = 0;
     if( gallery == localGallery ) {
         num = [localImages count];
     }

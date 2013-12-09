@@ -56,7 +56,7 @@ typedef enum
 @protocol GDIImageGalleryViewControllerDelegate
 
 @required
-- (int)numberOfPhotosForPhotoGallery:(GDIImageGalleryViewController*)gallery;
+- (NSUInteger)numberOfPhotosForPhotoGallery:(GDIImageGalleryViewController*)gallery;
 - (GDIImageGalleryPhotoSourceType)photoGallery:(GDIImageGalleryViewController*)gallery sourceTypeForPhotoAtIndex:(NSUInteger)index;
 
 @optional

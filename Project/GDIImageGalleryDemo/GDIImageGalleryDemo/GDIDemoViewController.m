@@ -77,9 +77,9 @@
 #pragma mark - GDIImageGalleryViewControllerDelegate Methods
 
 
-- (int)numberOfPhotosForPhotoGallery:(GDIImageGalleryViewController *)gallery
+- (NSUInteger)numberOfPhotosForPhotoGallery:(GDIImageGalleryViewController *)gallery
 {
-    int num = 0;
+    NSUInteger num = 0;
     if( gallery == localGallery ) {
         num = [localImages count];
     }

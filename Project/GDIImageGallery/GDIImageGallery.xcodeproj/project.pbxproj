@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		7768810018558408003942CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 776880FF18558408003942CA /* Foundation.framework */; };
-		7768810518558408003942CA /* GDIImageGallery.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7768810418558408003942CA /* GDIImageGallery.h */; };
 		7768810E18558409003942CA /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7768810D18558409003942CA /* XCTest.framework */; };
 		7768810F18558409003942CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 776880FF18558408003942CA /* Foundation.framework */; };
 		7768811118558409003942CA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7768811018558409003942CA /* UIKit.framework */; };
@@ -22,6 +21,7 @@
 		7768813118558452003942CA /* GDIImageGalleryPhotoView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7768812718558421003942CA /* GDIImageGalleryPhotoView.h */; };
 		7768813218558452003942CA /* GDIImageGalleryViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7768812918558421003942CA /* GDIImageGalleryViewController.h */; };
 		77688134185584B7003942CA /* GDIImageGallery.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 77688133185584B7003942CA /* GDIImageGallery.bundle */; };
+		7768813C185589A6003942CA /* GDIImageGallery.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7768813B1855899E003942CA /* GDIImageGallery.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,10 +41,10 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				7768813C185589A6003942CA /* GDIImageGallery.h in CopyFiles */,
 				7768813018558452003942CA /* GDIImageGalleryPhoto.h in CopyFiles */,
 				7768813118558452003942CA /* GDIImageGalleryPhotoView.h in CopyFiles */,
 				7768813218558452003942CA /* GDIImageGalleryViewController.h in CopyFiles */,
-				7768810518558408003942CA /* GDIImageGallery.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,7 +54,6 @@
 		776880FC18558408003942CA /* libGDIImageGallery.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGDIImageGallery.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		776880FF18558408003942CA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7768810318558408003942CA /* GDIImageGallery-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GDIImageGallery-Prefix.pch"; sourceTree = "<group>"; };
-		7768810418558408003942CA /* GDIImageGallery.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDIImageGallery.h; sourceTree = "<group>"; };
 		7768810C18558409003942CA /* GDIImageGalleryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GDIImageGalleryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7768810D18558409003942CA /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		7768811018558409003942CA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -68,6 +67,7 @@
 		7768812918558421003942CA /* GDIImageGalleryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GDIImageGalleryViewController.h; path = ../../../Classes/GDIImageGalleryViewController.h; sourceTree = "<group>"; };
 		7768812A18558421003942CA /* GDIImageGalleryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GDIImageGalleryViewController.m; path = ../../../Classes/GDIImageGalleryViewController.m; sourceTree = "<group>"; };
 		77688133185584B7003942CA /* GDIImageGallery.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GDIImageGallery.bundle; path = ../../../Assets/GDIImageGallery.bundle; sourceTree = "<group>"; };
+		7768813B1855899E003942CA /* GDIImageGallery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GDIImageGallery.h; path = ../../../Classes/GDIImageGallery.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,7 +125,7 @@
 		7768810118558408003942CA /* GDIImageGallery */ = {
 			isa = PBXGroup;
 			children = (
-				7768810418558408003942CA /* GDIImageGallery.h */,
+				7768813B1855899E003942CA /* GDIImageGallery.h */,
 				7768812518558421003942CA /* GDIImageGalleryPhoto.h */,
 				7768812618558421003942CA /* GDIImageGalleryPhoto.m */,
 				7768812718558421003942CA /* GDIImageGalleryPhotoView.h */,
@@ -358,6 +358,7 @@
 				DSTROOT = /tmp/GDIImageGallery.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GDIImageGallery/GDIImageGallery-Prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -370,6 +371,7 @@
 				DSTROOT = /tmp/GDIImageGallery.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GDIImageGallery/GDIImageGallery-Prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -433,6 +435,7 @@
 				7768812118558409003942CA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7768812218558409003942CA /* Build configuration list for PBXNativeTarget "GDIImageGalleryTests" */ = {
 			isa = XCConfigurationList;
@@ -441,6 +444,7 @@
 				7768812418558409003942CA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -5,6 +5,10 @@
 * Cocoapod support
 * Major project restructuring (for cocoapds)
 
+In Development:
+* Rebuild thumbnail view with UICollectionView
+* Add support for thumbnail view subclasses to customize the UICollectionView
+
 ## 1.3
 * Various fixes and merged pull requests.
 

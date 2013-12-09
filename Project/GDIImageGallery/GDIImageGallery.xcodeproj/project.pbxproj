@@ -1,0 +1,448 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7768810018558408003942CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 776880FF18558408003942CA /* Foundation.framework */; };
+		7768810518558408003942CA /* GDIImageGallery.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7768810418558408003942CA /* GDIImageGallery.h */; };
+		7768810E18558409003942CA /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7768810D18558409003942CA /* XCTest.framework */; };
+		7768810F18558409003942CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 776880FF18558408003942CA /* Foundation.framework */; };
+		7768811118558409003942CA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7768811018558409003942CA /* UIKit.framework */; };
+		7768811418558409003942CA /* libGDIImageGallery.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 776880FC18558408003942CA /* libGDIImageGallery.a */; };
+		7768811A18558409003942CA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7768811818558409003942CA /* InfoPlist.strings */; };
+		7768811C18558409003942CA /* GDIImageGalleryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7768811B18558409003942CA /* GDIImageGalleryTests.m */; };
+		7768812B18558421003942CA /* GDIImageGalleryPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 7768812618558421003942CA /* GDIImageGalleryPhoto.m */; };
+		7768812C18558421003942CA /* GDIImageGalleryPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7768812818558421003942CA /* GDIImageGalleryPhotoView.m */; };
+		7768812D18558421003942CA /* GDIImageGalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7768812A18558421003942CA /* GDIImageGalleryViewController.m */; };
+		7768813018558452003942CA /* GDIImageGalleryPhoto.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7768812518558421003942CA /* GDIImageGalleryPhoto.h */; };
+		7768813118558452003942CA /* GDIImageGalleryPhotoView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7768812718558421003942CA /* GDIImageGalleryPhotoView.h */; };
+		7768813218558452003942CA /* GDIImageGalleryViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7768812918558421003942CA /* GDIImageGalleryViewController.h */; };
+		77688134185584B7003942CA /* GDIImageGallery.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 77688133185584B7003942CA /* GDIImageGallery.bundle */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7768811218558409003942CA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 776880F418558408003942CA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 776880FB18558408003942CA;
+			remoteInfo = GDIImageGallery;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		776880FA18558408003942CA /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				7768813018558452003942CA /* GDIImageGalleryPhoto.h in CopyFiles */,
+				7768813118558452003942CA /* GDIImageGalleryPhotoView.h in CopyFiles */,
+				7768813218558452003942CA /* GDIImageGalleryViewController.h in CopyFiles */,
+				7768810518558408003942CA /* GDIImageGallery.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		776880FC18558408003942CA /* libGDIImageGallery.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGDIImageGallery.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		776880FF18558408003942CA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		7768810318558408003942CA /* GDIImageGallery-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GDIImageGallery-Prefix.pch"; sourceTree = "<group>"; };
+		7768810418558408003942CA /* GDIImageGallery.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDIImageGallery.h; sourceTree = "<group>"; };
+		7768810C18558409003942CA /* GDIImageGalleryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GDIImageGalleryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7768810D18558409003942CA /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		7768811018558409003942CA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		7768811718558409003942CA /* GDIImageGalleryTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GDIImageGalleryTests-Info.plist"; sourceTree = "<group>"; };
+		7768811918558409003942CA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7768811B18558409003942CA /* GDIImageGalleryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDIImageGalleryTests.m; sourceTree = "<group>"; };
+		7768812518558421003942CA /* GDIImageGalleryPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GDIImageGalleryPhoto.h; path = ../../../Classes/GDIImageGalleryPhoto.h; sourceTree = "<group>"; };
+		7768812618558421003942CA /* GDIImageGalleryPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GDIImageGalleryPhoto.m; path = ../../../Classes/GDIImageGalleryPhoto.m; sourceTree = "<group>"; };
+		7768812718558421003942CA /* GDIImageGalleryPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GDIImageGalleryPhotoView.h; path = ../../../Classes/GDIImageGalleryPhotoView.h; sourceTree = "<group>"; };
+		7768812818558421003942CA /* GDIImageGalleryPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GDIImageGalleryPhotoView.m; path = ../../../Classes/GDIImageGalleryPhotoView.m; sourceTree = "<group>"; };
+		7768812918558421003942CA /* GDIImageGalleryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GDIImageGalleryViewController.h; path = ../../../Classes/GDIImageGalleryViewController.h; sourceTree = "<group>"; };
+		7768812A18558421003942CA /* GDIImageGalleryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GDIImageGalleryViewController.m; path = ../../../Classes/GDIImageGalleryViewController.m; sourceTree = "<group>"; };
+		77688133185584B7003942CA /* GDIImageGallery.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GDIImageGallery.bundle; path = ../../../Assets/GDIImageGallery.bundle; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		776880F918558408003942CA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7768810018558408003942CA /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7768810918558409003942CA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7768810E18558409003942CA /* XCTest.framework in Frameworks */,
+				7768811418558409003942CA /* libGDIImageGallery.a in Frameworks */,
+				7768811118558409003942CA /* UIKit.framework in Frameworks */,
+				7768810F18558409003942CA /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		776880F318558408003942CA = {
+			isa = PBXGroup;
+			children = (
+				7768810118558408003942CA /* GDIImageGallery */,
+				7768811518558409003942CA /* GDIImageGalleryTests */,
+				776880FE18558408003942CA /* Frameworks */,
+				776880FD18558408003942CA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		776880FD18558408003942CA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				776880FC18558408003942CA /* libGDIImageGallery.a */,
+				7768810C18558409003942CA /* GDIImageGalleryTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		776880FE18558408003942CA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				776880FF18558408003942CA /* Foundation.framework */,
+				7768810D18558409003942CA /* XCTest.framework */,
+				7768811018558409003942CA /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7768810118558408003942CA /* GDIImageGallery */ = {
+			isa = PBXGroup;
+			children = (
+				7768810418558408003942CA /* GDIImageGallery.h */,
+				7768812518558421003942CA /* GDIImageGalleryPhoto.h */,
+				7768812618558421003942CA /* GDIImageGalleryPhoto.m */,
+				7768812718558421003942CA /* GDIImageGalleryPhotoView.h */,
+				7768812818558421003942CA /* GDIImageGalleryPhotoView.m */,
+				7768812918558421003942CA /* GDIImageGalleryViewController.h */,
+				7768812A18558421003942CA /* GDIImageGalleryViewController.m */,
+				77688133185584B7003942CA /* GDIImageGallery.bundle */,
+				7768810218558408003942CA /* Supporting Files */,
+			);
+			path = GDIImageGallery;
+			sourceTree = "<group>";
+		};
+		7768810218558408003942CA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7768810318558408003942CA /* GDIImageGallery-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7768811518558409003942CA /* GDIImageGalleryTests */ = {
+			isa = PBXGroup;
+			children = (
+				7768811B18558409003942CA /* GDIImageGalleryTests.m */,
+				7768811618558409003942CA /* Supporting Files */,
+			);
+			path = GDIImageGalleryTests;
+			sourceTree = "<group>";
+		};
+		7768811618558409003942CA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7768811718558409003942CA /* GDIImageGalleryTests-Info.plist */,
+				7768811818558409003942CA /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		776880FB18558408003942CA /* GDIImageGallery */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7768811F18558409003942CA /* Build configuration list for PBXNativeTarget "GDIImageGallery" */;
+			buildPhases = (
+				776880F818558408003942CA /* Sources */,
+				776880F918558408003942CA /* Frameworks */,
+				776880FA18558408003942CA /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GDIImageGallery;
+			productName = GDIImageGallery;
+			productReference = 776880FC18558408003942CA /* libGDIImageGallery.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		7768810B18558409003942CA /* GDIImageGalleryTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7768812218558409003942CA /* Build configuration list for PBXNativeTarget "GDIImageGalleryTests" */;
+			buildPhases = (
+				7768810818558409003942CA /* Sources */,
+				7768810918558409003942CA /* Frameworks */,
+				7768810A18558409003942CA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7768811318558409003942CA /* PBXTargetDependency */,
+			);
+			name = GDIImageGalleryTests;
+			productName = GDIImageGalleryTests;
+			productReference = 7768810C18558409003942CA /* GDIImageGalleryTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		776880F418558408003942CA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = "Grant Davis Interactive, LLC";
+			};
+			buildConfigurationList = 776880F718558408003942CA /* Build configuration list for PBXProject "GDIImageGallery" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 776880F318558408003942CA;
+			productRefGroup = 776880FD18558408003942CA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				776880FB18558408003942CA /* GDIImageGallery */,
+				7768810B18558409003942CA /* GDIImageGalleryTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7768810A18558409003942CA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7768811A18558409003942CA /* InfoPlist.strings in Resources */,
+				77688134185584B7003942CA /* GDIImageGallery.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		776880F818558408003942CA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7768812B18558421003942CA /* GDIImageGalleryPhoto.m in Sources */,
+				7768812C18558421003942CA /* GDIImageGalleryPhotoView.m in Sources */,
+				7768812D18558421003942CA /* GDIImageGalleryViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7768810818558409003942CA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7768811C18558409003942CA /* GDIImageGalleryTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7768811318558409003942CA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 776880FB18558408003942CA /* GDIImageGallery */;
+			targetProxy = 7768811218558409003942CA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		7768811818558409003942CA /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7768811918558409003942CA /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7768811D18558409003942CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		7768811E18558409003942CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7768812018558409003942CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/GDIImageGallery.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GDIImageGallery/GDIImageGallery-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		7768812118558409003942CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/GDIImageGallery.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GDIImageGallery/GDIImageGallery-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		7768812318558409003942CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GDIImageGallery/GDIImageGallery-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "GDIImageGalleryTests/GDIImageGalleryTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		7768812418558409003942CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GDIImageGallery/GDIImageGallery-Prefix.pch";
+				INFOPLIST_FILE = "GDIImageGalleryTests/GDIImageGalleryTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		776880F718558408003942CA /* Build configuration list for PBXProject "GDIImageGallery" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7768811D18558409003942CA /* Debug */,
+				7768811E18558409003942CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7768811F18558409003942CA /* Build configuration list for PBXNativeTarget "GDIImageGallery" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7768812018558409003942CA /* Debug */,
+				7768812118558409003942CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		7768812218558409003942CA /* Build configuration list for PBXNativeTarget "GDIImageGalleryTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7768812318558409003942CA /* Debug */,
+				7768812418558409003942CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 776880F418558408003942CA /* Project object */;
+}

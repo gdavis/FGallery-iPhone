@@ -6,4 +6,3 @@
 //  Copyright (c) 2013 Grant Davis Interactive, LLC. All rights reserved.
 //
 
-#import "GDIImageGalleryViewController.h"

@@ -1182,7 +1182,9 @@
 
 
 - (void)dealloc {
-	
+    
+    [self destroyViews];
+    
 	// remove KVO listener
 	[_container removeObserver:self forKeyPath:@"frame"];
 	
@@ -1209,8 +1211,10 @@
 	
     _innerContainer = nil;
 	
+    _thumbsView.delegate = nil;
+    _thumbsView = nil;
 	
-	
+	_scroller.delegate = nil;
     _scroller = nil;
 	
 	[_photoLoaders removeAllObjects];

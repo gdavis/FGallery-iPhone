@@ -505,7 +505,6 @@
     
     UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: NSLocalizedString(@"Back", @"") style: UIBarButtonItemStyleBordered target: nil action: nil];
     [[self navigationItem] setBackBarButtonItem: newBackButton];
-    [newBackButton release];
     
     _useThumbnailView = useThumbnailView;
     if( self.navigationController ) {
@@ -1150,15 +1149,14 @@
 	// unload fullsize and thumbnail images for all our images except at the current index.
 	NSArray *keys = [_photoLoaders allKeys];
 	NSUInteger i, count = [keys count];
-<<<<<<< HEAD:FGallery/Classes/GDIImageGallery/FGalleryViewController.m
     if (_isThumbViewShowing==YES) {
         for (i = 0; i < count; i++)
         {
-            FGalleryPhoto *photo = [_photoLoaders objectForKey:[keys objectAtIndex:i]];
+            GDIImageGalleryPhoto *photo = [_photoLoaders objectForKey:[keys objectAtIndex:i]];
             [photo unloadFullsize];
             
             // unload main image thumb
-            FGalleryPhotoView *photoView = [_photoViews objectAtIndex:i];
+            GDIImageGalleryPhotoView *photoView = [_photoViews objectAtIndex:i];
             photoView.imageView.image = nil;
         }
     } else {
@@ -1166,12 +1164,12 @@
         {
             if( i != _currentIndex )
             {
-                FGalleryPhoto *photo = [_photoLoaders objectForKey:[keys objectAtIndex:i]];
+                GDIImageGalleryPhoto *photo = [_photoLoaders objectForKey:[keys objectAtIndex:i]];
                 [photo unloadFullsize];
                 [photo unloadThumbnail];
                 
                 // unload main image thumb
-                FGalleryPhotoView *photoView = [_photoViews objectAtIndex:i];
+                GDIImageGalleryPhotoView *photoView = [_photoViews objectAtIndex:i];
                 photoView.imageView.image = nil;
                 
                 // unload thumb tile
@@ -1180,25 +1178,6 @@
             }
         }
     }
-=======
-	for (i = 0; i < count; i++) 
-	{
-		if( i != _currentIndex )
-		{
-			GDIImageGalleryPhoto *photo = [_photoLoaders objectForKey:[keys objectAtIndex:i]];
-			[photo unloadFullsize];
-			[photo unloadThumbnail];
-			
-			// unload main image thumb
-			GDIImageGalleryPhotoView *photoView = [_photoViews objectAtIndex:i];
-			photoView.imageView.image = nil;
-			
-			// unload thumb tile
-			photoView = [_photoThumbnailViews objectAtIndex:i];
-			photoView.imageView.image = nil;
-		}
-	}
->>>>>>> rework project to use multiple targets and improved organization:FGallery/Classes/GDIImageGallery/GDIImageGalleryViewController.m
 }
 
 

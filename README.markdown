@@ -11,56 +11,41 @@ FGallery is a photo gallery viewer developed for iPhone applications. FGallery i
 * Rotation support
 * Load images locally or from a web URL
 * Custom UITabBarItems
+* ARC Support
+
+## Installation
+
+GDIImageGallery is available through [CocoaPods](http://cocoapods.org), to install
+it simply add the following line to your Podfile:
+
+    pod "GDIImageGallery"
 
 ## Usage
+
+To run the example project; clone the repo, and run `pod install` from the Project directory first.
+
 ### Basic Instantiation
 FGallery requires an object to implement the FGalleryViewControllerDelegate protocol in order to act as the photo source for the gallery. Then just push it into the navigation controller stack as you would with any UIViewController.
 
 	FGalleryViewController *galleryVC = [[FGalleryViewController alloc] initWithPhotoSource:self];
 	[self.navigationController pushViewController:galleryVC animated:YES];
-	[galleryVC release];
 	
 ### Instantiation with Custom Bar Items
 FGallery allows you add additional UIBarButtonItems to the UIToolbar that exists within the gallery to perform additional functionality.
 
 	UIImage *trashIcon = [UIImage imageNamed:@"photo-gallery-trashcan.png"];
 	UIImage *captionIcon = [UIImage imageNamed:@"photo-gallery-edit-caption.png"];
-	UIBarButtonItem *trashButton = [[[UIBarButtonItem alloc] initWithImage:trashIcon style:UIBarButtonItemStylePlain target:self action:@selector(handleTrashButtonTouch:)] autorelease];
-	UIBarButtonItem *editCaptionButton = [[[UIBarButtonItem alloc] initWithImage:captionIcon style:UIBarButtonItemStylePlain target:self action:@selector(handleEditCaptionButtonTouch:)] autorelease];
+	UIBarButtonItem *trashButton = [[UIBarButtonItem alloc] initWithImage:trashIcon style:UIBarButtonItemStylePlain target:self action:@selector(handleTrashButtonTouch:)];
+	UIBarButtonItem *editCaptionButton = [[UIBarButtonItem alloc] initWithImage:captionIcon style:UIBarButtonItemStylePlain target:self action:@selector(handleEditCaptionButtonTouch:)];
 	NSArray *barItems = [NSArray arrayWithObjects:editCaptionButton, trashButton, nil];
 
 	FGalleryViewController *galleryVC = [[FGalleryViewController alloc] initWithPhotoSource:self barItems:barItems];
 	[self.navigationController pushViewController:galleryVC animated:YES];
-	[galleryVC release];
 
+## Author
 
-
-## Changes
-### 1.3
-* Various fixes and merged pull requests.
-
-### 1.2
-* Adds new 'startingIndex' property. As you might guess, it allows a developer to specify what the starting index should be for the gallery. This must be set before the view is built in the ViewController. Defaults to 0.
-* Adds new 'beginsInThumbnailView' property. Allows the developer to indicate that the view should initialize and show the thumbnail view when first displaying instead of starting on the first image. This must be set before the view is presented. Defaults to 'NO'.
-* FGallery classes are now contained in an FGallery group, separate from other code classes that are part of the demo. 
-
-
-### 1.1
-* Added support for translucent navigation bars
-* Added support to hide the right navigation button and therefore disable thumbnails through a new useThumbnailView property.
-* Added better memory management for building and destroying view objects.
-* Fixed a crash in the network images demo.
-
-### 1.0
-* First release!
+Grant Davis, grant.davis@gmail.com
 
 ## License
-(The MIT License)
 
-Copyright © 2010 Grant Davis Interactive, LLC
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the ‘Software’), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED ‘AS IS’, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+GDIImageGallery is available under the MIT license. See the LICENSE file for more info.

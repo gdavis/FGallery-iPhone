@@ -25,7 +25,7 @@
 {
     [super viewDidLoad];
     
-	self.title = @"FGallery";
+	self.title = @"GDIImageGallery";
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     
 	localCaptions = [[NSArray alloc] initWithObjects:@"Lava", @"Hawaii", @"Audi", @"Happy New Year!",@"Frosty Web",nil];
@@ -90,12 +90,12 @@
 }
 
 
-- (FGalleryPhotoSourceType)photoGallery:(GDIImageGalleryViewController *)gallery sourceTypeForPhotoAtIndex:(NSUInteger)index
+- (GDIImageGalleryPhotoSourceType)photoGallery:(GDIImageGalleryViewController *)gallery sourceTypeForPhotoAtIndex:(NSUInteger)index
 {
 	if( gallery == localGallery ) {
-		return FGalleryPhotoSourceTypeLocal;
+		return GDIImageGalleryPhotoSourceTypeLocal;
 	}
-	else return FGalleryPhotoSourceTypeNetwork;
+	else return GDIImageGalleryPhotoSourceTypeNetwork;
 }
 
 
@@ -112,11 +112,11 @@
 }
 
 
-- (NSString*)photoGallery:(GDIImageGalleryViewController*)gallery filePathForPhotoSize:(FGalleryPhotoSize)size atIndex:(NSUInteger)index {
+- (NSString*)photoGallery:(GDIImageGalleryViewController*)gallery filePathForPhotoSize:(GDIImageGalleryPhotoSize)size atIndex:(NSUInteger)index {
     return [localImages objectAtIndex:index];
 }
 
-- (NSString*)photoGallery:(GDIImageGalleryViewController *)gallery urlForPhotoSize:(FGalleryPhotoSize)size atIndex:(NSUInteger)index {
+- (NSString*)photoGallery:(GDIImageGalleryViewController *)gallery urlForPhotoSize:(GDIImageGalleryPhotoSize)size atIndex:(NSUInteger)index {
     return [networkImages objectAtIndex:index];
 }
 

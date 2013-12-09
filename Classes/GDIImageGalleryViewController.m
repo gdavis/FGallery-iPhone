@@ -1,6 +1,6 @@
     //
 //  GDIImageGalleryViewController.m
-//  FGallery
+//  GDIImageGallery
 //
 //  Created by Grant Davis on 5/19/10.
 //  Copyright 2011 Grant Davis Interactive, LLC. All rights reserved.
@@ -966,21 +966,21 @@
 
 - (GDIImageGalleryPhoto*)createGalleryPhotoForIndex:(NSUInteger)index
 {
-	FGalleryPhotoSourceType sourceType = [_photoSource photoGallery:self sourceTypeForPhotoAtIndex:index];
+	GDIImageGalleryPhotoSourceType sourceType = [_photoSource photoGallery:self sourceTypeForPhotoAtIndex:index];
 	GDIImageGalleryPhoto *photo;
 	NSString *thumbPath;
 	NSString *fullsizePath;
 	
-	if( sourceType == FGalleryPhotoSourceTypeLocal )
+	if( sourceType == GDIImageGalleryPhotoSourceTypeLocal )
 	{
-		thumbPath = [_photoSource photoGallery:self filePathForPhotoSize:FGalleryPhotoSizeThumbnail atIndex:index];
-		fullsizePath = [_photoSource photoGallery:self filePathForPhotoSize:FGalleryPhotoSizeFullsize atIndex:index];
+		thumbPath = [_photoSource photoGallery:self filePathForPhotoSize:GDIImageGalleryPhotoSizeThumbnail atIndex:index];
+		fullsizePath = [_photoSource photoGallery:self filePathForPhotoSize:GDIImageGalleryPhotoSizeFullsize atIndex:index];
 		photo = [[GDIImageGalleryPhoto alloc] initWithThumbnailPath:thumbPath fullsizePath:fullsizePath delegate:self];
 	}
-	else if( sourceType == FGalleryPhotoSourceTypeNetwork )
+	else if( sourceType == GDIImageGalleryPhotoSourceTypeNetwork )
 	{
-		thumbPath = [_photoSource photoGallery:self urlForPhotoSize:FGalleryPhotoSizeThumbnail atIndex:index];
-		fullsizePath = [_photoSource photoGallery:self urlForPhotoSize:FGalleryPhotoSizeFullsize atIndex:index];
+		thumbPath = [_photoSource photoGallery:self urlForPhotoSize:GDIImageGalleryPhotoSizeThumbnail atIndex:index];
+		fullsizePath = [_photoSource photoGallery:self urlForPhotoSize:GDIImageGalleryPhotoSizeFullsize atIndex:index];
 		photo = [[GDIImageGalleryPhoto alloc] initWithThumbnailUrl:thumbPath fullsizeUrl:fullsizePath delegate:self];
 	}
 	else 
@@ -1021,7 +1021,7 @@
 }
 
 
-#pragma mark - FGalleryPhoto Delegate Methods
+#pragma mark - GDIImageGalleryPhoto Delegate Methods
 
 
 - (void)galleryPhoto:(GDIImageGalleryPhoto*)photo willLoadThumbnailFromPath:(NSString*)path
@@ -1196,10 +1196,10 @@
 
 /**
  *	This section overrides the auto-rotate methods for UINaviationController and UITabBarController 
- *	to allow the tab bar to rotate only when a FGalleryController is the visible controller. Sweet.
+ *	to allow the tab bar to rotate only when a GDIImageGalleryController is the visible controller. Sweet.
  */
 
-@implementation UINavigationController (FGallery)
+@implementation UINavigationController (GDIImageGallery)
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -1244,7 +1244,7 @@
 
 
 
-@implementation UITabBarController (FGallery)
+@implementation UITabBarController (GDIImageGallery)
 
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

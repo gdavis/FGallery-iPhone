@@ -720,7 +720,7 @@
 - (void)updateTitle
 {
     if (!_hideTitle){
-        [self setTitle:[NSString stringWithFormat:@"%li %@ %lu", _currentIndex+1, NSLocalizedString(@"of", @"") , (unsigned long)[_photoSource numberOfPhotosForPhotoGallery:self]]];
+        [self setTitle:[NSString stringWithFormat:@"%i %@ %lu", _currentIndex+1, NSLocalizedString(@"of", @"") , (unsigned long)[_photoSource numberOfPhotosForPhotoGallery:self]]];
     }else{
         [self setTitle:@""];
     }

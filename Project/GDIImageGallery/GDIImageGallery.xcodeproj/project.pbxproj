@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		770FFDED1856D0A5007BFF28 /* GDIImageGalleryCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 770FFDEC1856D0A5007BFF28 /* GDIImageGalleryCollectionViewController.m */; };
+		770FFDEE1856D15C007BFF28 /* GDIImageGalleryCollectionViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 770FFDEB1856D0A5007BFF28 /* GDIImageGalleryCollectionViewController.h */; };
 		7768810018558408003942CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 776880FF18558408003942CA /* Foundation.framework */; };
 		7768810E18558409003942CA /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7768810D18558409003942CA /* XCTest.framework */; };
 		7768810F18558409003942CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 776880FF18558408003942CA /* Foundation.framework */; };
@@ -41,6 +43,7 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				770FFDEE1856D15C007BFF28 /* GDIImageGalleryCollectionViewController.h in CopyFiles */,
 				7768813C185589A6003942CA /* GDIImageGallery.h in CopyFiles */,
 				7768813018558452003942CA /* GDIImageGalleryPhoto.h in CopyFiles */,
 				7768813118558452003942CA /* GDIImageGalleryPhotoView.h in CopyFiles */,
@@ -51,6 +54,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		770FFDEB1856D0A5007BFF28 /* GDIImageGalleryCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GDIImageGalleryCollectionViewController.h; path = ../../../Classes/GDIImageGalleryCollectionViewController.h; sourceTree = "<group>"; };
+		770FFDEC1856D0A5007BFF28 /* GDIImageGalleryCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GDIImageGalleryCollectionViewController.m; path = ../../../Classes/GDIImageGalleryCollectionViewController.m; sourceTree = "<group>"; };
+		770FFDEF1856D4C0007BFF28 /* GDIImageGallery.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = GDIImageGallery.podspec; path = ../../GDIImageGallery.podspec; sourceTree = "<group>"; };
 		776880FC18558408003942CA /* libGDIImageGallery.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGDIImageGallery.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		776880FF18558408003942CA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7768810318558408003942CA /* GDIImageGallery-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GDIImageGallery-Prefix.pch"; sourceTree = "<group>"; };
@@ -96,6 +102,7 @@
 		776880F318558408003942CA = {
 			isa = PBXGroup;
 			children = (
+				770FFDEF1856D4C0007BFF28 /* GDIImageGallery.podspec */,
 				7768810118558408003942CA /* GDIImageGallery */,
 				7768811518558409003942CA /* GDIImageGalleryTests */,
 				776880FE18558408003942CA /* Frameworks */,
@@ -132,6 +139,8 @@
 				7768812818558421003942CA /* GDIImageGalleryPhotoView.m */,
 				7768812918558421003942CA /* GDIImageGalleryViewController.h */,
 				7768812A18558421003942CA /* GDIImageGalleryViewController.m */,
+				770FFDEB1856D0A5007BFF28 /* GDIImageGalleryCollectionViewController.h */,
+				770FFDEC1856D0A5007BFF28 /* GDIImageGalleryCollectionViewController.m */,
 				77688133185584B7003942CA /* GDIImageGallery.bundle */,
 				7768810218558408003942CA /* Supporting Files */,
 			);
@@ -246,6 +255,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				770FFDED1856D0A5007BFF28 /* GDIImageGalleryCollectionViewController.m in Sources */,
 				7768812B18558421003942CA /* GDIImageGalleryPhoto.m in Sources */,
 				7768812C18558421003942CA /* GDIImageGalleryPhotoView.m in Sources */,
 				7768812D18558421003942CA /* GDIImageGalleryViewController.m in Sources */,

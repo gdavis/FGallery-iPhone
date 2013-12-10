@@ -10,7 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "GDIImageGalleryPhotoView.h"
 #import "GDIImageGalleryPhoto.h"
-
+#import "GDIImageGalleryCollectionViewController.h"
 
 typedef enum
 {
@@ -28,7 +28,8 @@ typedef enum
 
 @interface GDIImageGalleryViewController : UIViewController <UIScrollViewDelegate,
                                                         GDIImageGalleryPhotoDelegate,
-                                                        GDIImageGalleryPhotoViewDelegate>
+                                                        GDIImageGalleryPhotoViewDelegate,
+                                                        GDIImageGalleryCollectionViewControllerDelegate>
 
 - (id)initWithPhotoSource:(NSObject<GDIImageGalleryViewControllerDelegate>*)photoSrc;
 - (id)initWithPhotoSource:(NSObject<GDIImageGalleryViewControllerDelegate>*)photoSrc barItems:(NSArray*)items;
@@ -42,13 +43,17 @@ typedef enum
 
 @property NSInteger currentIndex;
 @property NSInteger startingIndex;
-@property (nonatomic,unsafe_unretained) NSObject<GDIImageGalleryViewControllerDelegate> *photoSource;
-@property (nonatomic,readonly) UIToolbar *toolBar;
-@property (nonatomic,readonly) UIView* thumbsView;
-@property (nonatomic) NSString *galleryID;
+@property (nonatomic, unsafe_unretained) NSObject<GDIImageGalleryViewControllerDelegate> *photoSource;
+@property (nonatomic, readonly) UIToolbar *toolBar;
+//@property (nonatomic, readonly) UIView* thumbsView;
+@property (nonatomic, copy) NSString *galleryID;
 @property (nonatomic) BOOL useThumbnailView;
 @property (nonatomic) BOOL beginsInThumbnailView;
 @property (nonatomic) BOOL hideTitle;
+
+// thumbnail collection view
+@property (nonatomic, strong) GDIImageGalleryCollectionViewController *collectionViewController;
+@property (nonatomic, strong) UICollectionViewLayout *collectionViewLayout;
 
 @end
 

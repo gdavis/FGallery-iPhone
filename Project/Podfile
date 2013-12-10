@@ -1,4 +1,4 @@
-platform :ios
+platform :ios, 6.0
 xcodeproj 'GDIImageGalleryDemo/GDIImageGalleryDemo.xcodeproj'
 
 pod "GDIImageGallery", :path => "../"

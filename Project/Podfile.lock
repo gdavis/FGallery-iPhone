@@ -9,6 +9,6 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  GDIImageGallery: 716dc0bce5853b6971d4de7eb75b1abb79003ad7
+  GDIImageGallery: a71a153fae8396346aecf38f16bfcd9874a4b324
 
 COCOAPODS: 0.28.0

@@ -20,13 +20,9 @@ Pod::Spec.new do |s|
   s.author       = { "Grant Davis" => "grant.davis@gmail.com" }
   s.source       = { :git => "http://EXAMPLE/NAME.git", :tag => s.version.to_s }
 
-  s.platform     = :ios, '4.3'
+  s.platform     = :ios, '6.0'
   s.requires_arc = true
 
   s.source_files = 'Classes'
   s.resources = 'Assets/GDIImageGallery.bundle'
-  
-  # s.public_header_files = 'Classes/**/*.h'
-  # s.frameworks = 'SomeFramework', 'AnotherFramework'
-  # s.dependency 'JSONKit', '~> 1.4'
 end

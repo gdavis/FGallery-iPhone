@@ -8,8 +8,8 @@
 
 #import "GDIImageGalleryViewController.h"
 
-#define kThumbnailSize 75
-#define kThumbnailSpacing 4
+//#define kThumbnailSize 75
+//#define kThumbnailSpacing 4
 #define kCaptionPadding 3
 #define kToolbarHeight 40
 
@@ -23,20 +23,20 @@
 	UIStatusBarStyle _prevStatusStyle;
 	CGFloat _prevNextButtonSize;
 	CGRect _scrollerRect;
-	NSString *galleryID;
 	NSInteger _currentIndex;
 	
 	UIView *_container; // used as view for the controller
 	UIView *_innerContainer; // sized and placed to be fullscreen within the container
 	UIToolbar *_toolbar;
-	UIScrollView *_thumbsView;
+    GDIImageGalleryCollectionViewController *_thumbsViewController;
+//	UIScrollView *_thumbsView;
 	UIScrollView *_scroller;
 	UIView *_captionContainer;
 	UILabel *_caption;
 	
 	NSMutableDictionary *_photoLoaders;
 	NSMutableArray *_barItems;
-	NSMutableArray *_photoThumbnailViews;
+//	NSMutableArray *_photoThumbnailViews;
 	NSMutableArray *_photoViews;
 	
 	NSObject <GDIImageGalleryViewControllerDelegate> *__unsafe_unretained _photoSource;
@@ -45,67 +45,16 @@
 	UIBarButtonItem *_prevButton;
 }
 
-// general
-- (void)buildViews;
-- (void)destroyViews;
-- (void)layoutViews;
-- (void)moveScrollerToCurrentIndexWithAnimation:(BOOL)animation;
-- (void)updateTitle;
-- (void)updateButtons;
-- (void)layoutButtons;
-- (void)updateScrollSize;
-- (void)updateCaption;
-- (void)resizeImageViewsWithRect:(CGRect)rect;
-- (void)resetImageViewZoomLevels;
-
-- (void)enterFullscreen;
-- (void)exitFullscreen;
-- (void)enableApp;
-- (void)disableApp;
-
-- (void)positionInnerContainer;
-- (void)positionScroller;
-- (void)positionToolbar;
-- (void)resizeThumbView;
-
-// thumbnails
-- (void)toggleThumbnailViewWithAnimation:(BOOL)animation;
-- (void)showThumbnailViewWithAnimation:(BOOL)animation;
-- (void)hideThumbnailViewWithAnimation:(BOOL)animation;
-- (void)buildThumbsViewPhotos;
-
-- (void)arrangeThumbs;
-- (void)loadAllThumbViewPhotos;
-
-- (void)preloadThumbnailImages;
-- (void)unloadFullsizeImageWithIndex:(NSUInteger)index;
-
-- (void)scrollingHasEnded;
-
-- (void)handleSeeAllTouch:(id)sender;
-- (void)handleThumbClick:(id)sender;
-
-- (GDIImageGalleryPhoto*)createGalleryPhotoForIndex:(NSUInteger)index;
-
-- (void)loadThumbnailImageWithIndex:(NSUInteger)index;
-- (void)loadFullsizeImageWithIndex:(NSUInteger)index;
-
 @end
 
 
 
 @implementation GDIImageGalleryViewController
-@synthesize galleryID;
-@synthesize photoSource = _photoSource;
-@synthesize currentIndex = _currentIndex;
-@synthesize thumbsView = _thumbsView;
+//@synthesize thumbsView = _thumbsView;
 @synthesize toolBar = _toolbar;
-@synthesize useThumbnailView = _useThumbnailView;
-@synthesize startingIndex = _startingIndex;
-@synthesize beginsInThumbnailView = _beginsInThumbnailView;
-@synthesize hideTitle = _hideTitle;
 
 #pragma mark - Public Methods
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -127,7 +76,7 @@
         _startingIndex                      = 0;
 		_photoLoaders						= [[NSMutableDictionary alloc] init];
 		_photoViews							= [[NSMutableArray alloc] init];
-		_photoThumbnailViews				= [[NSMutableArray alloc] init];
+//		_photoThumbnailViews				= [[NSMutableArray alloc] init];
 		_barItems							= [[NSMutableArray alloc] init];
         
         /*
@@ -165,7 +114,7 @@
         _startingIndex                      = 0;
 		_photoLoaders						= [[NSMutableDictionary alloc] init];
 		_photoViews							= [[NSMutableArray alloc] init];
-		_photoThumbnailViews				= [[NSMutableArray alloc] init];
+//		_photoThumbnailViews				= [[NSMutableArray alloc] init];
 		_barItems							= [[NSMutableArray alloc] init];
 	}
 	
@@ -192,6 +141,13 @@
 	return self;
 }
 
+- (UICollectionViewLayout *)collectionViewLayout
+{
+    if (_collectionViewLayout == nil) {
+        _collectionViewLayout = [[UICollectionViewFlowLayout alloc] init];
+    }
+    return _collectionViewLayout;
+}
 
 - (void)loadView
 {
@@ -199,7 +155,12 @@
     _container							= [[UIView alloc] initWithFrame:CGRectZero];
     _innerContainer						= [[UIView alloc] initWithFrame:CGRectZero];
     _scroller							= [[UIScrollView alloc] initWithFrame:CGRectZero];
-    _thumbsView							= [[UIScrollView alloc] initWithFrame:CGRectZero];
+    
+//    _thumbsView							= [[UIScrollView alloc] initWithFrame:CGRectZero];
+    _thumbsViewController               = [[GDIImageGalleryCollectionViewController alloc] initWithCollectionViewLayout:self.collectionViewLayout];
+    _thumbsViewController.imageGalleryVC = self;
+    _thumbsViewController.delegate      = self;
+    
     _toolbar							= [[UIToolbar alloc] initWithFrame:CGRectZero];
     _captionContainer					= [[UIView alloc] initWithFrame:CGRectZero];
     _caption							= [[UILabel alloc] initWithFrame:CGRectZero];
@@ -224,7 +185,7 @@
     _caption.font								= [UIFont systemFontOfSize:14.0];
     _caption.textColor							= [UIColor whiteColor];
     _caption.backgroundColor					= [UIColor clearColor];
-    _caption.textAlignment						= UITextAlignmentCenter;
+    _caption.textAlignment						= NSTextAlignmentCenter;
     _caption.shadowColor						= [UIColor blackColor];
     _caption.shadowOffset						= CGSizeMake( 1, 1 );
     
@@ -234,17 +195,22 @@
     _scroller.autoresizesSubviews				= NO;
     _container.autoresizingMask					= UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
+    
     // setup thumbs view
-    _thumbsView.backgroundColor					= [UIColor whiteColor];
-    _thumbsView.hidden							= YES;
-    _thumbsView.contentInset					= UIEdgeInsetsMake( kThumbnailSpacing, kThumbnailSpacing, kThumbnailSpacing, kThumbnailSpacing);
+    _thumbsViewController.photoSource           = _photoSource;
+    _thumbsViewController.view.hidden           = YES;
+    [self addChildViewController:_thumbsViewController];
+//    _thumbsView.backgroundColor					= [UIColor whiteColor];
+//    _thumbsView.hidden							= YES;
+//    _thumbsView.contentInset					= UIEdgeInsetsMake( kThumbnailSpacing, kThumbnailSpacing, kThumbnailSpacing, kThumbnailSpacing);
     
 	// set view
 	self.view                                   = _container;
 	
 	// add items to their containers
 	[_container addSubview:_innerContainer];
-	[_container addSubview:_thumbsView];
+    [_container addSubview:_thumbsViewController.view];
+//	[_container addSubview:_thumbsView];
 	
 	[_innerContainer addSubview:_scroller];
 	[_innerContainer addSubview:_toolbar];
@@ -269,24 +235,6 @@
 }
 
 
-- (void)viewDidUnload {
-    
-    [self destroyViews];
-    
-    _barItems = nil;
-    _nextButton = nil;
-    _prevButton = nil;
-    _container = nil;
-    _innerContainer = nil;
-    _scroller = nil;
-    _thumbsView = nil;
-    _toolbar = nil;
-    _captionContainer = nil;
-    _caption = nil;
-    
-    [super viewDidUnload];
-}
-
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
@@ -302,10 +250,12 @@
     [_photoViews removeAllObjects];
     
     // remove previous thumbnails
-    for (UIView *view in _photoThumbnailViews) {
-        [view removeFromSuperview];
-    }
-    [_photoThumbnailViews removeAllObjects];
+    // TODO: Reset collection view
+    
+//    for (UIView *view in _photoThumbnailViews) {
+//        [view removeFromSuperview];
+//    }
+//    [_photoThumbnailViews removeAllObjects];
     
     // remove photo loaders
     NSArray *photoKeys = [_photoLoaders allKeys];
@@ -333,7 +283,8 @@
         [self buildViews];
         
         // create the thumbnail views
-        [self buildThumbsViewPhotos];
+        [self.collectionViewController.collectionView reloadData];
+//        [self buildThumbsViewPhotos];
         
         // start loading thumbs
         [self preloadThumbnailImages];
@@ -422,17 +373,17 @@
 {
 	// remove the image and thumbnail at the specified index.
 	GDIImageGalleryPhotoView *imgView = [_photoViews objectAtIndex:index];
- 	GDIImageGalleryPhotoView *thumbView = [_photoThumbnailViews objectAtIndex:index];
+// 	GDIImageGalleryPhotoView *thumbView = [_photoThumbnailViews objectAtIndex:index];
 	GDIImageGalleryPhoto *photo = [_photoLoaders objectForKey:[NSString stringWithFormat:@"%lu",(unsigned long)index]];
 	
 	[photo unloadFullsize];
 	[photo unloadThumbnail];
 	
 	[imgView removeFromSuperview];
-	[thumbView removeFromSuperview];
+//	[thumbView removeFromSuperview];
 	
 	[_photoViews removeObjectAtIndex:index];
-	[_photoThumbnailViews removeObjectAtIndex:index];
+//	[_photoThumbnailViews removeObjectAtIndex:index];
 	[_photoLoaders removeObjectForKey:[NSString stringWithFormat:@"%lu",(unsigned long)index]];
 	
 	[self layoutViews];
@@ -505,7 +456,7 @@
 	[self updateCaption];
 	[self resizeImageViewsWithRect:_scroller.frame];
 	[self layoutButtons];
-	[self arrangeThumbs];
+//	[self arrangeThumbs];
 	[self moveScrollerToCurrentIndexWithAnimation:NO];
 }
 
@@ -584,15 +535,16 @@
 
 - (void)resizeThumbView
 {
-    if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
-        _thumbsView.contentInset = UIEdgeInsetsMake(self.topLayoutGuide.length, 0, 0, 0);
-    }
-    
-    int barHeight = 0;
-    if (self.navigationController.navigationBar.barStyle == UIBarStyleBlackTranslucent) {
-        barHeight = self.navigationController.navigationBar.frame.size.height;
-    }
-	_thumbsView.frame = CGRectMake( 0, barHeight, _container.frame.size.width, _container.frame.size.height-barHeight );
+//    if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
+//        _thumbsView.contentInset = UIEdgeInsetsMake(self.topLayoutGuide.length, 0, 0, 0);
+//    }
+//    
+//    int barHeight = 0;
+//    if (self.navigationController.navigationBar.barStyle == UIBarStyleBlackTranslucent) {
+//        barHeight = self.navigationController.navigationBar.frame.size.height;
+//    }
+//	_thumbsView.frame = CGRectMake( 0, barHeight, _container.frame.size.width, _container.frame.size.height-barHeight );
+    _thumbsViewController.view.frame = CGRectMake( 0, 0, _container.frame.size.width, _container.frame.size.height );
 }
 
 
@@ -779,6 +731,8 @@
 }
 
 
+/*
+ // TODO: Refactor into collection view
 - (void)buildThumbsViewPhotos
 {
 	NSUInteger i, count = [_photoSource numberOfPhotosForPhotoGallery:self];
@@ -792,7 +746,6 @@
 		[_photoThumbnailViews addObject:thumbView];
 	}
 }
-
 
 
 - (void)arrangeThumbs
@@ -823,7 +776,7 @@
 	// set the content size of the thumb scroller
 	[_thumbsView setContentSize:CGSizeMake( _thumbsView.frame.size.width - ( kThumbnailSpacing*2 ), dy + kThumbnailSize + kThumbnailSpacing )];
 }
-
+*/
 
 - (void)toggleThumbnailViewWithAnimation:(BOOL)animation
 {
@@ -840,19 +793,19 @@
 {
     _isThumbViewShowing = YES;
     
-    [self arrangeThumbs];
+//    [self arrangeThumbs];
     [self.navigationItem.rightBarButtonItem setTitle:NSLocalizedString(@"Close", @"")];
     
     if (animation) {
         // do curl animation
         [UIView beginAnimations:@"uncurl" context:nil];
         [UIView setAnimationDuration:.666];
-        [UIView setAnimationTransition:UIViewAnimationTransitionCurlDown forView:_thumbsView cache:YES];
-        [_thumbsView setHidden:NO];
+        [UIView setAnimationTransition:UIViewAnimationTransitionCurlDown forView:_thumbsViewController.view cache:YES];
+        [_thumbsViewController.view setHidden:NO];
         [UIView commitAnimations];
     }
     else {
-        [_thumbsView setHidden:NO];
+        [_thumbsViewController.view setHidden:NO];
     }
 }
 
@@ -866,12 +819,12 @@
         // do curl animation
         [UIView beginAnimations:@"curl" context:nil];
         [UIView setAnimationDuration:.666];
-        [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:_thumbsView cache:YES];
-        [_thumbsView setHidden:YES];
+        [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:_thumbsViewController.view cache:YES];
+        [_thumbsViewController.view setHidden:YES];
         [UIView commitAnimations];
     }
     else {
-        [_thumbsView setHidden:NO];
+        [_thumbsViewController.view setHidden:NO];
     }
 }
 
@@ -886,11 +839,18 @@
 }
 
 
-- (void)handleThumbClick:(id)sender
+//- (void)handleThumbClick:(id)sender
+//{
+//	GDIImageGalleryPhotoView *photoView = (GDIImageGalleryPhotoView*)[(UIButton*)sender superview];
+//	[self hideThumbnailViewWithAnimation:YES];
+//	[self gotoImageByIndex:photoView.tag animated:NO];
+//}
+
+- (void)imageGalleryCollectionViewController:(GDIImageGalleryCollectionViewController *)collectionVC
+                              didSelectIndex:(NSUInteger)index
 {
-	GDIImageGalleryPhotoView *photoView = (GDIImageGalleryPhotoView*)[(UIButton*)sender superview];
-	[self hideThumbnailViewWithAnimation:YES];
-	[self gotoImageByIndex:photoView.tag animated:NO];
+    [self hideThumbnailViewWithAnimation:YES];
+	[self gotoImageByIndex:index animated:NO];
 }
 
 
@@ -1065,8 +1025,14 @@
 }
 
 
-#pragma mark - GDIImageGalleryPhoto Delegate Methods
 
+#pragma mark - Thumbnail Collection View
+
+
+
+
+
+#pragma mark - GDIImageGalleryPhoto Delegate Methods
 
 - (void)galleryPhoto:(GDIImageGalleryPhoto*)photo willLoadThumbnailFromPath:(NSString*)path
 {
@@ -1075,10 +1041,11 @@
 	[photoView.activity startAnimating];
 	
 	// show activity indicator for thumbail 
-	if( _isThumbViewShowing ) {
-		GDIImageGalleryPhotoView *thumb = [_photoThumbnailViews objectAtIndex:photo.tag];
-		[thumb.activity startAnimating];
-	}
+    // TODO: Refactor into collection view
+//	if( _isThumbViewShowing ) {
+//		GDIImageGalleryPhotoView *thumb = [_photoThumbnailViews objectAtIndex:photo.tag];
+//		[thumb.activity startAnimating];
+//	}
 }
 
 
@@ -1088,11 +1055,12 @@
 	GDIImageGalleryPhotoView *photoView = [_photoViews objectAtIndex:photo.tag];
 	[photoView.activity startAnimating];
 	
-	// show activity indicator for thumbail 
-	if( _isThumbViewShowing ) {
-		GDIImageGalleryPhotoView *thumb = [_photoThumbnailViews objectAtIndex:photo.tag];
-		[thumb.activity startAnimating];
-	}
+	// show activity indicator for thumbail
+    // TODO: Refactor into collection view
+//	if( _isThumbViewShowing ) {
+//		GDIImageGalleryPhotoView *thumb = [_photoThumbnailViews objectAtIndex:photo.tag];
+//		[thumb.activity startAnimating];
+//	}
 }
 
 
@@ -1108,9 +1076,10 @@
 	[photoView.activity stopAnimating];
 	
 	// grab the thumbail view and set its image
-	GDIImageGalleryPhotoView *thumbView = [_photoThumbnailViews objectAtIndex:photo.tag];
-	thumbView.imageView.image = image;
-	[thumbView.activity stopAnimating];
+    // TODO: Refactor into collection view
+//	GDIImageGalleryPhotoView *thumbView = [_photoThumbnailViews objectAtIndex:photo.tag];
+//	thumbView.imageView.image = image;
+//	[thumbView.activity stopAnimating];
 }
 
 
@@ -1188,8 +1157,9 @@
                 photoView.imageView.image = nil;
                 
                 // unload thumb tile
-                photoView = [_photoThumbnailViews objectAtIndex:i];
-                photoView.imageView.image = nil;
+                // TODO: Refactor into collection view
+//                photoView = [_photoThumbnailViews objectAtIndex:i];
+//                photoView.imageView.image = nil;
             }
         }
     }
@@ -1226,8 +1196,8 @@
 	
     _innerContainer = nil;
 	
-    _thumbsView.delegate = nil;
-    _thumbsView = nil;
+//    _thumbsView.delegate = nil;
+//    _thumbsView = nil;
 	
 	_scroller.delegate = nil;
     _scroller = nil;
@@ -1238,8 +1208,8 @@
 	[_barItems removeAllObjects];
 	_barItems = nil;
 	
-	[_photoThumbnailViews removeAllObjects];
-    _photoThumbnailViews = nil;
+//	[_photoThumbnailViews removeAllObjects];
+//    _photoThumbnailViews = nil;
 	
 	[_photoViews removeAllObjects];
     _photoViews = nil;

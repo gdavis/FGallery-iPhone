@@ -199,7 +199,6 @@
 	if([_tapTimer isValid])
 		[_tapTimer invalidate];
 	
-	[_tapTimer release];
 	_tapTimer = nil;
 }
 
@@ -227,22 +226,16 @@
 {
 	[_activity stopAnimating];
 	[_activity removeFromSuperview];
-	[_activity release];
 	_activity = nil;
 }
 
 - (void)dealloc {
 	[self stopTapTimer];
 	
-	[_button release];
-	_button = nil;
 	
 	[self killActivityIndicator];
 	
-	[imageView release];
-	imageView = nil;
 	
-    [super dealloc];
 }
 
 

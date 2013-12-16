@@ -194,7 +194,7 @@
     _caption.font								= [UIFont systemFontOfSize:14.0];
     _caption.textColor							= [UIColor whiteColor];
     _caption.backgroundColor					= [UIColor clearColor];
-    _caption.textAlignment						= UITextAlignmentCenter;
+    _caption.textAlignment						= NSTextAlignmentCenter;
     _caption.shadowColor						= [UIColor blackColor];
     _caption.shadowOffset						= CGSizeMake( 1, 1 );
     
@@ -246,16 +246,16 @@
     
     [self destroyViews];
     
-    [_barItems release], _barItems = nil;
-    [_nextButton release], _nextButton = nil;
-    [_prevButton release], _prevButton = nil;
-    [_container release], _container = nil;
-    [_innerContainer release], _innerContainer = nil;
-    [_scroller release], _scroller = nil;
-    [_thumbsView release], _thumbsView = nil;
-    [_toolbar release], _toolbar = nil;
-    [_captionContainer release], _captionContainer = nil;
-    [_caption release], _caption = nil;
+    _barItems = nil;
+    _nextButton = nil;
+    _prevButton = nil;
+    _container = nil;
+    _innerContainer = nil;
+    _scroller = nil;
+    _thumbsView = nil;
+    _toolbar = nil;
+    _captionContainer = nil;
+    _caption = nil;
     
     [super viewDidUnload];
 }
@@ -475,12 +475,11 @@
     
     UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: NSLocalizedString(@"Back", @"") style: UIBarButtonItemStyleBordered target: nil action: nil];
     [[self navigationItem] setBackBarButtonItem: newBackButton];
-    [newBackButton release];
     
     _useThumbnailView = useThumbnailView;
     if( self.navigationController ) {
         if (_useThumbnailView) {
-            UIBarButtonItem *btn = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"See all", @"") style:UIBarButtonItemStylePlain target:self action:@selector(handleSeeAllTouch:)] autorelease];
+            UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"See all", @"") style:UIBarButtonItemStylePlain target:self action:@selector(handleSeeAllTouch:)];
             [self.navigationItem setRightBarButtonItem:btn animated:YES];
         }
         else {
@@ -732,7 +731,6 @@
 		photoView.photoDelegate = self;
 		[_scroller addSubview:photoView];
 		[_photoViews addObject:photoView];
-		[photoView release];
 	}
 }
 
@@ -748,7 +746,6 @@
 		[thumbView setTag:i];
 		[_thumbsView addSubview:thumbView];
 		[_photoThumbnailViews addObject:thumbView];
-		[thumbView release];
 	}
 }
 
@@ -977,13 +974,13 @@
 	{
 		thumbPath = [_photoSource photoGallery:self filePathForPhotoSize:FGalleryPhotoSizeThumbnail atIndex:index];
 		fullsizePath = [_photoSource photoGallery:self filePathForPhotoSize:FGalleryPhotoSizeFullsize atIndex:index];
-		photo = [[[FGalleryPhoto alloc] initWithThumbnailPath:thumbPath fullsizePath:fullsizePath delegate:self] autorelease];
+		photo = [[FGalleryPhoto alloc] initWithThumbnailPath:thumbPath fullsizePath:fullsizePath delegate:self];
 	}
 	else if( sourceType == FGalleryPhotoSourceTypeNetwork )
 	{
 		thumbPath = [_photoSource photoGallery:self urlForPhotoSize:FGalleryPhotoSizeThumbnail atIndex:index];
 		fullsizePath = [_photoSource photoGallery:self urlForPhotoSize:FGalleryPhotoSizeFullsize atIndex:index];
-		photo = [[[FGalleryPhoto alloc] initWithThumbnailUrl:thumbPath fullsizeUrl:fullsizePath delegate:self] autorelease];
+		photo = [[FGalleryPhoto alloc] initWithThumbnailUrl:thumbPath fullsizeUrl:fullsizePath delegate:self];
 	}
 	else 
 	{
@@ -1171,54 +1168,37 @@
 	
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 	
-	self.galleryID = nil;
 	
 	_photoSource = nil;
 	
-    [_caption release];
     _caption = nil;
 	
-    [_captionContainer release];
     _captionContainer = nil;
 	
-    [_container release];
     _container = nil;
 	
-    [_innerContainer release];
     _innerContainer = nil;
 	
-    [_toolbar release];
-    _toolbar = nil;
 	
-    [_thumbsView release];
-    _thumbsView = nil;
 	
-    [_scroller release];
     _scroller = nil;
 	
 	[_photoLoaders removeAllObjects];
-    [_photoLoaders release];
     _photoLoaders = nil;
 	
 	[_barItems removeAllObjects];
-	[_barItems release];
 	_barItems = nil;
 	
 	[_photoThumbnailViews removeAllObjects];
-    [_photoThumbnailViews release];
     _photoThumbnailViews = nil;
 	
 	[_photoViews removeAllObjects];
-    [_photoViews release];
     _photoViews = nil;
 	
-    [_nextButton release];
     _nextButton = nil;
 	
-    [_prevButton release];
     _prevButton = nil;
 	
-    [super dealloc];
 }
 
 

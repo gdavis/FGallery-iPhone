@@ -7,6 +7,7 @@
 //
 
 #import "FGalleryPhoto.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface FGalleryPhoto (Private)
 
@@ -43,8 +44,8 @@
 {
 	self = [super init];
 	_useNetwork = YES;
-	_thumbUrl = [thumb retain];
-	_fullsizeUrl = [fullsize retain];
+	_thumbUrl = thumb;
+	_fullsizeUrl = fullsize;
 	_delegate = delegate;
 	return self;
 }
@@ -54,8 +55,8 @@
 	self = [super init];
 	
 	_useNetwork = NO;
-	_thumbUrl = [thumb retain];
-	_fullsizeUrl = [fullsize retain];
+	_thumbUrl = thumb;
+	_fullsizeUrl = fullsize;
 	_delegate = delegate;
 	return self;
 }
@@ -74,8 +75,26 @@
 		_isThumbLoading = YES;
 		
 		NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:_thumbUrl]];
-		_thumbConnection = [[NSURLConnection connectionWithRequest:request delegate:self] retain];
-		_thumbData = [[NSMutableData alloc] init];
+        UIImageView *tempImage = [[UIImageView alloc] init];
+        
+        [tempImage setImageWithURLRequest:request
+                         placeholderImage:[UIImage imageNamed:@"resim.png"]
+                                  success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image){
+                                      
+                                      _isThumbLoading = NO;
+                                      _hasThumbLoaded = YES;
+                                      
+                                      // create new image with data
+                                      _thumbnail = image;
+                                      
+                                      
+                                      // notify delegate
+                                      if( _delegate )
+                                          [self didLoadThumbnail];
+                                  }
+                                  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error){
+                                      
+                                  }];
 	}
 	
 	// load from disk
@@ -103,9 +122,29 @@
 		
 		_isFullsizeLoading = YES;
 		
-		NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:_fullsizeUrl]];
-		_fullsizeConnection = [[NSURLConnection connectionWithRequest:request delegate:self] retain];
-		_fullsizeData = [[NSMutableData alloc] init];
+		NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:_thumbUrl]];
+        
+        UIImageView *tempImage = [[UIImageView alloc] init];
+        
+        [tempImage setImageWithURLRequest:request
+                         placeholderImage:[UIImage imageNamed:@"resim.png"]
+                                  success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image){
+                                      
+                                      _isThumbLoading = NO;
+                                      _hasThumbLoaded = YES;
+                                      
+                                      // create new image with data
+                                      _thumbnail = image;
+                                      
+                                      
+                                      // notify delegate
+                                      if( _delegate )
+                                          [self didLoadThumbnail];
+                                  }
+                                  failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error){
+                                      
+                                  }];
+	
 	}
 	else
 	{
@@ -121,9 +160,9 @@
 
 - (void)loadFullsizeInThread
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
 	
-	NSString *path;
+		NSString *path;
         
         if([[NSFileManager defaultManager] fileExistsAtPath:_fullsizeUrl])
         {
@@ -132,23 +171,23 @@
         else {
             path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] bundlePath], _fullsizeUrl];
         }
-			
-	_fullsize = [[UIImage imageWithContentsOfFile:path] retain];
-	
-	_hasFullsizeLoaded = YES;
-	_isFullsizeLoading = NO;
+				
+		_fullsize = [UIImage imageWithContentsOfFile:path];
+		
+		_hasFullsizeLoaded = YES;
+		_isFullsizeLoading = NO;
 
-	[self performSelectorOnMainThread:@selector(didLoadFullsize) withObject:nil waitUntilDone:YES];
+		[self performSelectorOnMainThread:@selector(didLoadFullsize) withObject:nil waitUntilDone:YES];
 	
-	[pool release];
+	}
 }
 
 
 - (void)loadThumbnailInThread
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
 	
-	NSString *path;
+		NSString *path;
         
         if([[NSFileManager defaultManager] fileExistsAtPath:_thumbUrl])
         {
@@ -157,15 +196,15 @@
         else {
             path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] bundlePath], _thumbUrl];
         }
+			
+		_thumbnail = [UIImage imageWithContentsOfFile:path];
 		
-	_thumbnail = [[UIImage imageWithContentsOfFile:path] retain];
+		_hasThumbLoaded = YES;
+		_isThumbLoading = NO;
+		
+		[self performSelectorOnMainThread:@selector(didLoadThumbnail) withObject:nil waitUntilDone:YES];
 	
-	_hasThumbLoaded = YES;
-	_isThumbLoading = NO;
-	
-	[self performSelectorOnMainThread:@selector(didLoadThumbnail) withObject:nil waitUntilDone:YES];
-	
-	[pool release];
+	}
 }
 
 
@@ -177,7 +216,6 @@
 	_isFullsizeLoading = NO;
 	_hasFullsizeLoaded = NO;
 	
-	[_fullsize release];
 	_fullsize = nil;
 }
 
@@ -189,77 +227,7 @@
 	_isThumbLoading = NO;
 	_hasThumbLoaded = NO;
 	
-	[_thumbnail release];
 	_thumbnail = nil;
-}
-
-
-#pragma mark -
-#pragma mark NSURLConnection Delegate Methods
-
-
-- (void)connection:(NSURLConnection *)conn didReceiveResponse:(NSURLResponse *)response {
-	
-	if( conn == _thumbConnection )
-		[_thumbData setLength:0];
-	
-    else if( conn == _fullsizeConnection )
-		[_fullsizeData setLength:0];
-	
-	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-}
-
-
-
-- (void)connection:(NSURLConnection *)conn didReceiveData:(NSData *)data 
-{
-	if( conn == _thumbConnection )
-		[_thumbData appendData:data];
-	
-    else if( conn == _fullsizeConnection )
-		[_fullsizeData appendData:data];
-	
-	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-}
-
-
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)conn 
-{	
-	if( conn == _thumbConnection )
-	{
-		_isThumbLoading = NO;
-		_hasThumbLoaded = YES;
-		
-		// create new image with data
-		_thumbnail = [[UIImage alloc] initWithData:_thumbData];
-		
-		// cleanup 
-		[self killThumbnailLoadObjects];
-		
-		// notify delegate
-		if( _delegate ) 
-			[self didLoadThumbnail];
-	}
-    else if( conn == _fullsizeConnection )
-	{
-		_isFullsizeLoading = NO;
-		_hasFullsizeLoaded = YES;
-		
-		// create new image with data
-		_fullsize = [[UIImage alloc] initWithData:_fullsizeData];
-		
-		// cleanup 
-		[self killFullsizeLoadObjects];
-		
-		// notify delegate
-		if( _delegate )
-			[self didLoadFullsize];
-	}
-	
-	// turn off data indicator
-	if( !_isFullsizeLoading && !_isThumbLoading ) 
-		[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
 
 #pragma mark -
@@ -317,8 +285,6 @@
 - (void)killThumbnailLoadObjects
 {
 	
-	[_thumbConnection release];
-	[_thumbData release];
 	_thumbConnection = nil;
 	_thumbData = nil;
 }
@@ -328,8 +294,6 @@
 - (void)killFullsizeLoadObjects
 {
 	
-	[_fullsizeConnection release];
-	[_fullsizeData release];
 	_fullsizeConnection = nil;
 	_fullsizeData = nil;
 }
@@ -348,19 +312,12 @@
 	[self killFullsizeLoadObjects];
 	[self killThumbnailLoadObjects];
 	
-	[_thumbUrl release];
 	_thumbUrl = nil;
 	
-	[_fullsizeUrl release];
 	_fullsizeUrl = nil;
 	
-	[_thumbnail release];
-	_thumbnail = nil;
 	
-	[_fullsize release];
-	_fullsize = nil;
 	
-	[super dealloc];
 }
 
 

@@ -345,9 +345,6 @@
 	_thumbUrl = nil;
 	
 	_fullsizeUrl = nil;
-	
-	
-	
 }
 
 

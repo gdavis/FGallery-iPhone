@@ -8,19 +8,23 @@
 #import "GDIImageGalleryCollectionViewController.h"
 #import "GDIImageGalleryViewController.h"
 
+
 @interface GDIImageGalleryCollectionViewController ()
 
 @end
 
+
 @implementation GDIImageGalleryCollectionViewController
+
 
 - (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout
 {
     if (self = [super initWithCollectionViewLayout:layout]) {
-        self.thumbnailSize = CGSizeMake(100.f, 100.f);
+        self.thumbnailSize = CGSizeMake(88.f, 88.f);
     }
     return self;
 }
+
 
 - (void)viewDidLoad
 {
@@ -35,7 +39,10 @@
     
     [self.collectionView registerClass:[UICollectionViewCell class]
             forCellWithReuseIdentifier:@"thumb"];
+    UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)self.collectionViewLayout;
+    flowLayout.sectionInset = UIEdgeInsetsMake(10.f, 10.f, 10.f, 10.f);
 }
+
 
 - (void)viewDidLayoutSubviews
 {
@@ -46,11 +53,6 @@
                                                         0);
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 - (void)setThumbnailSize:(CGSize)thumbnailSize
 {
@@ -62,19 +64,15 @@
     }
 }
 
-#pragma mark - UICollectionViewDelegate
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    if ([self.delegate respondsToSelector:@selector(imageGalleryCollectionViewController:didSelectIndex:)]) {
-        [self.delegate imageGalleryCollectionViewController:self didSelectIndex:indexPath.row];
-    }
-}
+#pragma mark - UICollectionViewDataSource
+
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return [self.photoSource numberOfPhotosForPhotoGallery:self.imageGalleryVC];
+    return [self.imageGalleryVC.photoSource numberOfPhotosForPhotoGallery:self.imageGalleryVC];
 }
+
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {

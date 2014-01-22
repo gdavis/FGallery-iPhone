@@ -27,9 +27,9 @@ typedef enum
 @protocol GDIImageGalleryViewControllerDelegate;
 
 @interface GDIImageGalleryViewController : UIViewController <UIScrollViewDelegate,
+                                                        UICollectionViewDelegate,
                                                         GDIImageGalleryPhotoDelegate,
-                                                        GDIImageGalleryPhotoViewDelegate,
-                                                        GDIImageGalleryCollectionViewControllerDelegate>
+                                                        GDIImageGalleryPhotoViewDelegate>
 
 - (id)initWithPhotoSource:(NSObject<GDIImageGalleryViewControllerDelegate>*)photoSrc;
 - (id)initWithPhotoSource:(NSObject<GDIImageGalleryViewControllerDelegate>*)photoSrc barItems:(NSArray*)items;

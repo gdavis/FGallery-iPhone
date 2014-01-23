@@ -36,7 +36,7 @@ FGallery allows you add additional UIBarButtonItems to the UIToolbar that exists
 
 ## Current Project Status
 
-The 1.x version of FGallery is no longer supported. Since I need to make a living I haven't had time to fully support the 1.x versions. However, I am in the midst of slowly rewriting FGallery for a 2.0 version that will modernize the project and also convert it into a Cocoapod that I do plan on supporting. The new version will also use a UICollectionView to display the thumbnail gallery, will allow for custom layouts, and a few more nice updates. Sorry for being busy and not updating as much as I should, but I never thought this project would get as much attention as it has! Thanks for all the contributions and support for the project! -Grant
+The 1.x version of FGallery is no longer supported. Since I need to make a living, I've been busy contracting and haven't had time to fully support the 1.x versions. However, I am in the midst of slowly rewriting FGallery for a 2.0 version that will modernize the project and also convert it into a Cocoapod that I do plan on supporting. The new version will also use a UICollectionView to display the thumbnail gallery, will allow for custom layouts, and a few more nice updates. Sorry for being busy and not updating as much as I should, but I never thought this project would get as much attention as it has! Thanks for all the contributions and support for the project! -Grant
 
 ## Changes
 ### 1.3

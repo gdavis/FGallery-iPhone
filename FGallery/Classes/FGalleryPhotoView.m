@@ -22,7 +22,7 @@
 @synthesize imageView;
 @synthesize activity = _activity;
 @synthesize button = _button;
-
+@synthesize isSelected = _isSelected;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -222,6 +222,42 @@
 	else _isZoomed = YES;
 }
 
+- (void)enableGlowWithColor:(UIColor *)color{
+  if (!_glowingView) {
+    _glowingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+    [_glowingView setUserInteractionEnabled:NO];
+    [self addSubview:_glowingView];
+  }
+  [_glowingView.layer setBorderColor:[color CGColor]];
+  [_glowingView.layer setBorderWidth:2.0];
+  _glowingView.layer.shadowColor = [color CGColor];
+  _glowingView.layer.shadowRadius = 5.0f;
+  _glowingView.layer.shadowOpacity = 1;
+  _glowingView.layer.shadowOffset = CGSizeZero;
+  _glowingView.layer.masksToBounds = NO;
+}
+
+- (void)showCornerIcon:(UIImage *)icon{
+  if (!_cornerIconView) {
+    int imageWidth = self.frame.size.width;
+    int imageHeight = self.frame.size.height;
+    CGRect rect = CGRectMake(imageWidth/4*3-imageWidth/8, imageHeight/4*3-imageHeight/8, imageWidth/4, imageHeight/4);
+    _cornerIconView = [[UIImageView alloc] initWithFrame:rect];
+    [_cornerIconView setUserInteractionEnabled:NO];
+    [_cornerIconView setContentMode:UIViewContentModeScaleAspectFit];
+    [self addSubview:_cornerIconView];
+  }
+  [_cornerIconView setHidden:NO];
+  [_cornerIconView setImage:icon];
+}
+
+- (void)setCornerIconHidden:(BOOL)b{
+  if (_cornerIconView) {
+    [_cornerIconView setHidden:b];
+  }
+}
+
+
 
 - (void)killActivityIndicator
 {
@@ -241,7 +277,19 @@
 	
 	[imageView release];
 	imageView = nil;
-	
+
+  if (_cornerIconView) {
+    [_cornerIconView release];
+    _cornerIconView = nil;
+  }
+
+  if (_glowingView) {
+    [_glowingView release];
+    _glowingView = nil;
+  }
+
+
+
     [super dealloc];
 }
 

@@ -21,7 +21,7 @@
 	
 	BOOL _isFullsizeLoading;
 	BOOL _hasFullsizeLoaded;
-	
+
 	NSMutableData *_thumbData;
 	NSMutableData *_fullsizeData;
 	

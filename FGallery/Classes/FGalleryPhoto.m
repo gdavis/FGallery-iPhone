@@ -8,6 +8,12 @@
 
 #import "FGalleryPhoto.h"
 
+// NSConditionLock values
+enum {
+    WDASSETURL_PENDINGREADS = 1,
+    WDASSETURL_ALLFINISHED = 0
+};
+
 @interface FGalleryPhoto (Private)
 
 // delegate notifying methods
@@ -15,17 +21,22 @@
 - (void)willLoadFullsizeFromUrl;
 - (void)willLoadThumbFromPath;
 - (void)willLoadFullsizeFromPath;
+- (void)willLoadThumbFromAsset;
+- (void)willLoadFullsizeFromAsset;
 - (void)didLoadThumbnail;
 - (void)didLoadFullsize;
 
 // loading local images with threading
 - (void)loadFullsizeInThread;
 - (void)loadThumbnailInThread;
+- (void)loadAssetFullsizeInThread;
+- (void)loadAssetThumbnailInThread;
 
 // cleanup
 - (void)killThumbnailLoadObjects;
 - (void)killFullsizeLoadObjects;
 @end
+
 
 
 @implementation FGalleryPhoto
@@ -43,6 +54,7 @@
 {
 	self = [super init];
 	_useNetwork = YES;
+    _useAsset = NO;
 	_thumbUrl = [thumb retain];
 	_fullsizeUrl = [fullsize retain];
 	_delegate = delegate;
@@ -53,6 +65,7 @@
 {
 	self = [super init];
 	
+    _useAsset = NO;
 	_useNetwork = NO;
 	_thumbUrl = [thumb retain];
 	_fullsizeUrl = [fullsize retain];
@@ -60,6 +73,17 @@
 	return self;
 }
 
+- (id)initWithThumbnailAsset:(NSString*)thumb fullsizePath:(NSString*)fullsize delegate:(NSObject<FGalleryPhotoDelegate>*)delegate
+{
+	self = [super init];
+	
+    _useAsset = YES;
+	_useNetwork = NO;
+	_thumbUrl = [thumb retain];
+	_fullsizeUrl = [fullsize retain];
+	_delegate = delegate;
+	return self;
+}
 
 - (void)loadThumbnail
 {
@@ -79,7 +103,8 @@
 	}
 	
 	// load from disk
-	else {
+	else if (!_useAsset)
+    {
 		
 		// notify delegate
 		[self willLoadThumbFromPath];
@@ -89,6 +114,14 @@
 		// spawn a new thread to load from disk
 		[NSThread detachNewThreadSelector:@selector(loadThumbnailInThread) toTarget:self withObject:nil];
 	}
+    
+    if (_useAsset)
+    {
+        [self willLoadThumbFromAsset];
+        _isThumbLoading = YES;
+        
+        [NSThread detachNewThreadSelector:@selector(loadAssetThumbnailInThread) toTarget:self withObject:nil];
+    }
 }
 
 
@@ -107,7 +140,7 @@
 		_fullsizeConnection = [[NSURLConnection connectionWithRequest:request delegate:self] retain];
 		_fullsizeData = [[NSMutableData alloc] init];
 	}
-	else
+	else if( !_useAsset)
 	{
 		[self willLoadFullsizeFromPath];
 		
@@ -116,6 +149,14 @@
 		// spawn a new thread to load from disk
 		[NSThread detachNewThreadSelector:@selector(loadFullsizeInThread) toTarget:self withObject:nil];
 	}
+    
+    if (_useAsset)
+    {
+        [self willLoadFullsizeFromAsset];
+        _isFullsizeLoading = YES;
+        
+        [NSThread detachNewThreadSelector:@selector(loadAssetFullsizeInThread) toTarget:self withObject:nil];
+    }
 }
 
 
@@ -143,6 +184,50 @@
 	[pool release];
 }
 
+- (void)loadAssetFullsizeInThread
+{
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+    NSAssert(![NSThread isMainThread], @"can't be called on the main thread due to ALAssetLibrary limitations");
+    readLock = [[NSConditionLock alloc] initWithCondition:WDASSETURL_PENDINGREADS];
+    
+    ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *myasset)
+    {
+        ALAssetRepresentation *rep = [myasset defaultRepresentation];
+        CGImageRef iref = [rep fullScreenImage];
+        if (iref) {
+            _fullsize = [[UIImage imageWithCGImage:iref] retain];
+        }
+        [readLock lock];
+        [readLock unlockWithCondition:WDASSETURL_ALLFINISHED];
+    };
+
+    ALAssetsLibraryAccessFailureBlock failureblock  = ^(NSError *myerror)
+    {
+        NSLog(@"Error can't load fullsize image - %@",[myerror localizedDescription]);
+        [readLock lock];
+        [readLock unlockWithCondition:WDASSETURL_ALLFINISHED];
+    };
+    
+    NSURL *asseturl = [NSURL URLWithString:_fullsizeUrl];
+    ALAssetsLibrary* assetslibrary = [[[ALAssetsLibrary alloc] init] autorelease];
+    [assetslibrary assetForURL:asseturl
+                   resultBlock:resultblock
+                  failureBlock:failureblock];
+	
+    [readLock lockWhenCondition:WDASSETURL_ALLFINISHED];
+    [readLock unlock];
+    // cleanup
+    [readLock release];
+    readLock = nil;
+
+	_hasFullsizeLoaded = YES;
+	_isFullsizeLoading = NO;
+    
+	[self performSelectorOnMainThread:@selector(didLoadFullsize) withObject:nil waitUntilDone:YES];
+	
+	[pool release];
+}
 
 - (void)loadThumbnailInThread
 {
@@ -160,6 +245,49 @@
 		
 	_thumbnail = [[UIImage imageWithContentsOfFile:path] retain];
 	
+	_hasThumbLoaded = YES;
+	_isThumbLoading = NO;
+	
+	[self performSelectorOnMainThread:@selector(didLoadThumbnail) withObject:nil waitUntilDone:YES];
+	
+	[pool release];
+}
+
+- (void)loadAssetThumbnailInThread
+{
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
+    NSAssert(![NSThread isMainThread], @"can't be called on the main thread due to ALAssetLibrary limitations");
+    readLock = [[NSConditionLock alloc] initWithCondition:WDASSETURL_PENDINGREADS];
+    
+    ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *myasset)
+    {
+        CGImageRef iref = [myasset thumbnail];
+        if (iref) {
+            _thumbnail = [[UIImage imageWithCGImage:iref] retain];
+        }
+        [readLock lock];
+        [readLock unlockWithCondition:WDASSETURL_ALLFINISHED];
+    };
+    ALAssetsLibraryAccessFailureBlock failureblock  = ^(NSError *myerror)
+    {
+        NSLog(@"Error can't load thumbnail - %@",[myerror localizedDescription]);
+        [readLock lock];
+        [readLock unlockWithCondition:WDASSETURL_ALLFINISHED];
+    };
+    
+    NSURL *asseturl = [NSURL URLWithString:_thumbUrl];
+    ALAssetsLibrary* assetslibrary = [[[ALAssetsLibrary alloc] init] autorelease];
+    [assetslibrary assetForURL:asseturl
+                   resultBlock:resultblock
+                  failureBlock:failureblock];
+	
+    [readLock lockWhenCondition:WDASSETURL_ALLFINISHED];
+    [readLock unlock];
+    // cleanup
+    [readLock release];
+    readLock = nil;
+    
 	_hasThumbLoaded = YES;
 	_isThumbLoading = NO;
 	
@@ -293,6 +421,18 @@
 		[_delegate galleryPhoto:self willLoadFullsizeFromPath:_fullsizeUrl];
 }
 
+- (void)willLoadThumbFromAsset
+{
+	if([_delegate respondsToSelector:@selector(galleryPhoto:willLoadThumbnailFromAsset:)])
+		[_delegate galleryPhoto:self willLoadThumbnailFromAsset:_thumbUrl];
+}
+
+
+- (void)willLoadFullsizeFromAsset
+{
+	if([_delegate respondsToSelector:@selector(galleryPhoto:willLoadFullsizeFromAsset:)])
+		[_delegate galleryPhoto:self willLoadFullsizeFromAsset:_fullsizeUrl];
+}
 
 - (void)didLoadThumbnail
 {

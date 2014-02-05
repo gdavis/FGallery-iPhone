@@ -7,7 +7,7 @@
 //
 
 #import "RootViewController.h"
-
+#import "AssetsLibrary/AssetsLibrary.h"
 
 @implementation RootViewController
 
@@ -25,6 +25,28 @@
     
     networkCaptions = [[NSArray alloc] initWithObjects:@"Happy New Year!",@"Frosty Web",nil];
     networkImages = [[NSArray alloc] initWithObjects:@"http://farm6.static.flickr.com/5042/5323996646_9c11e1b2f6_b.jpg", @"http://farm6.static.flickr.com/5007/5311573633_3cae940638.jpg",nil];
+    
+    ALAssetsLibrary *al = [[ALAssetsLibrary alloc] init];
+    assetImages = [[NSMutableArray alloc] init];
+    
+    [al enumerateGroupsWithTypes:ALAssetsGroupAll
+                      usingBlock:^(ALAssetsGroup *group, BOOL *stop)
+    {
+        [group enumerateAssetsUsingBlock:^(ALAsset *asset, NSUInteger index, BOOL *stop)
+        {
+            if (asset)
+            {
+                [assetCaptions addObject: @"1"];
+                [assetImages addObject: [asset.defaultRepresentation.url absoluteString]];
+            }
+        }
+         ];
+    }
+                            failureBlock:^(NSError *error)
+        {
+            NSLog(@"error");
+        }
+    ];
 }
 
 #pragma mark - Table view data source
@@ -37,7 +59,7 @@
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return 4;
 }
 
 
@@ -61,6 +83,9 @@
 	else if( indexPath.row == 2 ) {
 		cell.textLabel.text = @"Custom Controls";
 	}
+    else if( indexPath.row == 3) {
+        cell.textLabel.text = @"Gallery";
+    }
 
     return cell;
 }
@@ -77,6 +102,8 @@
     }
     else if( gallery == networkGallery ) {
         num = [networkImages count];
+    } else if( gallery == assetGallery) {
+        num = [assetImages count];
     }
 	return num;
 }
@@ -87,7 +114,14 @@
 	if( gallery == localGallery ) {
 		return FGalleryPhotoSourceTypeLocal;
 	}
-	else return FGalleryPhotoSourceTypeNetwork;
+	else if (gallery == networkGallery) {
+        return FGalleryPhotoSourceTypeNetwork;
+    }
+    else if (gallery == assetGallery) {
+        return FGalleryPhotoSourceTypeAsset;
+    }
+    
+    return FGalleryPhotoSourceTypeAsset;
 }
 
 
@@ -100,6 +134,10 @@
     else if( gallery == networkGallery ) {
         caption = [networkCaptions objectAtIndex:index];
     }
+    else if( gallery == assetGallery ) {
+        caption = [assetCaptions objectAtIndex:index];
+    }
+    
 	return caption;
 }
 
@@ -110,6 +148,10 @@
 
 - (NSString*)photoGallery:(FGalleryViewController *)gallery urlForPhotoSize:(FGalleryPhotoSize)size atIndex:(NSUInteger)index {
     return [networkImages objectAtIndex:index];
+}
+
+- (NSString*)photoGallery:(FGalleryViewController *)gallery assetForPhotoSize:(FGalleryPhotoSize)size atIndex:(NSUInteger)index {
+    return [assetImages objectAtIndex:index];
 }
 
 - (void)handleTrashButtonTouch:(id)sender {
@@ -148,6 +190,11 @@
         [self.navigationController pushViewController:localGallery animated:YES];
         [localGallery release];
 	}
+    else if( indexPath.row == 3) {
+        assetGallery = [[FGalleryViewController alloc] initWithPhotoSource:self];
+        [self.navigationController pushViewController:assetGallery animated:YES];
+        [assetGallery release];
+    }
 }
 
 

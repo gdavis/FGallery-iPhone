@@ -21,7 +21,8 @@ typedef enum
 typedef enum
 {
 	FGalleryPhotoSourceTypeNetwork,
-	FGalleryPhotoSourceTypeLocal
+	FGalleryPhotoSourceTypeLocal,
+    FGalleryPhotoSourceTypeAsset
 } FGalleryPhotoSourceType;
 
 @protocol FGalleryViewControllerDelegate;
@@ -93,5 +94,5 @@ typedef enum
 // the photosource must implement one of these methods depending on which FGalleryPhotoSourceType is specified 
 - (NSString*)photoGallery:(FGalleryViewController*)gallery filePathForPhotoSize:(FGalleryPhotoSize)size atIndex:(NSUInteger)index;
 - (NSString*)photoGallery:(FGalleryViewController*)gallery urlForPhotoSize:(FGalleryPhotoSize)size atIndex:(NSUInteger)index;
-
+- (NSString*)photoGallery:(FGalleryViewController*)gallery assetForPhotoSize:(FGalleryPhotoSize)size atIndex:(NSUInteger)index;
 @end

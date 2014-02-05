@@ -17,6 +17,7 @@
 @interface FGalleryViewController (Private)
 
 // general
+- (void)loadDefaultToolBar;
 - (void)buildViews;
 - (void)destroyViews;
 - (void)layoutViews;
@@ -75,6 +76,7 @@
 @synthesize startingIndex = _startingIndex;
 @synthesize beginsInThumbnailView = _beginsInThumbnailView;
 @synthesize hideTitle = _hideTitle;
+@synthesize barItems = _barItems;
 
 #pragma mark - Public Methods
 
@@ -112,6 +114,9 @@
          _scroller.layer.borderColor = [[UIColor redColor] CGColor];
          _scroller.layer.borderWidth = 2.0;
          */
+		
+		[self loadDefaultToolBar];
+
 	}
 	return self;
 }
@@ -138,6 +143,8 @@
 		_photoViews							= [[NSMutableArray alloc] init];
 		_photoThumbnailViews				= [[NSMutableArray alloc] init];
 		_barItems							= [[NSMutableArray alloc] init];
+		
+		[self loadDefaultToolBar];
 	}
 	
 	return self;
@@ -221,19 +228,7 @@
 	
 	[_toolbar addSubview:_captionContainer];
 	[_captionContainer addSubview:_caption];
-	
-	// create buttons for toolbar
-	UIImage *leftIcon = [UIImage imageNamed:@"photo-gallery-left.png"];
-	UIImage *rightIcon = [UIImage imageNamed:@"photo-gallery-right.png"];
-	_nextButton = [[UIBarButtonItem alloc] initWithImage:rightIcon style:UIBarButtonItemStylePlain target:self action:@selector(next)];
-	_prevButton = [[UIBarButtonItem alloc] initWithImage:leftIcon style:UIBarButtonItemStylePlain target:self action:@selector(previous)];
-	
-	// add prev next to front of the array
-	[_barItems insertObject:_nextButton atIndex:0];
-	[_barItems insertObject:_prevButton atIndex:0];
-	
-	_prevNextButtonSize = leftIcon.size.width;
-	
+		
 	// set buttons on the toolbar.
 	[_toolbar setItems:_barItems animated:NO];
     
@@ -487,10 +482,25 @@
             [self.navigationItem setRightBarButtonItem:nil animated:NO];
         }
     }
+	
+	[newBackButton release], newBackButton = nil;
 }
 
 
 #pragma mark - Private Methods
+
+- (void)loadDefaultToolBar {
+	UIImage *leftIcon = [UIImage imageNamed:@"photo-gallery-left.png"];
+	UIImage *rightIcon = [UIImage imageNamed:@"photo-gallery-right.png"];
+	_nextButton = [[UIBarButtonItem alloc] initWithImage:rightIcon style:UIBarButtonItemStylePlain target:self action:@selector(next)];
+	_prevButton = [[UIBarButtonItem alloc] initWithImage:leftIcon style:UIBarButtonItemStylePlain target:self action:@selector(previous)];
+	
+	// add prev next to front of the array
+	[_barItems addObject:_prevButton];
+	[_barItems addObject:_nextButton];
+	
+	_prevNextButtonSize = leftIcon.size.width;
+}
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {

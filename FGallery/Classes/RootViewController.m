@@ -16,6 +16,7 @@
 
 - (void)loadView {
 	[super loadView];
+    bookmarkedIndex = [[NSMutableArray alloc] init];
     
 	self.title = @"FGallery";
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
@@ -103,6 +104,24 @@
 	return caption;
 }
 
+- (BOOL)photoGallery:(FGalleryViewController *)gallery isBookmarkedImageAtIndex:(NSUInteger)index {
+    NSNumber *selectedIndex = [NSNumber numberWithInteger:index];
+    
+    return [bookmarkedIndex indexOfObject:selectedIndex] != NSNotFound;
+}
+
+- (void)photoGallery:(FGalleryViewController *)gallery didBookmarkedImageAtIndex:(NSUInteger)index {
+    NSLog(@"BOOKMARKED: %d", index);
+    NSNumber *selectedIndex = [NSNumber numberWithInteger:index];
+    [bookmarkedIndex addObject:selectedIndex];
+}
+
+- (void)photoGallery:(FGalleryViewController *)gallery didUnbookmarkedImageAtIndex:(NSUInteger)index {
+    NSLog(@"UN-BOOKMARKED: %d", index);
+    NSNumber *selectedIndex = [NSNumber numberWithInteger:index];
+    [bookmarkedIndex removeObject:selectedIndex];
+}
+
 
 - (NSString*)photoGallery:(FGalleryViewController*)gallery filePathForPhotoSize:(FGalleryPhotoSize)size atIndex:(NSUInteger)index {
     return [localImages objectAtIndex:index];
@@ -129,6 +148,7 @@
     
 	if( indexPath.row == 0 ) {
 		localGallery = [[FGalleryViewController alloc] initWithPhotoSource:self];
+        localGallery.enableBookmark = TRUE;
         [self.navigationController pushViewController:localGallery animated:YES];
         [localGallery release];
 	}

@@ -16,6 +16,7 @@
     NSArray *networkImages;
 	FGalleryViewController *localGallery;
     FGalleryViewController *networkGallery;
+    NSMutableArray *bookmarkedIndex;
 }
 
 @end

@@ -190,7 +190,7 @@
     _caption.font								= [UIFont systemFontOfSize:14.0];
     _caption.textColor							= [UIColor whiteColor];
     _caption.backgroundColor					= [UIColor clearColor];
-    _caption.textAlignment						= UITextAlignmentCenter;
+    _caption.textAlignment						= NSTextAlignmentCenter;
     _caption.shadowColor						= [UIColor blackColor];
     _caption.shadowOffset						= CGSizeMake( 1, 1 );
     
@@ -332,7 +332,7 @@
 	[self layoutViews];
 	
 	// update status bar to be see-through
-	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:animated];
+	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:animated];
 	
 	// init with next on first run.
 	if( _currentIndex == -1 ) [self next];
@@ -644,7 +644,7 @@
 			if([caption length] > 0 )
 			{
 				float captionWidth = _container.frame.size.width-kCaptionPadding*2;
-				CGSize textSize = [caption sizeWithFont:_caption.font];
+				CGSize textSize = [caption sizeWithAttributes:@{NSFontAttributeName: _caption.font}];
 				NSUInteger numLines = ceilf( textSize.width / captionWidth );
 				NSInteger height = ( textSize.height + kCaptionPadding ) * numLines;
 				

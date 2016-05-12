@@ -130,7 +130,7 @@
             path = _fullsizeUrl;
         }
         else {
-            path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] bundlePath], _fullsizeUrl];
+            path = [[NSBundle mainBundle] pathForResource:_fullsizeUrl ofType:nil];
         }
 			
 	_fullsize = [[UIImage imageWithContentsOfFile:path] retain];
@@ -155,7 +155,7 @@
             path = _thumbUrl;
         }
         else {
-            path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] bundlePath], _thumbUrl];
+            path = [[NSBundle mainBundle] pathForResource:_thumbUrl ofType:nil];
         }
 		
 	_thumbnail = [[UIImage imageWithContentsOfFile:path] retain];
